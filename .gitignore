@@ -1,0 +1,12 @@
+# Python cache    
+*.pyc
+
+# Proyect .exe converter
+Main.spec
+build/
+dict/
+
+# Sprites / Sounds / Fonts stuff (leave only the code)
+sounds/
+sprites/
+fonts/
