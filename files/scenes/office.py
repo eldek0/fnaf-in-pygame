@@ -250,12 +250,12 @@ class Office:
 
             if App.animations.darkness._isFading:
                 if not ToyBunny._prepare_to_jumpscare:
-                    ToyBunny.change_location_id(App, 3)
+                    ToyBunny.change_location_id(App, ToyBunny.rest_room)
                 self.animatronic_in_office = False
                 self.bunny_moving_left = True
                 self.bunny_x_position =self.bunny_x_initial_position
 
-    def withered_animatrionic_in_office(self, App, id_name:str, office_sprite_id:int, rest_location:int):
+    def withered_animatrionic_in_office(self, App, id_name:str, office_sprite_id:int):
         animatrionic = App.objects.Animatronics.animatronics_in_game[id_name]
         if animatrionic.locationId == 104 and not animatrionic.changing_position and not animatrionic._prepare_to_jumpscare:
             self.hallway_animatrionic_fade = True
@@ -279,4 +279,4 @@ class Office:
                 self.office_sprite = App.assets.office1
                 self.animatronic_in_office = False
                 if not animatrionic._prepare_to_jumpscare:
-                    animatrionic.change_location_id(App, rest_location)
+                    animatrionic.change_location_id(App, animatrionic.rest_room)

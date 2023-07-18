@@ -3,7 +3,7 @@ from files.animatronics.animatronic_base import Animatronic
 
 class WitheredFreddy(Animatronic):
     def __init__(self, App, activated:int=True):
-        super().__init__(activated, 8, App.animations.toy_chica_jump)
+        super().__init__(activated, 8, App.animations.toy_chica_jump, 8)
 
     def movement(self, App):
         match self.locationId:

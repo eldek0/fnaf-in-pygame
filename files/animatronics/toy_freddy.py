@@ -4,7 +4,7 @@ from files.animatronics.animatronic_base import Animatronic
 
 class ToyFreddy(Animatronic):
     def __init__(self, App, activated=True):
-        super().__init__(activated=activated, locationId=9, jumpscare_animation=None)
+        super().__init__(activated=activated, locationId=9, jumpscare_animation=None, rest_room=9)
 
     def movement(self, App):
         if self.locationId == 9:

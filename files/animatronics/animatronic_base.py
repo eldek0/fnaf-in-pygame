@@ -2,7 +2,7 @@ import pygame
 from abc import ABC
 
 class Animatronic(ABC):
-    def __init__(self, activated:bool, locationId:int, jumpscare_animation:list):
+    def __init__(self, activated:bool, locationId:int, jumpscare_animation:list, rest_room:int):
         """
         locationId:
             - From 1 to 12 are room locations
@@ -31,6 +31,7 @@ class Animatronic(ABC):
         self._prepare_to_jumpscare = False # Get a random timer and jumpscare the player
         self.time_with_mask_goal = 120
         self.time_with_mask = 0
+        self.rest_room = rest_room # The room where the animatrionic rests after a screamer attempt
 
     def update(self, App):
         if self.activated:

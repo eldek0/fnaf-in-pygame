@@ -4,7 +4,7 @@ from files.animatronics.animatronic_base import Animatronic
 
 class ToyChica(Animatronic):
     def __init__(self, App, activated:int=True):
-        super().__init__(activated, 9, App.animations.toy_chica_jump)
+        super().__init__(activated, 9, App.animations.toy_chica_jump, 9)
 
     def movement(self, App):
         match self.locationId:

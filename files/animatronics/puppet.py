@@ -4,7 +4,7 @@ from files.animatronics.animatronic_base import Animatronic
 
 class Puppet(Animatronic):
     def __init__(self, App, activated=True):
-        super().__init__(activated=activated, locationId=11, jumpscare_animation=App.animations.puppet_jump)
+        super().__init__(activated=activated, locationId=11, jumpscare_animation=App.animations.puppet_jump, rest_room=11)
 
     def movement(self, App):
         if self.locationId == 11:
