@@ -11,27 +11,27 @@ class Mangle(Animatronic):
         match self.locationId:
             case 12:
                 if pygame.time.get_ticks() - self.timer > 5000:
-                    self.change_location_id(App, 11, force=True)
+                    self.change_location_id(App, 11, forced=True)
 
             case 11:
                 if pygame.time.get_ticks() - self.timer > 5000:
-                    self.change_location_id(App, 10, force=True)
+                    self.change_location_id(App, 10, forced=True)
 
             case 10:
                 if pygame.time.get_ticks() - self.timer > 5000:
-                    self.change_location_id(App, 7, force=True)
+                    self.change_location_id(App, 7, forced=True)
 
             case 7:
                 if pygame.time.get_ticks() - self.timer > 5000:
-                    self.change_location_id(App, 1, force=True)
+                    self.change_location_id(App, 1, forced=True)
 
             case 1: # rare
                 if pygame.time.get_ticks() - self.timer > 5000:
-                    self.change_location_id(App, 2, force=True)
+                    self.change_location_id(App, 2, forced=True)
 
             case 2:
                 if pygame.time.get_ticks() - self.timer > 5000:
-                    self.change_location_id(App, 6, force=True)
+                    self.change_location_id(App, 6, forced=True)
 
             case 6:
                 if pygame.time.get_ticks() - self.timer > 5000:
@@ -43,7 +43,7 @@ class Mangle(Animatronic):
 
             case 102:
                 if pygame.time.get_ticks() - self.timer > 7000 and App.objects.open_monitor_button.inCamera:
-                    self.change_location_id(App, -1, force=True)
+                    self.change_location_id(App, -1, forced=True)
 
                 if App.objects.mask_button.inMask:
                     self.time_with_mask += 1

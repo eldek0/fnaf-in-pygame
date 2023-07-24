@@ -47,8 +47,10 @@ class App:
 		pygame.mixer.Channel(4).set_volume(1) # Mask breathing
 		pygame.mixer.Channel(5).set_volume(1) # Stare at an animatrionic
 		pygame.mixer.Channel(6).set_volume(1) # Mangle noise
+		pygame.mixer.Channel(7).set_volume(1) # Baloon boy laugh
 
 		self.TIME_PLAYING = pygame.time.get_ticks()
+		self.ambiance_sound = pygame.time.get_ticks()
 
 	def get_deltatime(self):
 		self.now_time = time.time()

@@ -41,3 +41,21 @@ def sounds_effects_updater(App):
     
     if not pygame.mixer.Channel(6).get_busy():
         pygame.mixer.Channel(6).play(App.assets.mangle_noise)
+    
+    baloon_boy = App.objects.Animatronics.animatronics_in_game["BALOON_BOY"]
+    
+    if baloon_boy.locationId == -1:
+        pygame.mixer.Channel(7).set_volume(1)
+    else:
+        if not pygame.mixer.Channel(7).get_busy():
+            pygame.mixer.Channel(7).set_volume(0)
+
+    if not pygame.mixer.Channel(7).get_busy():
+        pygame.mixer.Channel(7).play(App.assets.baloon_laugh)
+
+    # Scary ambiance
+    position = App.objects.Animatronics.every_animatrionic_position
+    if pygame.time.get_ticks() - App.ambiance_sound > 25000:
+        if position[101] != [] or position[103] != [] or position[102] != []:
+            App.assets.scary_ambiance.play()
+            App.ambiance_sound = pygame.time.get_ticks()

@@ -256,6 +256,9 @@ class import_images:
 		# Mangle in office
 		self.office_mangle = pygame.image.load(f"sprites/office/inside/7.png").convert_alpha()
 
+		# Baloon boy in office
+		self.office_baloon_boy = pygame.image.load(f"sprites/office/inside/5.png").convert_alpha()
+
 		# -- Jumpscares Animation -- 
 		# Puppet jumpscare animation
 		self.puppet_screamer_animation = []
@@ -359,6 +362,10 @@ class import_images:
 		self.xScream1 = pygame.mixer.Sound("sounds/Xscream2.wav")
 
 		self.mangle_noise = pygame.mixer.Sound("sounds/elec_garble.wav")
+
+		self.baloon_laugh = pygame.mixer.Sound("sounds/echo4b.wav")
+
+		self.scary_ambiance = pygame.mixer.Sound("sounds/ScaryAmbiance.wav")
 
 	def fonts(self):
 		self.Arial = "fonts/arial.ttf"

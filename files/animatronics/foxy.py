@@ -28,4 +28,4 @@ class Foxy(Animatronic):
 
                 # "Get scared"
                 if pygame.time.get_ticks() - self.timer > 10000:
-                    self.change_location_id(App, 8, force=True)
+                    self.change_location_id(App, 8, forced=True)

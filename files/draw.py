@@ -8,9 +8,6 @@ def Draw(App):
 
 		if not App.objects.Animatronics.gameOver:
 
-			# Sounds
-			sounds_effects_updater(App)
-
 			# Background
 			App.objects.camera.timers_update(App)
 
@@ -39,6 +36,9 @@ def Draw(App):
 			# Update animatronics
 			App.objects.Animatronics.update(App)
 			App.gameOver = App.objects.Animatronics.gameOver
+
+			# Sounds
+			sounds_effects_updater(App)
 
 		else:
 			App.animations.static_anim_1.alpha = 255

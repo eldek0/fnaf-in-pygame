@@ -9,22 +9,26 @@ from files.animatronics.withered_bonnie import WitheredBonnie
 from files.animatronics.withered_chica import WitheredChica
 from files.animatronics.foxy import Foxy
 from files.animatronics.mangle import Mangle
+from files.animatronics.baloon_boy import BaloonBoy
 
 class AnimatronicsMain:
     def __init__(self, App):
 
         self.animatronics_in_game = {
-            "TOY_FREDDY":ToyFreddy(App, activated=True), 
-            "PUPPET":Puppet(App, activated=True),
-            "TOY_BUNNY":ToyBunny(App, activated=True),
-            "TOY_CHICA":ToyChica(App, activated=True),
+            "TOY_FREDDY":ToyFreddy(App, activated=False), 
+            "PUPPET":Puppet(App, activated=False),
+            "TOY_BUNNY":ToyBunny(App, activated=False),
+            "TOY_CHICA":ToyChica(App, activated=False),
             "WITHERED_BONNIE":WitheredBonnie(App, activated=True),
-            "WITHERED_CHICA":WitheredChica(App, activated=True),
-            "WITHERED_FREDDY":WitheredFreddy(App, activated=True),
-            "FOXY":Foxy(App, activated=True),
-            "MANGLE":Mangle(App, activated=True)
+            "WITHERED_CHICA":WitheredChica(App, activated=False),
+            "WITHERED_FREDDY":WitheredFreddy(App, activated=False),
+            "FOXY":Foxy(App, activated=False),
+            "MANGLE":Mangle(App, activated=True),
+            "BALOON_BOY":BaloonBoy(App, activated=True)
         }
         self.gameOver = False
+
+        self.update_animatrionic_position()
 
     def console_animatrionic_position_log(self):
         os.system("cls")

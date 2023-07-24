@@ -52,10 +52,11 @@ class Animatronic(ABC):
                 if self._prepare_to_jumpscare:
                     self.jumpscare_time(App)
                 else:
-                    if not self.changing_position or self.name_id == "PUPPET":
+                    self.movement(App)
+                    """if not self.changing_position or self.name_id == "PUPPET":
                         self.movement(App)
                     else:
-                        self.change_location_id(App, self._previous_movement[0], self._previous_movement[2])
+                        self.change_location_id(App, self._previous_movement[0], self._previous_movement[2])"""
 
             # Static to camera
             if self.changing_position:
@@ -94,6 +95,7 @@ class Animatronic(ABC):
         if animatrionics_in_room == []: return True
 
         if not room_location == 101: # It's not office hallway
+            print(animatrionics_in_room)
             for animatrionic in animatrionics_in_room:
                 if animatrionic.name_id != self.name_id:
                     return False
@@ -109,18 +111,20 @@ class Animatronic(ABC):
             
             return False
 
-    def change_location_id(self ,App, room_location:int, secondPositionId=1, force=False):
+    def change_location_id(self ,App, room_location:int, secondPositionId=1, forced=False):
+        print(forced)
         changing_to_location = room_location
         changing_to_position = secondPositionId
         self._previous_movement = [changing_to_location, self.locationId, changing_to_position, self.secondPositionId]
 
-        if changing_to_location == 104 or self.change_location_id == -1:
+        if (changing_to_location == 104 or self.change_location_id == -1):
             self._wait_movement_time(force=True)
         else:
             self._wait_movement_time()
-        print("free-room: ", self.verify_free_room(App, room_location))
+        is_free_room = self.verify_free_room(App, room_location)
+        print(f"free-room ({self.name_id}): {is_free_room}, force: {forced}")
         # If it's empty or its forced
-        if  force or self.verify_free_room:
+        if  forced or is_free_room:
             if not self.changing_position:
                 self.locationId = changing_to_location
                 self.secondPositionId = changing_to_position

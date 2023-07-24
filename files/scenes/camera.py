@@ -318,9 +318,12 @@ class Camera:
     def left_air_vent(self, App):
         """ 5 """
         toy_chica = App.objects.Animatronics.animatronics_in_game["TOY_CHICA"]
-        if toy_chica.locationId == 5:
+        baloon_boy = App.objects.Animatronics.animatronics_in_game["BALOON_BOY"]
+        if toy_chica.locationId == 5 and baloon_boy.locationId != 5:
             return 0, 4
-        elif toy_chica.locationId != 5:
+        elif toy_chica.locationId != 5 and baloon_boy.locationId == 5:
+            return 0, 3
+        elif toy_chica.locationId != 5 and baloon_boy.locationId != 5:
             return 0, 1
 
     # Normal
@@ -393,11 +396,18 @@ class Camera:
         """ 10 """
 
         toy_freddy = App.objects.Animatronics.animatronics_in_game["TOY_FREDDY"]
+        baloon_boy = App.objects.Animatronics.animatronics_in_game["BALOON_BOY"]
         
         if toy_freddy.locationId == 10:
-            return 0, 4
-        else:
+            if baloon_boy.locationId == 10:
+                return 0, 4
+            else:
+                return 2, 5
+        elif baloon_boy.locationId == 10:
             return 0, 1
+
+        else:
+            return 2, 3
     # Wider
     def prize_corner(self, App):
         """ 11 """
