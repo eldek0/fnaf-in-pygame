@@ -52,6 +52,10 @@ class Camera:
 
         self.camera_flashlighting = False
 
+        self.label_to_draw = None
+
+        self.record_spr_timer = pygame.time.get_ticks()
+
     def update(self, App):
         self.camera_room_managment(App)
 
@@ -124,59 +128,58 @@ class Camera:
     def camera_ui(self, App):
         self.cam_map(App)
         labels_position = (550, 280)
-        match self.inCameraRoom:
-            case 1:
-                App.surface.blit(App.assets.party_room_1_label, labels_position)
-            case 2:
-                App.surface.blit(App.assets.party_room_2_label, labels_position)
-            case 3:
-                App.surface.blit(App.assets.party_room_3_label, labels_position)
-            case 4:
-                App.surface.blit(App.assets.party_room_4_label, labels_position)
-            case 5:
-                App.surface.blit(App.assets.left_air_vent_label, labels_position)
-            case 6:
-                App.surface.blit(App.assets.main_hall_label, labels_position)
-            case 7:
-                App.surface.blit(App.assets.main_hall_label, labels_position)
-            case 8:
-                App.surface.blit(App.assets.parts_n_service_label, labels_position)
-            case 9:
-                App.surface.blit(App.assets.parts_n_service_label, labels_position)
-            case 10:
-                App.surface.blit(App.assets.game_area_label, labels_position)
-            case 11:
-                App.surface.blit(App.assets.prize_corner_label, labels_position)
-                App.objects.music_box.update(App)
-            case 12:
-                App.surface.blit(App.assets.kids_cove_label, labels_position)    
+        App.surface.blit(self.label_to_draw, labels_position)
+        if self.inCameraRoom == 11:
+            App.objects.music_box.update(App)
+
+        self.record_sprite(App)
+
+    def record_sprite(self, App):
+        time = 1000
+        if pygame.time.get_ticks() - self.record_spr_timer > 0 and pygame.time.get_ticks() - self.record_spr_timer < time:
+            App.surface.blit(App.assets.camera_record_sprite, (62, 96))
+        elif pygame.time.get_ticks() - self.record_spr_timer > time*2:
+            self.record_spr_timer = pygame.time.get_ticks()
+        
 
     def camera_room_managment(self, App):
         match self.inCameraRoom:
             case 1:
                 self.camera_basics(App, App.assets.party_room_1_cameras,0, lambda:self.party_room_1(App))
+                self.label_to_draw = App.assets.party_room_1_label
             case 2:
                 self.camera_basics(App, App.assets.party_room_2_cameras,1, lambda:self.party_room_2(App))
+                self.label_to_draw = App.assets.party_room_2_label
             case 3:
                 self.camera_basics(App, App.assets.party_room_3_cameras,2, lambda:self.party_room_3(App))
+                self.label_to_draw = App.assets.party_room_3_label
             case 4:
                 self.camera_basics(App, App.assets.party_room_4_cameras,3, lambda:self.party_room_4(App))
+                self.label_to_draw = App.assets.party_room_4_label
             case 5: 
                 self.camera_basics(App, App.assets.left_air_vent_cameras,4, lambda:self.left_air_vent(App))
+                self.label_to_draw = App.assets.left_air_vent_label
             case 6:
                 self.camera_basics(App, App.assets.right_air_vent_cameras,5, lambda:self.right_air_vent(App))
+                self.label_to_draw = App.assets.right_air_vent_label
             case 7:
                 self.camera_basics(App, App.assets.main_hall_cameras,6, lambda:self.main_hall(App))
+                self.label_to_draw = App.assets.main_hall_label
             case 8:
                 self.camera_basics(App, App.assets.partsnservice_cameras,7, lambda:self.parts_n_service(App))
+                self.label_to_draw = App.assets.parts_n_service_label
             case 9:
                 self.camera_basics(App, App.assets.show_stage_cameras,8, lambda:self.show_stage(App))
+                self.label_to_draw = App.assets.show_stage_label
             case 10:
                 self.camera_basics(App, App.assets.game_area_cameras,9, lambda:self.game_area(App))
+                self.label_to_draw = App.assets.game_area_label
             case 11:
                 self.camera_basics(App, App.assets.prize_corner_cameras,10, lambda:self.prize_corner(App))
+                self.label_to_draw = App.assets.prize_corner_label
             case 12:
                 self.camera_basics(App, App.assets.kids_cove_cameras,11, lambda:self.kids_cove(App))
+                self.label_to_draw = App.assets.kids_cove_label
 
         if App.objects.music_box.charge != 0:
             self.room_music()
@@ -207,10 +210,13 @@ class Camera:
 
         # --- Camera intelligence module ---
         try:
-            surface_id_off, surface_id_on = room_module()
+            m = room_module()
+            surface_id_off, surface_id_on = m
         except TypeError as e:
-            print(f"- Error in room {index + 1} - Error code: {e}")
+            print(f"- Error in room {index + 1} - Error code: {e} - {m}")
             App.objects.Animatronics.console_animatrionic_position_log()
+
+        
 
         if not self.occupied_camera[index]:
             App.animations.static_anim_1.alpha = 100
@@ -249,9 +255,13 @@ class Camera:
     def party_room_2(self, App):
         """ 2 """
         toy_bunny_location = App.objects.Animatronics.animatronics_in_game["TOY_BUNNY"]
-        if toy_bunny_location.locationId == 2:
+        withered_chica_location = App.objects.Animatronics.animatronics_in_game["WITHERED_CHICA"]
+        
+        if toy_bunny_location.locationId == 2 and withered_chica_location.locationId != 2:
             return 0, 2
-        elif toy_bunny_location.locationId != 2:
+        if toy_bunny_location.locationId != 2 and withered_chica_location.locationId == 2:
+            return 3, 4
+        elif toy_bunny_location.locationId != 2 and withered_chica_location.locationId != 2:
             return 0, 1
     # Normal
     def party_room_3(self, App):
@@ -270,11 +280,14 @@ class Camera:
         """ 4 """
         toy_bunny_location = App.objects.Animatronics.animatronics_in_game["TOY_BUNNY"]
         toy_chica_location = App.objects.Animatronics.animatronics_in_game["TOY_CHICA"]
+        withered_chica_location = App.objects.Animatronics.animatronics_in_game["WITHERED_CHICA"]
 
-        if toy_bunny_location.locationId == 4 and toy_chica_location.locationId != 4:
+        if toy_bunny_location.locationId == 4 and toy_chica_location.locationId != 4 and withered_chica_location.locationId != 4:
             return 2, 3
-        elif toy_chica_location.locationId == 4 and toy_bunny_location.locationId != 4:
+        elif toy_bunny_location.locationId != 4 and toy_chica_location.locationId == 4 and withered_chica_location != 4:
             return 0, 4
+        elif toy_chica_location.locationId != 4 and toy_bunny_location.locationId != 4 and withered_chica_location == 4:
+            return 0, 5
         elif toy_chica_location.locationId != 4 and toy_bunny_location.locationId != 4:
             return 0, 1
 
@@ -291,9 +304,13 @@ class Camera:
     def right_air_vent(self, App):
         """ 6 """
         toy_bunny_location = App.objects.Animatronics.animatronics_in_game["TOY_BUNNY"]
-        if toy_bunny_location.locationId == 6:
+        withered_chica_location = App.objects.Animatronics.animatronics_in_game["WITHERED_CHICA"]
+
+        if toy_bunny_location.locationId == 6 and withered_chica_location.locationId != 6:
             return 0, 2
-        elif toy_bunny_location.locationId != 6:
+        elif toy_bunny_location.locationId != 6 and withered_chica_location.locationId == 6:
+            return 0, 3
+        elif toy_bunny_location.locationId != 6 and withered_chica_location.locationId != 6:
             return 0, 1
     # Wider
     def main_hall(self, App):
@@ -312,16 +329,19 @@ class Camera:
             return 0, 1
     # Wider
     def parts_n_service(self, App):
-        """ 8 """
+        """ 8 - First goes withered bonnie, then chica and finally freddy"""
         withered_freddy_location = App.objects.Animatronics.animatronics_in_game["WITHERED_FREDDY"]
         withered_bonnie_location = App.objects.Animatronics.animatronics_in_game["WITHERED_BONNIE"]
+        withered_chica_location = App.objects.Animatronics.animatronics_in_game["WITHERED_CHICA"]
 
-        if withered_freddy_location.locationId == 8 and withered_bonnie_location.locationId != 8:
-            return 0, 2
-        elif withered_freddy_location.locationId != 8 and withered_bonnie_location.locationId == 8:
-            return 0, 5
-        elif withered_freddy_location.locationId == 8 and withered_bonnie_location.locationId == 8:
+        if withered_freddy_location.locationId == 8 and withered_bonnie_location.locationId == 8 and withered_chica_location.locationId == 8:
             return 0, 1
+        if withered_freddy_location.locationId == 8 and withered_bonnie_location.locationId != 8 and withered_chica_location.locationId == 8:
+            return 0, 2
+        elif withered_freddy_location.locationId == 8 and withered_bonnie_location.locationId != 8 and withered_chica_location.locationId != 8:
+            return 0, 3
+        elif withered_freddy_location.locationId != 8 and withered_bonnie_location.locationId != 8 and withered_chica_location.locationId != 8:
+            return 0, 5
     # Wider
     def show_stage(self, App):
         """ 9 """
@@ -355,7 +375,13 @@ class Camera:
     # Wider
     def prize_corner(self, App):
         """ 11 """
-        return 0, 1
+        puppet = App.objects.Animatronics.animatronics_in_game["PUPPET"]
+        if puppet.secondPositionId == 2:
+            return 0, 2
+        elif puppet.secondPositionId == 3:
+            return 0, 3
+        else:
+            return 0, 1
     # Wider
     def kids_cove(self, App):
         """ 12 """

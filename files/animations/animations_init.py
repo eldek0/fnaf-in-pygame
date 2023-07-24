@@ -19,3 +19,7 @@ class animations_init:
         self.puppet_jump = SpritesAnimation(sprites=App.assets.puppet_screamer_animation, position=(0, 0), frame_wait=2)
         self.toy_bunny_jump = SpritesAnimation(sprites=App.assets.toy_bunny_screamer_animation, position=(0, 0), frame_wait=2)
         self.toy_chica_jump = SpritesAnimation(sprites=App.assets.toy_chica_screamer_animation, position=(0, 0), frame_wait=2)
+        self.toy_freddy_jump = SpritesAnimation(sprites=App.assets.toy_freddy_screamer_animation, position=(0, 0), frame_wait=2)
+        self.withered_freddy_jump = SpritesAnimation(sprites=App.assets.withered_freddy_screamer_animation, position=(0, 0), frame_wait=2)
+        self.withered_bonnie_jump = SpritesAnimation(sprites=App.assets.withered_bonnie_screamer_animation, position=(0, 0), frame_wait=2)
+        self.withered_chica_jump = SpritesAnimation(sprites=App.assets.withered_chica_screamer_animation, position=(0, 0), frame_wait=2)

@@ -4,13 +4,13 @@ from files.animatronics.animatronic_base import Animatronic
 
 class ToyBunny(Animatronic):
     def __init__(self, App, activated:int=True):
-        super().__init__(activated, 102, App.animations.toy_bunny_jump, 9)
+        super().__init__(activated, 9, App.animations.toy_bunny_jump, 3)
 
     def movement(self, App):
         match self.locationId:
             case 9:
                 if pygame.time.get_ticks() - self.timer > 5000:
-                    self.change_location_id(App, 102)
+                    self.change_location_id(App, 3)
 
             case 3:
                 if pygame.time.get_ticks() - self.timer > 5000:

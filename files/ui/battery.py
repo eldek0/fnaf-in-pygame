@@ -2,10 +2,10 @@ import pygame
 
 class Battery:
     def __init__(self, App):
-        # 200 = Maximum
+        # 100 = Maximum
         # 0 = No battery
         self.charge = 100
-        self.position = [50, 60]
+        self.position = [45, 40]
         self.surface_index = 0
 
     def update(self, App):
@@ -15,8 +15,6 @@ class Battery:
         self.detect_usage(App)
         self.charge_update()
         
-        
-
     def detect_usage(self, App):
         usage_detections = [
             App.objects.office.hallway_on,
@@ -27,7 +25,7 @@ class Battery:
         ]
         for state in usage_detections:
             if state:
-                self.charge -= 0
+                self.charge -= 0.006
         
         if self.charge < 0:
             self.charge = 0

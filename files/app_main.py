@@ -9,14 +9,14 @@ from files.game_objects import GameObjects
 
 
 class App:
-	def __init__(self, initial_dimentions=(1024, 768), caption="App"):
+	def __init__(self, initial_dimentions=(1024, 768), caption="Five Nights at Freddy's - made with pygame"):
 		self.playing = True
 
 		# Surface init
 		pygame.init() # Starts the pygame timer
 		pygame.mixer.init() # Init the mixer
 		self.dimentions = initial_dimentions
-		self.surface = pygame.display.set_mode( self.dimentions, pygame.RESIZABLE, vsync=True )
+		self.surface = pygame.display.set_mode( self.dimentions ,vsync=True )
 		pygame.display.set_caption(caption) # Win's name
 
 		# Fps configurations
@@ -47,6 +47,8 @@ class App:
 		pygame.mixer.Channel(4).set_volume(1) # Mask breathing
 		pygame.mixer.Channel(5).set_volume(1) # Stare at an animatrionic
 
+		self.TIME_PLAYING = pygame.time.get_ticks()
+
 	def get_deltatime(self):
 		self.now_time = time.time()
 		self.deltaTime = self.now_time - self.prev_time
@@ -63,7 +65,7 @@ class App:
 			# Frames per second
 			self.game_fps = self.clock.tick(self.frames_per_second)
 
-			pygame.display.set_caption(str(round(self.clock.get_fps(), 2)) ) # Win's name
+			#pygame.display.set_caption(str(round(self.clock.get_fps(), 2)) ) # Win's name
 
 			#DeltaTime
 			self.get_deltatime()

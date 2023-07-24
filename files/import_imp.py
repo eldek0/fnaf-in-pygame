@@ -37,7 +37,10 @@ class import_images:
 			self.animatrionic_offices.append(
 				pygame.image.load(f"sprites/office/inside/{i}.png").convert()
 			)
-		print(len(self.animatrionic_offices))
+		# Add toy freddy 
+		self.animatrionic_offices.append(
+			pygame.image.load(f"sprites/office/inside/4.png").convert()
+			)
 
 		#  -- Flash hallway offices --
 		self.flash_offices = []
@@ -86,6 +89,7 @@ class import_images:
 		# -- Cameras --
 		self.camera_map = pygame.image.load("sprites/cameras/utils/Map.png").convert_alpha()
 		self.camera_borderline = pygame.image.load("sprites/cameras/utils/Border.png").convert_alpha()
+		self.camera_record_sprite = pygame.image.load("sprites/cameras/utils/1.png").convert_alpha()
 
 		# Camera room buttons and labels
 
@@ -264,6 +268,39 @@ class import_images:
 				pygame.image.load(f"sprites/jumpscares/toy_chica/{i+1}.png").convert_alpha()
 			)
 
+		# Toy freddy jumpscare animation
+		self.toy_freddy_screamer_animation = []
+		for i in range(12):
+			self.toy_freddy_screamer_animation.append(
+				pygame.image.load(f"sprites/jumpscares/toy_freddy/{i+1}.png").convert_alpha()
+			)
+
+		# Withered freddy jumpscare animation
+		self.withered_freddy_screamer_animation = []
+		for i in range(13):
+			self.withered_freddy_screamer_animation.append(
+				pygame.image.load(f"sprites/jumpscares/withered_freddy/{i+1}.png").convert_alpha()
+			)
+		for i in range(3):
+			self.withered_freddy_screamer_animation.append(
+				pygame.image.load(f"sprites/jumpscares/withered_freddy/{i+7}.png").convert_alpha()
+			)
+
+
+		# Withered bonnie jumpscare animation
+		self.withered_bonnie_screamer_animation = []
+		for i in range(16):
+			self.withered_bonnie_screamer_animation.append(
+				pygame.image.load(f"sprites/jumpscares/withered_bonnie/{i+1}.png").convert_alpha()
+			)
+
+		# Withered chica jumpscare animation
+		self.withered_chica_screamer_animation = []
+		for i in range(12):
+			self.withered_chica_screamer_animation.append(
+				pygame.image.load(f"sprites/jumpscares/withered_chica/{i+1}.png").convert_alpha()
+			)
+
 		# Get crops from cropped images
 		import_images.cropped_images(self)
 		
@@ -292,6 +329,10 @@ class import_images:
 		self.times_out = pygame.mixer.Sound("sounds/jackinthebox.wav")
 
 		self.stare = pygame.mixer.Sound("sounds/stare.wav")
+
+		self.boop = pygame.mixer.Sound("sounds/PartyFavorraspyPart_AC01__3.wav")
+
+		self.xScream1 = pygame.mixer.Sound("sounds/Xscream2.wav")
 
 	def fonts(self):
 		self.Arial = "fonts/arial.ttf"

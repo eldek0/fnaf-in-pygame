@@ -13,7 +13,7 @@ class CameraButton:
 
         self.monitor_button.update(App.surface, App.mouse_hitbox)
         if App.objects.battery.charge == 0:
-            self.inCamera = False
+            self.quitting_camera = True
             if self.monitor_button.mouse_hovered:
                 if not self.camera_being_pressed:
                     App.assets.error_sound.play()
@@ -36,7 +36,7 @@ class CameraButton:
                         if not App.objects.battery.charge == 0:
                             self.inCamera = True
                             App.objects.camera.static_animation = True
-                            App.animations.monitor.desactivate = True
+                        App.animations.monitor.desactivate = True
 
                         self.camera_being_pressed = True
             else:
@@ -44,7 +44,7 @@ class CameraButton:
                 if App.animations.monitor.sprite_num != 0:
                     App.animations.monitor.update(App.surface, reversed=True)
         else:
-            if self.monitor_button.mouse_hovered:
+            if self.monitor_button.mouse_hovered or self.quitting_camera:
                 if not self.camera_being_pressed:
                     self.quitting_camera = True
 
@@ -53,8 +53,10 @@ class CameraButton:
 
             if self.quitting_camera:
                 App.animations.monitor.desactivate = False
+                
                 if App.objects.music_box.charge != 0:
                     pygame.mixer.Channel(2).set_volume(0)
+
                 App.animations.monitor.update(App.surface, reversed=True)
                 # Get off camera
                 if App.animations.monitor.sprite_num == 0:

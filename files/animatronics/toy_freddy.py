@@ -4,21 +4,27 @@ from files.animatronics.animatronic_base import Animatronic
 
 class ToyFreddy(Animatronic):
     def __init__(self, App, activated=True):
-        super().__init__(activated=activated, locationId=9, jumpscare_animation=None, rest_room=9)
+        super().__init__(activated=activated, locationId=9, jumpscare_animation=App.animations.toy_freddy_jump, rest_room=10)
 
     def movement(self, App):
-        if self.locationId == 9:
-            if pygame.time.get_ticks() - self.timer > 5000:
-                # Moves to Game Area
-                self.change_location_id(App, 10)
+        toy_bonnie = App.objects.Animatronics.animatronics_in_game["TOY_BUNNY"]
+        toy_chica = App.objects.Animatronics.animatronics_in_game["TOY_CHICA"]
 
-        if self.locationId == 10:
-            if pygame.time.get_ticks() - self.timer > 3000:
-                self.change_office_position(1)
+        match self.locationId:
+            case 9:
+                if pygame.time.get_ticks() - self.timer > 5000:
+                    if toy_bonnie.locationId != 9 and toy_chica.locationId != 9:
+                        # Moves to Game Area
+                        self.change_location_id(App, 10)
+                    else:
+                        self.timer = pygame.time.get_ticks()
 
-        if self.officeLocation == 1:
-            if pygame.time.get_ticks() - self.timer > 2000:
-                self.change_location_id(App, 2)
+            case 10:
+                if pygame.time.get_ticks() - self.timer > 3000:
+                    self.change_location_id(App, 101, secondPositionId=1)
 
+            case 101:
+                if pygame.time.get_ticks() - self.timer > 3000 and App.objects.open_monitor_button.inCamera:
+                    self.change_location_id(App, 104)
         
                 

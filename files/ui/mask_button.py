@@ -16,9 +16,6 @@ class MaskButton:
 
         self.animation(App)
 
-        if self.quitting_mask and App.objects.office.animatronic_in_office:
-            App.animations.darkness.fade_screen()
-
     def animation(self, App):
         if not self.inMask:
             if self.mask_button.mouse_hovered:

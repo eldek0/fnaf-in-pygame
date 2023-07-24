@@ -11,7 +11,7 @@ class Office:
 
         # Audio variables
         self.attempting_right_vent_interact, self.attempting_left_vent_interact  = False, False
-        self.attempting_hallway_interact = False
+        self.attempting_hallway_interact, self.attempting_esteregg_interact = False, False
 
         self.animatronic_in_office = False
 
@@ -38,6 +38,8 @@ class Office:
             self.right_vent_interact(App)
 
             self.left_vent_interact(App)
+
+            self.easter_egg_interact(App)
 
         if draw:
             # Draw vent buttons
@@ -75,8 +77,10 @@ class Office:
 
         # Mouse click 
         mouse_click = pygame.mouse.get_pressed()
-        if App.mouse_hitbox.colliderect(hallway_rect):
-            if mouse_click[0]:
+        ctrl_clicked = pygame.key.get_pressed()[pygame.K_LCTRL]
+        
+        if App.mouse_hitbox.colliderect(hallway_rect) or ctrl_clicked:
+            if mouse_click[0] or ctrl_clicked:
                 if not (self.occupied_office[0] or App.objects.battery.charge == 0):
                     self.hallway_on = True
                     if not self.attempting_hallway_interact:
@@ -90,7 +94,7 @@ class Office:
 
                 self.attempting_hallway_interact = True
                 
-        if not App.mouse_hitbox.colliderect(hallway_rect) or not mouse_click[0]:
+        elif not (App.mouse_hitbox.colliderect(hallway_rect) and (mouse_click[0] or ctrl_clicked)) or self.attempting_right_vent_interact or self.attempting_left_vent_interact:
             self.hallway_on = False
             if self.attempting_hallway_interact:
                 App.assets.buzzlight.stop()
@@ -164,6 +168,22 @@ class Office:
                 self.left_vent_on = False
             self.attempting_left_vent_interact = False
 
+    def easter_egg_interact(self, App):
+        """ Freddy's nose """
+        ester_egg_rect = pygame.Rect(145 + self.position[0], 190, 10, 10)
+
+        mouse_click = pygame.mouse.get_pressed()
+        colliding_rect = App.mouse_hitbox.colliderect(ester_egg_rect)
+
+        if colliding_rect:
+            if mouse_click[0]:
+                if not self.attempting_esteregg_interact:
+                    App.assets.boop.play()
+                    self.attempting_esteregg_interact = True
+
+        if not colliding_rect or not mouse_click[0]:
+            self.attempting_esteregg_interact = False
+
     def desk_update(self, App):
         App.animations.desk.position = [ self.position[0] + 560,App.dimentions[1] - 435]
         App.animations.desk.update(App.surface)
@@ -175,9 +195,10 @@ class Office:
         withered_bonnie = App.objects.Animatronics.animatronics_in_game["WITHERED_BONNIE"]
 
         if ToyFreddy.locationId == 101:
-            return App.assets.flash_offices[3]
-        elif ToyFreddy.locationId == 101 and True==True: #TODO
-            return App.assets.flash_offices[4]
+            if ToyFreddy.secondPositionId == 1:
+                return App.assets.flash_offices[3]
+            elif ToyFreddy.secondPositionId == 1:
+                return App.assets.flash_offices[4]
         elif withered_freddy.locationId == 101:
             return App.assets.flash_offices[6]
         elif ToyChica.locationId == 101:
@@ -207,7 +228,7 @@ class Office:
 
     def animatronic_detect(self, App):
         self.toy_bunny(App)
-        animatrionic_in_hall = ["WITHERED_FREDDY", "WITHERED_BONNIE"]
+        animatrionic_in_hall = ["WITHERED_FREDDY", "WITHERED_BONNIE", "WITHERED_CHICA", "TOY_FREDDY"]
 
         for i in range(len(animatrionic_in_hall)):
             self.withered_animatrionic_in_office(App, animatrionic_in_hall[i], i)
@@ -250,7 +271,7 @@ class Office:
 
             if App.animations.darkness._isFading:
                 if not ToyBunny._prepare_to_jumpscare:
-                    ToyBunny.change_location_id(App, ToyBunny.rest_room)
+                    ToyBunny.change_location_id(App, 0)
                 self.animatronic_in_office = False
                 self.bunny_moving_left = True
                 self.bunny_x_position =self.bunny_x_initial_position
@@ -264,12 +285,13 @@ class Office:
             self.animatronic_in_office = True
         
 
+        time_to_put_mask = 2500
         if self.animatronic_in_office and animatrionic.locationId == 104:
             self.office_sprite = App.assets.animatrionic_offices[office_sprite_id]
-            if pygame.time.get_ticks() - self.timer > 1000:
+            if pygame.time.get_ticks() - self.timer > time_to_put_mask:
                 if not App.objects.mask_button.inMask or App.objects.mask_button.quitting_mask:
                     animatrionic.prepare_to_jumpscare()
-                    if pygame.time.get_ticks() - self.timer > 1000 + 2000:
+                    if pygame.time.get_ticks() - self.timer > time_to_put_mask + 2000:
                         App.animations.darkness.fade_screen()
                 else:
                     if pygame.time.get_ticks() - self.timer > 1000 + 4000:
@@ -279,4 +301,4 @@ class Office:
                 self.office_sprite = App.assets.office1
                 self.animatronic_in_office = False
                 if not animatrionic._prepare_to_jumpscare:
-                    animatrionic.change_location_id(App, animatrionic.rest_room)
+                    animatrionic.change_location_id(App, 0)

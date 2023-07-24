@@ -38,7 +38,7 @@ class MusicBoxButton:
 
     def run_time(self, App):
         if not self.times_out:
-            if pygame.time.get_ticks() - self.timer > 100 and not self.charge == 0 and not self.recharging_time:
+            if pygame.time.get_ticks() - self.timer > 1000 and not self.charge == 0 and not self.recharging_time:
                 self.charge -= 1
                 self.timer = pygame.time.get_ticks()
 
@@ -48,12 +48,13 @@ class MusicBoxButton:
                 self.times_out = True
 
     def recharge_time(self):
-        if not self.recharging_time:
-            self.timer = pygame.time.get_ticks()
-            self.recharging_time = True
-
-        if self.recharging_time:
-            if pygame.time.get_ticks() - self.timer > 300:
-                if not self.charge >= 21:
-                    self.charge += 1
+        if not self.times_out:
+            if not self.recharging_time:
                 self.timer = pygame.time.get_ticks()
+                self.recharging_time = True
+
+            if self.recharging_time:
+                if pygame.time.get_ticks() - self.timer > 300:
+                    if not self.charge >= 21:
+                        self.charge += 1
+                    self.timer = pygame.time.get_ticks()
