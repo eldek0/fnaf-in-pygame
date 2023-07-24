@@ -7,6 +7,8 @@ from files.animatronics.toy_chica import ToyChica
 from files.animatronics.withered_freddy import WitheredFreddy
 from files.animatronics.withered_bonnie import WitheredBonnie
 from files.animatronics.withered_chica import WitheredChica
+from files.animatronics.foxy import Foxy
+from files.animatronics.mangle import Mangle
 
 class AnimatronicsMain:
     def __init__(self, App):
@@ -18,7 +20,9 @@ class AnimatronicsMain:
             "TOY_CHICA":ToyChica(App, activated=True),
             "WITHERED_BONNIE":WitheredBonnie(App, activated=True),
             "WITHERED_CHICA":WitheredChica(App, activated=True),
-            "WITHERED_FREDDY":WitheredFreddy(App, activated=True)
+            "WITHERED_FREDDY":WitheredFreddy(App, activated=True),
+            "FOXY":Foxy(App, activated=True),
+            "MANGLE":Mangle(App, activated=True)
         }
         self.gameOver = False
 

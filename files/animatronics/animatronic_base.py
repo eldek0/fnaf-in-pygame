@@ -34,6 +34,11 @@ class Animatronic(ABC):
         self.time_with_mask = 0
         self.rest_room = rest_room # The room where the animatrionic rests after a screamer attempt
 
+        # Aveliable animatrionics with the same office position (101)
+        self.aveliable_office_positions = [
+            ["FOXY", "WITHERED_BONNIE"], ["FOXY", "MANGLE"]
+        ]
+
     def update(self, App):
         if self.activated:
             if self._jumpscare:
@@ -64,7 +69,7 @@ class Animatronic(ABC):
                 self.change_location_id(App, self.rest_room)
 
     def jumpscare_time(self, App, time=3000):
-        self.change_location_id(App, -1)
+        self.change_location_id(App, -1, force=True)
         if pygame.time.get_ticks() - self.timer > time and App.objects.open_monitor_button.inCamera:
             self.jumpscare(App)
 
@@ -88,13 +93,23 @@ class Animatronic(ABC):
         animatrionics_in_room = App.objects.Animatronics.every_animatrionic_position[room_location]
         if animatrionics_in_room == []: return True
 
-        for animatrionic in animatrionics_in_room:
-            if animatrionic.name_id != self.name_id:
-                return False
+        if not room_location == 101: # It's not office hallway
+            for animatrionic in animatrionics_in_room:
+                if animatrionic.name_id != self.name_id:
+                    return False
 
-        return True
+            return True
+        else:                       # It's office hallway
+            for animatrionic in animatrionics_in_room:
+                for aveliable_pos in self.aveliable_office_positions:
+                    found_match = False
+                    for name in aveliable_pos:
+                        if animatrionic.name_id == name:
+                            return True
+            
+            return False
 
-    def change_location_id(self ,App, room_location:int, secondPositionId=1):
+    def change_location_id(self ,App, room_location:int, secondPositionId=1, force=False):
         changing_to_location = room_location
         changing_to_position = secondPositionId
         self._previous_movement = [changing_to_location, self.locationId, changing_to_position, self.secondPositionId]
@@ -103,9 +118,9 @@ class Animatronic(ABC):
             self._wait_movement_time(force=True)
         else:
             self._wait_movement_time()
-        
-        # If it's empty or its room 0
-        if self.verify_free_room(App, room_location) or changing_to_location == 0:
+        print("free-room: ", self.verify_free_room(App, room_location))
+        # If it's empty or its forced
+        if  force or self.verify_free_room:
             if not self.changing_position:
                 self.locationId = changing_to_location
                 self.secondPositionId = changing_to_position

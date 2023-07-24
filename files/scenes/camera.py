@@ -65,12 +65,17 @@ class Camera:
 
         self.camera_ui(App)
 
+        # UI static
         if self.static_animation:
             App.animations.static_anim_2.update(App.surface)
             if App.animations.static_anim_2.sprite_num == len(App.animations.static_anim_2.sprites) - 1:
                 App.animations.static_anim_2.sprite_num = 0
                 self.static_animation = False
                 App.assets.camera_sound_1.play()
+
+        if self.occupied_camera[self.inCameraRoom-1]:
+            signal_intr = App.assets.camera_signal_interrupted
+            App.surface.blit(signal_intr, (App.dimentions[0]/2 - signal_intr.get_rect().width / 2, 80))
 
         #pygame.draw.rect(App.surface, (255,0,0), self.flash_light_hitbox)
 
@@ -164,7 +169,7 @@ class Camera:
                 self.label_to_draw = App.assets.right_air_vent_label
             case 7:
                 self.camera_basics(App, App.assets.main_hall_cameras,6, lambda:self.main_hall(App))
-                self.label_to_draw = App.assets.main_hall_label
+                self.label_to_draw = App.assets.main_hall_label    
             case 8:
                 self.camera_basics(App, App.assets.partsnservice_cameras,7, lambda:self.parts_n_service(App))
                 self.label_to_draw = App.assets.parts_n_service_label
@@ -181,8 +186,26 @@ class Camera:
                 self.camera_basics(App, App.assets.kids_cove_cameras,11, lambda:self.kids_cove(App))
                 self.label_to_draw = App.assets.kids_cove_label
 
-        if App.objects.music_box.charge != 0:
+        if App.objects.music_box.charge != 0 and not self.occupied_camera[self.inCameraRoom-1]:
             self.room_music()
+
+        mangle = App.objects.Animatronics.animatronics_in_game["MANGLE"]
+        if mangle.locationId == self.inCameraRoom:
+            self.mangle_cameras_position(App)
+
+    def mangle_cameras_position(self, App):
+        match self.inCameraRoom:
+            case 1:
+                App.surface.blit(App.assets.mangle_cameras[0], (700 + self.cameras_x_position[self.inCameraRoom - 1], 0))
+            case 2:
+                App.surface.blit(App.assets.mangle_cameras[3], (0 + self.cameras_x_position[self.inCameraRoom - 1], 0))
+            case 7:
+                dims = App.assets.mangle_cameras[0].get_rect()
+                App.surface.blit(App.assets.mangle_cameras[0], (300 + self.cameras_x_position[self.inCameraRoom - 1], App.dimentions[1] - dims.height))
+            case 10:
+                App.surface.blit(App.assets.mangle_cameras[1], (0 + self.cameras_x_position[self.inCameraRoom - 1], 0))
+            case 11:
+                App.surface.blit(App.assets.mangle_cameras[2], (300 + self.cameras_x_position[self.inCameraRoom - 1], 0))
 
     def room_music(self):
         # Puppet music
@@ -246,129 +269,132 @@ class Camera:
     # Normal
     def party_room_1(self, App):
         """ 1 """
-        toy_chica_location = App.objects.Animatronics.animatronics_in_game["TOY_CHICA"]
-        if toy_chica_location.locationId == 1:
+        toy_chica = App.objects.Animatronics.animatronics_in_game["TOY_CHICA"]
+        if toy_chica.locationId == 1:
             return 0, 3
-        elif toy_chica_location.locationId != 1:
+        elif toy_chica.locationId != 1:
             return 0, 1
     # Normal
     def party_room_2(self, App):
         """ 2 """
-        toy_bunny_location = App.objects.Animatronics.animatronics_in_game["TOY_BUNNY"]
-        withered_chica_location = App.objects.Animatronics.animatronics_in_game["WITHERED_CHICA"]
+        toy_bunny = App.objects.Animatronics.animatronics_in_game["TOY_BUNNY"]
+        withered_chica = App.objects.Animatronics.animatronics_in_game["WITHERED_CHICA"]
         
-        if toy_bunny_location.locationId == 2 and withered_chica_location.locationId != 2:
+        if toy_bunny.locationId == 2 and withered_chica.locationId != 2:
             return 0, 2
-        if toy_bunny_location.locationId != 2 and withered_chica_location.locationId == 2:
+        elif toy_bunny.locationId != 2 and withered_chica.locationId == 2:
             return 3, 4
-        elif toy_bunny_location.locationId != 2 and withered_chica_location.locationId != 2:
+        elif toy_bunny.locationId != 2 and withered_chica.locationId != 2:
             return 0, 1
     # Normal
     def party_room_3(self, App):
         """ 3 """
-        withered_freddy_location = App.objects.Animatronics.animatronics_in_game["WITHERED_FREDDY"]
-        toy_bunny_location = App.objects.Animatronics.animatronics_in_game["TOY_BUNNY"]
-        if toy_bunny_location.locationId == 3 and withered_freddy_location.locationId != 3:
+        withered_freddy = App.objects.Animatronics.animatronics_in_game["WITHERED_FREDDY"]
+        toy_bunny = App.objects.Animatronics.animatronics_in_game["TOY_BUNNY"]
+        if toy_bunny.locationId == 3 and withered_freddy.locationId != 3:
             return 0, 2
-        elif toy_bunny_location.locationId != 3 and withered_freddy_location.locationId == 3:
+        elif toy_bunny.locationId != 3 and withered_freddy.locationId == 3:
             return 3, 4
-        elif toy_bunny_location.locationId != 3:
+        elif toy_bunny.locationId != 3:
             return 0, 1
 
     # Normal
     def party_room_4(self, App):
         """ 4 """
-        toy_bunny_location = App.objects.Animatronics.animatronics_in_game["TOY_BUNNY"]
-        toy_chica_location = App.objects.Animatronics.animatronics_in_game["TOY_CHICA"]
-        withered_chica_location = App.objects.Animatronics.animatronics_in_game["WITHERED_CHICA"]
+        toy_bunny = App.objects.Animatronics.animatronics_in_game["TOY_BUNNY"]
+        toy_chica = App.objects.Animatronics.animatronics_in_game["TOY_CHICA"]
+        withered_chica = App.objects.Animatronics.animatronics_in_game["WITHERED_CHICA"]
 
-        if toy_bunny_location.locationId == 4 and toy_chica_location.locationId != 4 and withered_chica_location.locationId != 4:
+        if toy_bunny.locationId == 4 and toy_chica.locationId != 4 and withered_chica.locationId != 4:
             return 2, 3
-        elif toy_bunny_location.locationId != 4 and toy_chica_location.locationId == 4 and withered_chica_location != 4:
+        elif toy_bunny.locationId != 4 and toy_chica.locationId == 4 and withered_chica != 4:
             return 0, 4
-        elif toy_chica_location.locationId != 4 and toy_bunny_location.locationId != 4 and withered_chica_location == 4:
+        elif toy_chica.locationId != 4 and toy_bunny.locationId != 4 and withered_chica == 4:
             return 0, 5
-        elif toy_chica_location.locationId != 4 and toy_bunny_location.locationId != 4:
+        elif toy_chica.locationId != 4 and toy_bunny.locationId != 4:
             return 0, 1
 
     # Normal
     def left_air_vent(self, App):
         """ 5 """
-        toy_chica_location = App.objects.Animatronics.animatronics_in_game["TOY_CHICA"]
-        if toy_chica_location.locationId == 5:
+        toy_chica = App.objects.Animatronics.animatronics_in_game["TOY_CHICA"]
+        if toy_chica.locationId == 5:
             return 0, 4
-        elif toy_chica_location.locationId != 5:
+        elif toy_chica.locationId != 5:
             return 0, 1
 
     # Normal
     def right_air_vent(self, App):
         """ 6 """
-        toy_bunny_location = App.objects.Animatronics.animatronics_in_game["TOY_BUNNY"]
-        withered_chica_location = App.objects.Animatronics.animatronics_in_game["WITHERED_CHICA"]
+        toy_bunny = App.objects.Animatronics.animatronics_in_game["TOY_BUNNY"]
+        withered_chica = App.objects.Animatronics.animatronics_in_game["WITHERED_CHICA"]
+        mangle = App.objects.Animatronics.animatronics_in_game["MANGLE"]
 
-        if toy_bunny_location.locationId == 6 and withered_chica_location.locationId != 6:
+        if toy_bunny.locationId == 6 and withered_chica.locationId != 6 and mangle.locationId != 6:
             return 0, 2
-        elif toy_bunny_location.locationId != 6 and withered_chica_location.locationId == 6:
+        elif toy_bunny.locationId != 6 and withered_chica.locationId == 6 and mangle.locationId != 6:
             return 0, 3
-        elif toy_bunny_location.locationId != 6 and withered_chica_location.locationId != 6:
+        elif toy_bunny.locationId != 6 and withered_chica.locationId != 6 and mangle.locationId == 6:
+            return 0, 4
+        elif toy_bunny.locationId != 6 and withered_chica.locationId != 6 and mangle.locationId != 6:
             return 0, 1
     # Wider
     def main_hall(self, App):
         """ 7 """
-        toy_chica_location = App.objects.Animatronics.animatronics_in_game["TOY_CHICA"]
-        withered_freddy_location = App.objects.Animatronics.animatronics_in_game["WITHERED_FREDDY"]
-        withered_bonnie_location = App.objects.Animatronics.animatronics_in_game["WITHERED_BONNIE"]
+        toy_chica = App.objects.Animatronics.animatronics_in_game["TOY_CHICA"]
+        withered_freddy = App.objects.Animatronics.animatronics_in_game["WITHERED_FREDDY"]
+        withered_bonnie = App.objects.Animatronics.animatronics_in_game["WITHERED_BONNIE"]
 
-        if toy_chica_location.locationId == 7 and withered_freddy_location.locationId != 7 and withered_bonnie_location.locationId != 7:
+        if toy_chica.locationId == 7 and withered_freddy.locationId != 7 and withered_bonnie.locationId != 7:
             return 4, 5
-        elif toy_chica_location.locationId != 7 and withered_freddy_location.locationId == 7 and withered_bonnie_location.locationId != 7:
+        elif toy_chica.locationId != 7 and withered_freddy.locationId == 7 and withered_bonnie.locationId != 7:
             return 0, 3
-        elif toy_chica_location.locationId != 7 and withered_freddy_location.locationId != 7 and withered_bonnie_location.locationId == 7:
+        elif toy_chica.locationId != 7 and withered_freddy.locationId != 7 and withered_bonnie.locationId == 7:
             return 0, 2
-        elif toy_chica_location.locationId != 7 and withered_freddy_location.locationId != 7 and withered_bonnie_location.locationId != 7: 
+        elif toy_chica.locationId != 7 and withered_freddy.locationId != 7 and withered_bonnie.locationId != 7: 
             return 0, 1
     # Wider
     def parts_n_service(self, App):
         """ 8 - First goes withered bonnie, then chica and finally freddy"""
-        withered_freddy_location = App.objects.Animatronics.animatronics_in_game["WITHERED_FREDDY"]
-        withered_bonnie_location = App.objects.Animatronics.animatronics_in_game["WITHERED_BONNIE"]
-        withered_chica_location = App.objects.Animatronics.animatronics_in_game["WITHERED_CHICA"]
+        withered_freddy = App.objects.Animatronics.animatronics_in_game["WITHERED_FREDDY"]
+        withered_bonnie = App.objects.Animatronics.animatronics_in_game["WITHERED_BONNIE"]
+        withered_chica = App.objects.Animatronics.animatronics_in_game["WITHERED_CHICA"]
 
-        if withered_freddy_location.locationId == 8 and withered_bonnie_location.locationId == 8 and withered_chica_location.locationId == 8:
+        if withered_freddy.locationId == 8 and withered_bonnie.locationId == 8 and withered_chica.locationId == 8:
             return 0, 1
-        if withered_freddy_location.locationId == 8 and withered_bonnie_location.locationId != 8 and withered_chica_location.locationId == 8:
+        if withered_freddy.locationId == 8 and withered_bonnie.locationId != 8 and withered_chica.locationId == 8:
             return 0, 2
-        elif withered_freddy_location.locationId == 8 and withered_bonnie_location.locationId != 8 and withered_chica_location.locationId != 8:
+        elif withered_freddy.locationId == 8 and withered_bonnie.locationId != 8 and withered_chica.locationId != 8:
             return 0, 3
-        elif withered_freddy_location.locationId != 8 and withered_bonnie_location.locationId != 8 and withered_chica_location.locationId != 8:
+        elif withered_freddy.locationId != 8 and withered_bonnie.locationId != 8 and withered_chica.locationId != 8:
             return 0, 5
     # Wider
     def show_stage(self, App):
         """ 9 """
 
-        toy_freddy_location = App.objects.Animatronics.animatronics_in_game["TOY_FREDDY"]
-        toy_bunny_location = App.objects.Animatronics.animatronics_in_game["TOY_BUNNY"]
-        toy_chica_location = App.objects.Animatronics.animatronics_in_game["TOY_CHICA"]
+        toy_freddy = App.objects.Animatronics.animatronics_in_game["TOY_FREDDY"]
+        toy_bunny = App.objects.Animatronics.animatronics_in_game["TOY_BUNNY"]
+        toy_chica = App.objects.Animatronics.animatronics_in_game["TOY_CHICA"]
 
-        if toy_bunny_location.locationId == 9 and toy_freddy_location.locationId == 9 and toy_chica_location.locationId == 9:
+        if toy_bunny.locationId == 9 and toy_freddy.locationId == 9 and toy_chica.locationId == 9:
             return 0, 1
 
-        elif toy_bunny_location.locationId != 9 and toy_freddy_location.locationId == 9 and toy_chica_location.locationId == 9:
+        elif toy_bunny.locationId != 9 and toy_freddy.locationId == 9 and toy_chica.locationId == 9:
             return 2, 3
 
-        elif toy_bunny_location.locationId != 9 and toy_freddy_location.locationId == 9 and toy_chica_location.locationId != 9:
+        elif toy_bunny.locationId != 9 and toy_freddy.locationId == 9 and toy_chica.locationId != 9:
             return 4, 5
 
-        elif toy_bunny_location.locationId != 9 and toy_freddy_location.locationId != 9 and toy_chica_location.locationId != 9:
+        elif toy_bunny.locationId != 9 and toy_freddy.locationId != 9 and toy_chica.locationId != 9:
             return 6, None
 
     # Wider
     def game_area(self, App):
         """ 10 """
 
-        toy_freddy_location = App.objects.Animatronics.animatronics_in_game["TOY_FREDDY"]
+        toy_freddy = App.objects.Animatronics.animatronics_in_game["TOY_FREDDY"]
         
-        if toy_freddy_location.locationId == 10:
+        if toy_freddy.locationId == 10:
             return 0, 4
         else:
             return 0, 1
@@ -385,4 +411,8 @@ class Camera:
     # Wider
     def kids_cove(self, App):
         """ 12 """
-        return 0, 1
+        mangle = App.objects.Animatronics.animatronics_in_game["MANGLE"]
+        if mangle.locationId == 12:
+            return 0, 2
+        elif mangle.locationId != 12:
+            return 0, 1

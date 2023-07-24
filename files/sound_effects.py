@@ -30,3 +30,14 @@ def sounds_effects_updater(App):
 
     if App.objects.Animatronics.animatronics_in_game["PUPPET"].activated:
         App.objects.music_box.run_time(App)
+
+    mangle = App.objects.Animatronics.animatronics_in_game["MANGLE"]
+    if mangle.locationId == -1:
+        pygame.mixer.Channel(6).set_volume(1)
+    elif (App.objects.camera.inCameraRoom == mangle.locationId and App.objects.open_monitor_button.inCamera and not mangle.changing_position):
+        pygame.mixer.Channel(6).set_volume(0.4)
+    else:
+        pygame.mixer.Channel(6).set_volume(0)
+    
+    if not pygame.mixer.Channel(6).get_busy():
+        pygame.mixer.Channel(6).play(App.assets.mangle_noise)

@@ -46,6 +46,7 @@ class App:
 		pygame.mixer.Channel(3).set_volume(1) # Sounds effects
 		pygame.mixer.Channel(4).set_volume(1) # Mask breathing
 		pygame.mixer.Channel(5).set_volume(1) # Stare at an animatrionic
+		pygame.mixer.Channel(6).set_volume(1) # Mangle noise
 
 		self.TIME_PLAYING = pygame.time.get_ticks()
 

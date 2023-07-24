@@ -90,7 +90,7 @@ class import_images:
 		self.camera_map = pygame.image.load("sprites/cameras/utils/Map.png").convert_alpha()
 		self.camera_borderline = pygame.image.load("sprites/cameras/utils/Border.png").convert_alpha()
 		self.camera_record_sprite = pygame.image.load("sprites/cameras/utils/1.png").convert_alpha()
-
+		self.camera_signal_interrupted = pygame.image.load("sprites/cameras/utils/2.png").convert_alpha()
 		# Camera room buttons and labels
 
 		self.room_button_unselected, self.room_button_selected = pygame.image.load("sprites/cameras/Labels/13.png").convert(), pygame.image.load("sprites/cameras/Labels/14.png").convert()
@@ -246,6 +246,16 @@ class import_images:
 			)
 		self.flashlight_label = pygame.image.load(f"sprites/battery/label.png").convert_alpha()
 
+		# Mangle cameras position
+		self.mangle_cameras = []
+		for i in range(4):
+			self.mangle_cameras.append(
+				pygame.image.load(f"sprites/cameras/mangle/{i}.png").convert_alpha()
+			)
+
+		# Mangle in office
+		self.office_mangle = pygame.image.load(f"sprites/office/inside/7.png").convert_alpha()
+
 		# -- Jumpscares Animation -- 
 		# Puppet jumpscare animation
 		self.puppet_screamer_animation = []
@@ -301,6 +311,20 @@ class import_images:
 				pygame.image.load(f"sprites/jumpscares/withered_chica/{i+1}.png").convert_alpha()
 			)
 
+		# Foxy jumpscare animation
+		self.foxy_screamer_animation = []
+		for i in range(14):
+			self.foxy_screamer_animation.append(
+				pygame.image.load(f"sprites/jumpscares/withered_foxy/{i+1}.png").convert_alpha()
+			)
+
+		# Mangle jumpscare animation
+		self.mangle_screamer_animation = []
+		for i in range(16):
+			self.mangle_screamer_animation.append(
+				pygame.image.load(f"sprites/jumpscares/mangle/{i+1}.png").convert_alpha()
+			)
+
 		# Get crops from cropped images
 		import_images.cropped_images(self)
 		
@@ -333,6 +357,8 @@ class import_images:
 		self.boop = pygame.mixer.Sound("sounds/PartyFavorraspyPart_AC01__3.wav")
 
 		self.xScream1 = pygame.mixer.Sound("sounds/Xscream2.wav")
+
+		self.mangle_noise = pygame.mixer.Sound("sounds/elec_garble.wav")
 
 	def fonts(self):
 		self.Arial = "fonts/arial.ttf"

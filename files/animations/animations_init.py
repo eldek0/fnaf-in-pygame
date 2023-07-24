@@ -23,3 +23,5 @@ class animations_init:
         self.withered_freddy_jump = SpritesAnimation(sprites=App.assets.withered_freddy_screamer_animation, position=(0, 0), frame_wait=2)
         self.withered_bonnie_jump = SpritesAnimation(sprites=App.assets.withered_bonnie_screamer_animation, position=(0, 0), frame_wait=2)
         self.withered_chica_jump = SpritesAnimation(sprites=App.assets.withered_chica_screamer_animation, position=(0, 0), frame_wait=2)
+        self.foxy_jump = SpritesAnimation(sprites=App.assets.foxy_screamer_animation, position=(0,0), frame_wait=2)
+        self.mangle_jump = SpritesAnimation(sprites=App.assets.mangle_screamer_animation, position=(0,0), frame_wait=2)

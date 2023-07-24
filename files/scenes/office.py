@@ -48,12 +48,20 @@ class Office:
 
             self.desk_update(App)
 
+            self.animatrionics_in_office(App)
+
         self.animatronic_detect(App)
         if self.hallway_animatrionic_fade:
             App.animations.darkness.update(App)
             if not App.animations.darkness.is_animating:
                 print("desactivated")
                 self.hallway_animatrionic_fade = False
+
+    def animatrionics_in_office(self, App):
+        mangle = App.objects.Animatronics.animatronics_in_game["MANGLE"]
+
+        if mangle.locationId == -1 and not mangle._jumpscare:
+            App.surface.blit(App.assets.office_mangle, (400 + self.position[0], 0))
 
     def camera_movement(self, App):
         move_left, move_right = pygame.Rect(0, 0, 300, App.dimentions[1]), pygame.Rect(App.dimentions[0] - 300, 0, 300, App.dimentions[1])
@@ -71,17 +79,21 @@ class Office:
         hallway_rect = pygame.Rect(self.position[0] + 560, 200, 490, 370)
 
         if self.hallway_on:
-            self.office_sprite = self.get_flashed_office(App)
+            self.office_sprite = App.assets.flash_offices[self.get_flashed_office(App)]
         else:
             self.office_sprite = App.assets.office1
+
+        hallway_collide = App.mouse_hitbox.colliderect(hallway_rect)
 
         # Mouse click 
         mouse_click = pygame.mouse.get_pressed()
         ctrl_clicked = pygame.key.get_pressed()[pygame.K_LCTRL]
         
-        if App.mouse_hitbox.colliderect(hallway_rect) or ctrl_clicked:
+        cannot_interact = self.occupied_office[0] or App.objects.battery.charge == 0
+
+        if hallway_collide or ctrl_clicked:
             if mouse_click[0] or ctrl_clicked:
-                if not (self.occupied_office[0] or App.objects.battery.charge == 0):
+                if not cannot_interact:
                     self.hallway_on = True
                     if not self.attempting_hallway_interact:
                         App.assets.buzzlight.play()
@@ -94,11 +106,12 @@ class Office:
 
                 self.attempting_hallway_interact = True
                 
-        elif not (App.mouse_hitbox.colliderect(hallway_rect) and (mouse_click[0] or ctrl_clicked)) or self.attempting_right_vent_interact or self.attempting_left_vent_interact:
-            self.hallway_on = False
-            if self.attempting_hallway_interact:
-                App.assets.buzzlight.stop()
+        if (not hallway_collide or not mouse_click[0]) and not ctrl_clicked:
             self.attempting_hallway_interact = False
+            self.hallway_on = False
+
+        if not self.hallway_on and not self.left_vent_on and not self.right_vent_on:
+            App.assets.buzzlight.stop()
 
     def right_vent_interact(self, App):
         right_vent_rect = pygame.Rect(1450 + self.position[0], 390, 55, 60)
@@ -128,11 +141,12 @@ class Office:
                 self.attempting_right_vent_interact = True
 
         if not colliding_button or not mouse_click[0]:
-            if self.right_vent_on:
-                App.assets.buzzlight.stop()
-                self.office_sprite = App.assets.office1
-                self.right_vent_on = False
+            self.right_vent_on = False
             self.attempting_right_vent_interact = False
+
+        if not self.right_vent_on and not self.left_vent_on and not self.hallway_on:
+            App.assets.buzzlight.stop()
+            self.office_sprite = App.assets.office1
             
     def left_vent_interact(self, App):
         left_vent_rect = pygame.Rect(125 + self.position[0], 390, 55, 60)
@@ -162,11 +176,12 @@ class Office:
                 self.attempting_left_vent_interact = True
 
         if not colliding_button or not mouse_click[0]:
-            if self.left_vent_on:
-                App.assets.buzzlight.stop()
-                self.office_sprite = App.assets.office1
-                self.left_vent_on = False
+            self.left_vent_on = False
             self.attempting_left_vent_interact = False
+
+        if not self.left_vent_on and not self.hallway_on and not self.right_vent_on:
+            App.assets.buzzlight.stop()
+            self.office_sprite = App.assets.office1
 
     def easter_egg_interact(self, App):
         """ Freddy's nose """
@@ -193,29 +208,38 @@ class Office:
         ToyChica = App.objects.Animatronics.animatronics_in_game["TOY_CHICA"]
         withered_freddy = App.objects.Animatronics.animatronics_in_game["WITHERED_FREDDY"]
         withered_bonnie = App.objects.Animatronics.animatronics_in_game["WITHERED_BONNIE"]
+        foxy = App.objects.Animatronics.animatronics_in_game["FOXY"]
+        mangle = App.objects.Animatronics.animatronics_in_game["MANGLE"]
 
         if ToyFreddy.locationId == 101:
             if ToyFreddy.secondPositionId == 1:
-                return App.assets.flash_offices[3]
+                return 3
             elif ToyFreddy.secondPositionId == 1:
-                return App.assets.flash_offices[4]
+                return 4
         elif withered_freddy.locationId == 101:
-            return App.assets.flash_offices[6]
+            return 6
         elif ToyChica.locationId == 101:
-            return App.assets.flash_offices[1]
+            return 1
         elif withered_bonnie.locationId == 101:
-            if withered_bonnie.secondPositionId == 1:
-                return App.assets.flash_offices[5]
-            elif withered_bonnie.secondPositionId == 1:
-                # If foxy is in the hallway
-                return App.assets.flash_offices[9]
+            if foxy.locationId == 101:
+                return 9
+            return 5
+        elif mangle.locationId == 101:
+            if foxy.locationId == 101:
+                return 10
+            return 2
+        elif foxy.locationId == 101:
+            return 7
         
-        return App.assets.flash_offices[0]
+        return 0
 
     def get_flashed_right_vent(self, App):
         ToyBunny = App.objects.Animatronics.animatronics_in_game["TOY_BUNNY"]
+        Mangle = App.objects.Animatronics.animatronics_in_game["MANGLE"]
         if ToyBunny.locationId == 102:
             return App.assets.right_vent_offices[1]
+        elif Mangle.locationId == 102:
+            return App.assets.right_vent_offices[2]
 
         return App.assets.right_vent_offices[0]
 
@@ -271,7 +295,7 @@ class Office:
 
             if App.animations.darkness._isFading:
                 if not ToyBunny._prepare_to_jumpscare:
-                    ToyBunny.change_location_id(App, 0)
+                    ToyBunny.change_location_id(App, 0, force=True)
                 self.animatronic_in_office = False
                 self.bunny_moving_left = True
                 self.bunny_x_position =self.bunny_x_initial_position
@@ -301,4 +325,4 @@ class Office:
                 self.office_sprite = App.assets.office1
                 self.animatronic_in_office = False
                 if not animatrionic._prepare_to_jumpscare:
-                    animatrionic.change_location_id(App, 0)
+                    animatrionic.change_location_id(App, 0, force=True)
