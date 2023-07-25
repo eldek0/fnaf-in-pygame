@@ -17,13 +17,13 @@ class AnimatronicsMain:
         self.animatronics_in_game = {
             "TOY_FREDDY":ToyFreddy(App, activated=False), 
             "PUPPET":Puppet(App, activated=False),
-            "TOY_BUNNY":ToyBunny(App, activated=True),
+            "TOY_BUNNY":ToyBunny(App, activated=False),
             "TOY_CHICA":ToyChica(App, activated=False),
             "WITHERED_BONNIE":WitheredBonnie(App, activated=False),
             "WITHERED_CHICA":WitheredChica(App, activated=False),
             "WITHERED_FREDDY":WitheredFreddy(App, activated=False),
             "FOXY":Foxy(App, activated=False),
-            "MANGLE":Mangle(App, activated=False),
+            "MANGLE":Mangle(App, activated=True),
             "BALOON_BOY":BaloonBoy(App, activated=False)
         }
         self.gameOver = False
@@ -77,7 +77,7 @@ class AnimatronicsMain:
             if jumpscared_:
                 self.jumpscared()
 
-        #self.console_animatrionic_position_log()
+        self.console_animatrionic_position_log()
 
     def game_over(self):
         self.gameOver = True

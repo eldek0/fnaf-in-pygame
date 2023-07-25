@@ -11,35 +11,35 @@ class Mangle(Animatronic):
         
         match self.locationId:
             case 12:
-                if pygame.time.get_ticks() - self.timer > 5000:
+                if pygame.time.get_ticks() - self.timer > 10000:
                     self.change_location_id(App, 11, forced=True)
 
             case 11:
-                if pygame.time.get_ticks() - self.timer > 5000:
+                if pygame.time.get_ticks() - self.timer > 10000:
                     self.change_location_id(App, 10, forced=True)
 
             case 10:
-                if pygame.time.get_ticks() - self.timer > 5000:
+                if pygame.time.get_ticks() - self.timer > 10000:
                     self.change_location_id(App, 7, forced=True)
 
             case 7:
-                if pygame.time.get_ticks() - self.timer > 5000:
+                if pygame.time.get_ticks() - self.timer > 10000:
                     self.change_location_id(App, 1, forced=True)
 
             case 1: # rare
-                if pygame.time.get_ticks() - self.timer > 5000:
+                if pygame.time.get_ticks() - self.timer > 10000:
                     self.change_location_id(App, 2, forced=True)
 
             case 2:
-                if pygame.time.get_ticks() - self.timer > 5000:
+                if pygame.time.get_ticks() - self.timer > 10000:
                     self.change_location_id(App, 6, forced=True)
 
             case 6:
-                if pygame.time.get_ticks() - self.timer > 5000:
+                if pygame.time.get_ticks() - self.timer > 10000:
                     self.change_location_id(App, 101)
 
             case 101:
-                if pygame.time.get_ticks() - self.timer > 5000:
+                if pygame.time.get_ticks() - self.timer > 10000:
                     self.change_location_id(App, 102)
 
             case 102:
@@ -52,5 +52,5 @@ class Mangle(Animatronic):
                     self.change_location_id(App, 12)
 
             case -1:
-                if pygame.time.get_ticks() - self.timer > self.time_to_scare and App.objects.open_monitor_button.inCamera:
+                if pygame.time.get_ticks() - self.timer > self.time_to_scare:
                     self.jumpscare(App)

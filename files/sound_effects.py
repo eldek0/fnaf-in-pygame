@@ -56,7 +56,7 @@ def sounds_effects_updater(App):
 
         # Scary ambiance
         position = App.objects.Animatronics.every_animatrionic_position
-        if pygame.time.get_ticks() - App.ambiance_sound > 25000:
+        if pygame.time.get_ticks() - App.game.ambiance_sound > 25000:
             if position[101] != [] or position[103] != [] or position[102] != []:
                 App.assets.scary_ambiance.play()
-                App.ambiance_sound = pygame.time.get_ticks()
+                App.game.ambiance_sound = pygame.time.get_ticks()

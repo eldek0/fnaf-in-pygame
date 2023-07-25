@@ -292,7 +292,7 @@ class Office:
 
             if pygame.time.get_ticks() - self.timer > 3000 and (not App.objects.mask_button.inMask or App.animations.darkness._isFading):
                 App.animations.darkness.fade_screen()
-                ToyBunny.prepare_to_jumpscare()
+                ToyBunny.prepare_to_jumpscare(App)
 
             if App.objects.mask_button.inMask:  
                 if pygame.time.get_ticks() - self.hallway_animatrionic_coyote_time > 6000:
@@ -324,7 +324,7 @@ class Office:
             self.office_sprite = App.assets.animatrionic_offices[office_sprite_id]
             if pygame.time.get_ticks() - self.timer > time_to_put_mask:
                 if not App.objects.mask_button.inMask or App.objects.mask_button.quitting_mask:
-                    animatrionic.prepare_to_jumpscare()
+                    animatrionic.prepare_to_jumpscare(App)
                     if pygame.time.get_ticks() - self.timer > time_to_put_mask + 2000:
                         App.animations.darkness.fade_screen()
                 else:

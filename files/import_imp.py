@@ -328,6 +328,29 @@ class import_images:
 				pygame.image.load(f"sprites/jumpscares/mangle/{i+1}.png").convert_alpha()
 			)
 
+		# -- MENU UTILITIES -- 
+		self.background_menu = []
+		for i in range(4):
+			self.background_menu.append(
+				pygame.image.load(f"sprites/menu/misc/{i}.png").convert()
+			)
+
+		# Labels
+		self.fnaf_title = pygame.image.load("sprites/menu/logos/2.png").convert_alpha()
+		self.scott_credits = pygame.image.load("sprites/menu/logos/1.png").convert_alpha()
+		self.option_selected = pygame.image.load("sprites/menu/logos/3.png").convert_alpha()
+		self.new_game_option = pygame.image.load("sprites/menu/logos/5.png").convert_alpha()
+		self.continue_option = pygame.image.load("sprites/menu/logos/6.png").convert_alpha()
+
+		self.newspaper = pygame.image.load("sprites/menu/help_wanted.png").convert()
+		self.loading_icon = pygame.image.load("sprites/menu/logos/0.png").convert_alpha()
+
+		self.nights_12am = []
+		for i in range(7):
+			self.nights_12am.append(
+				pygame.image.load(f"sprites/menu/nights/{i+1}.png").convert()
+			)
+
 		# Get crops from cropped images
 		import_images.cropped_images(self)
 		
@@ -343,7 +366,9 @@ class import_images:
 		self.camera_sound_1 = pygame.mixer.Sound("sounds/blip3.wav")
 		self.camera_sound_2 = pygame.mixer.Sound("sounds/computer_digital.wav")
 
-		self.background_music = pygame.mixer.music.load("sounds/In_The_Depths.wav")
+		self.background_music = "sounds/In_The_Depths.wav"
+		
+		self.background_music_menu = "sounds/The_Sand_Temple_Loop_G.wav"
 
 		self.fan_sound = pygame.mixer.Sound("sounds/fansound.wav")
 

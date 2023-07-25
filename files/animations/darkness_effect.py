@@ -1,7 +1,7 @@
 import pygame
 
 class DarknessAnimation:
-    def __init__(self, App, position:tuple, frame_wait=1,fading_time=3000,time_until_fade=16000, fade=True):
+    def __init__(self, App, position:tuple, frame_wait=1,fading_time=3000,time_until_fade=16000, fade=True, reversed_=False):
         self.frame_wait:int = frame_wait
         self.position:tuple = position
         self.sprite_num:int = 0
@@ -15,14 +15,21 @@ class DarknessAnimation:
         self.black_screen = pygame.Surface((App.dimentions[0], App.dimentions[1]))
         self.is_animating = False
         self.timer = pygame.time.get_ticks()
-        self.fade_alpha = 255
         self._isFading = False
         self.time_until_fade = time_until_fade
         self.hold_black_screen_time = 750
+        self.reversed = reversed_
+        if self.reversed:
+            self.fade_alpha = 1
+        else:
+            self.fade_alpha = 255
         
     def reset(self):
         print("resetting darkness")
-        self.fade_alpha = 255
+        if self.reversed:
+            self.fade_alpha = 1
+        else:
+            self.fade_alpha = 255
         self.is_animating = False
         self._isFading = False
         self.sprite_num = 0
@@ -31,15 +38,26 @@ class DarknessAnimation:
         if self._fade:
             # Hold black screen some time
             if pygame.time.get_ticks() - self.timer <= self.hold_black_screen_time:
-                self.fade_alpha = 255
+                if self.reversed:
+                    self.fade_alpha = 1
+                else:
+                    self.fade_alpha = 255
             else:
                 min_time = self.hold_black_screen_time
                 max_time = self.hold_black_screen_time + self.fading_time
                 steps = max_time // (self.fade_alpha)
                 if pygame.time.get_ticks() - self.timer >= min_time + steps:
-                    self.fade_alpha -= 1
-                if self.fade_alpha <= 15:
-                    self.reset()
+                    if self.reversed:
+                        self.fade_alpha += 1
+                    else:
+                        self.fade_alpha -= 1
+
+                if self.reversed:
+                    if self.fade_alpha >= 255:
+                        self.reset()
+                else:
+                    if self.fade_alpha <= 15:
+                        self.reset()
 
         else:
             self.reset()

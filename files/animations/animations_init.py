@@ -15,6 +15,8 @@ class animations_init:
 
         self.darkness = DarknessAnimation(App=App, position=(0,0), frame_wait=3, fading_time=15000)
 
+        self.darkness_reversed = DarknessAnimation(App=App, position=(0,0), frame_wait=0, fading_time=15000, time_until_fade=0, reversed_=True)
+
         # -- Jumpscares --
         self.puppet_jump = SpritesAnimation(sprites=App.assets.puppet_screamer_animation, position=(0, 0), frame_wait=2)
         self.toy_bunny_jump = SpritesAnimation(sprites=App.assets.toy_bunny_screamer_animation, position=(0, 0), frame_wait=2)

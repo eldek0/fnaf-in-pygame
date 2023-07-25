@@ -6,6 +6,8 @@ import files.draw as dr
 from files.import_imp import import_images
 from files.animations.animations_init import animations_init
 from files.game_objects import GameObjects
+from files.game_controller import Game
+from files.menu.menu import Menu
 
 
 class App:
@@ -31,27 +33,14 @@ class App:
 		# DeltaTime variables
 		self.prev_time, self.now_time = 0, 0
 
-		# Game animations
+		# Animations
 		self.animations = animations_init(self)
 
-		# Game object initialize
-		self.objects = GameObjects(self)
+		# Will be initialized in menu
+		self.objects:GameObjects = None
+		self.game:Game = None
 
-		self.gameOver = False
-		pygame.mixer.set_num_channels(16)
-		pygame.mixer.music.set_volume(0.5)
-		pygame.mixer.music.play(-1)
-		pygame.mixer.Channel(1).set_volume(0.8)
-		pygame.mixer.Channel(2).set_volume(0) # Music box
-		pygame.mixer.Channel(3).set_volume(1) # Sounds effects
-		pygame.mixer.Channel(4).set_volume(1) # Mask breathing
-		pygame.mixer.Channel(5).set_volume(1) # Stare at an animatrionic
-		pygame.mixer.Channel(6).set_volume(1) # Mangle noise
-		pygame.mixer.Channel(7).set_volume(1) # Baloon boy laugh
-		pygame.mixer.Channel(8).set_volume(1) # Jumpscare scream
-
-		self.TIME_PLAYING = pygame.time.get_ticks()
-		self.ambiance_sound = pygame.time.get_ticks()
+		self.menu = Menu(self)
 
 	def get_deltatime(self):
 		self.now_time = time.time()
@@ -84,7 +73,7 @@ class App:
 				self.playing = False
 				
 	def update(self, events):
-		self.surface.fill((105,105,105))
+		self.surface.fill((0,0,0))
 
 		# Draw on screen
 		dr.Draw(self)
