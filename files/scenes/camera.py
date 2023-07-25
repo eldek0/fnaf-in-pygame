@@ -270,9 +270,12 @@ class Camera:
     def party_room_1(self, App):
         """ 1 """
         toy_chica = App.objects.Animatronics.animatronics_in_game["TOY_CHICA"]
-        if toy_chica.locationId == 1:
+        withered_bonnie = App.objects.Animatronics.animatronics_in_game["WITHERED_BONNIE"]
+        if toy_chica.locationId == 1 and withered_bonnie.locationId != 1:
             return 0, 3
-        elif toy_chica.locationId != 1:
+        elif toy_chica.locationId != 1 and withered_bonnie.locationId == 1:
+            return 0, 2
+        elif toy_chica.locationId != 1 and withered_bonnie.locationId != 1:
             return 0, 1
     # Normal
     def party_room_2(self, App):
@@ -319,11 +322,14 @@ class Camera:
         """ 5 """
         toy_chica = App.objects.Animatronics.animatronics_in_game["TOY_CHICA"]
         baloon_boy = App.objects.Animatronics.animatronics_in_game["BALOON_BOY"]
-        if toy_chica.locationId == 5 and baloon_boy.locationId != 5:
+        withered_bonnie = App.objects.Animatronics.animatronics_in_game["WITHERED_BONNIE"]
+        if toy_chica.locationId == 5 and baloon_boy.locationId != 5 and withered_bonnie.locationId != 5:
             return 0, 4
-        elif toy_chica.locationId != 5 and baloon_boy.locationId == 5:
+        elif toy_chica.locationId != 5 and baloon_boy.locationId == 5 and withered_bonnie.locationId != 5:
             return 0, 3
-        elif toy_chica.locationId != 5 and baloon_boy.locationId != 5:
+        elif toy_chica.locationId != 5 and baloon_boy.locationId != 5 and withered_bonnie.locationId == 5:
+            return 0, 2
+        elif toy_chica.locationId != 5 and baloon_boy.locationId != 5 and withered_bonnie.locationId != 5:
             return 0, 1
 
     # Normal

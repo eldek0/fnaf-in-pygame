@@ -17,16 +17,17 @@ class AnimatronicsMain:
         self.animatronics_in_game = {
             "TOY_FREDDY":ToyFreddy(App, activated=False), 
             "PUPPET":Puppet(App, activated=False),
-            "TOY_BUNNY":ToyBunny(App, activated=False),
+            "TOY_BUNNY":ToyBunny(App, activated=True),
             "TOY_CHICA":ToyChica(App, activated=False),
-            "WITHERED_BONNIE":WitheredBonnie(App, activated=True),
+            "WITHERED_BONNIE":WitheredBonnie(App, activated=False),
             "WITHERED_CHICA":WitheredChica(App, activated=False),
             "WITHERED_FREDDY":WitheredFreddy(App, activated=False),
             "FOXY":Foxy(App, activated=False),
-            "MANGLE":Mangle(App, activated=True),
-            "BALOON_BOY":BaloonBoy(App, activated=True)
+            "MANGLE":Mangle(App, activated=False),
+            "BALOON_BOY":BaloonBoy(App, activated=False)
         }
         self.gameOver = False
+        self.being_jumpscared = False
 
         self.update_animatrionic_position()
 
@@ -63,15 +64,23 @@ class AnimatronicsMain:
         keys = list(self.animatronics_in_game.keys())
         # Update the animatrionics
         for j in range(len(self.animatronics_in_game)):
-            self.update_animatrionic_position()
             animatronic = self.animatronics_in_game[keys[j]]
-            animatronic.name_id = keys[j]
-            animatronic.update(App)
-            game_over= animatronic.isGameOver()
-            if game_over:
+            if not self.being_jumpscared:
+                self.update_animatrionic_position()
+                animatronic.name_id = keys[j]
+                animatronic.update(App)
+            animatronic.jumpscare_update(App)
+            game_over_ = animatronic.isGameOver()
+            jumpscared_ = animatronic.isBeingJumpscared()
+            if game_over_:
                 self.game_over()
+            if jumpscared_:
+                self.jumpscared()
 
-        self.console_animatrionic_position_log()
+        #self.console_animatrionic_position_log()
 
     def game_over(self):
         self.gameOver = True
+
+    def jumpscared(self):
+        self.being_jumpscared = True

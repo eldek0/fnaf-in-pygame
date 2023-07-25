@@ -39,7 +39,7 @@ class Animatronic(ABC):
             ["FOXY", "WITHERED_BONNIE"], ["FOXY", "MANGLE"]
         ]
 
-    def update(self, App):
+    def jumpscare_update(self, App):
         if self.activated:
             if self._jumpscare:
                 self.jumpscare_animation.update(App.surface)
@@ -47,16 +47,14 @@ class Animatronic(ABC):
                 App.objects.mask_button.quitting_mask = True
                 if self.jumpscare_animation.sprite_num == len(self.jumpscare_animation.sprites) - 1:
                     self._gameOver = True
-                    
-            else:
+
+    def update(self, App):
+        if self.activated:      
+            if not self._jumpscare:
                 if self._prepare_to_jumpscare:
                     self.jumpscare_time(App)
                 else:
                     self.movement(App)
-                    """if not self.changing_position or self.name_id == "PUPPET":
-                        self.movement(App)
-                    else:
-                        self.change_location_id(App, self._previous_movement[0], self._previous_movement[2])"""
 
             # Static to camera
             if self.changing_position:
@@ -70,7 +68,7 @@ class Animatronic(ABC):
                 self.change_location_id(App, self.rest_room)
 
     def jumpscare_time(self, App, time=3000):
-        self.change_location_id(App, -1, force=True)
+        self.change_location_id(App, -1, forced=True)
         if pygame.time.get_ticks() - self.timer > time and App.objects.open_monitor_button.inCamera:
             self.jumpscare(App)
 
@@ -117,14 +115,15 @@ class Animatronic(ABC):
         changing_to_position = secondPositionId
         self._previous_movement = [changing_to_location, self.locationId, changing_to_position, self.secondPositionId]
 
-        if (changing_to_location == 104 or self.change_location_id == -1):
+        if (changing_to_location == 104 or changing_to_location == -1 or changing_to_location == 0):
+            self.changing_position = True
             self._wait_movement_time(force=True)
         else:
             self._wait_movement_time()
         is_free_room = self.verify_free_room(App, room_location)
         print(f"free-room ({self.name_id}): {is_free_room}, force: {forced}")
         # If it's empty or its forced
-        if  forced or is_free_room:
+        if forced or is_free_room:
             if not self.changing_position:
                 self.locationId = changing_to_location
                 self.secondPositionId = changing_to_position
@@ -164,9 +163,21 @@ class Animatronic(ABC):
 
     def jumpscare(self, App):
         if not self._jumpscare:
-            App.assets.xScream1.play()
+            self.stop_sounds()
+            pygame.mixer.Channel(8).play(App.assets.xScream1)
             self._jumpscare = True
+
+    def stop_sounds(self):
+        pygame.mixer.Channel(1).set_volume(0)
+        pygame.mixer.Channel(2).set_volume(0) # Music box
+        pygame.mixer.Channel(3).set_volume(0) # Sounds effects
+        pygame.mixer.Channel(4).set_volume(0) # Mask breathing
+        pygame.mixer.Channel(5).set_volume(0) # Stare at an animatrionic
+        pygame.mixer.Channel(6).set_volume(0) # Mangle noise
+        pygame.mixer.Channel(7).set_volume(0) # Baloon boy laugh
 
     def prepare_to_jumpscare(self):
         self.timer = pygame.time.get_ticks()
         self._prepare_to_jumpscare = True
+
+    def isBeingJumpscared(self): return self._jumpscare

@@ -6,6 +6,7 @@ class Foxy(Animatronic):
     def __init__(self, App, activated:int=True):
         super().__init__(activated, 8, App.animations.foxy_jump, 8)
         self._light = 100
+        
 
     def movement(self, App): 
         match self.locationId:
@@ -15,7 +16,7 @@ class Foxy(Animatronic):
 
             case 101:
                 if not App.objects.office.hallway_on:
-                    self._light -= 0.01
+                    self._light -= 0.05
                     if self._light < 0:
                         self._light = 0
                 else:
@@ -27,5 +28,8 @@ class Foxy(Animatronic):
                     self.jumpscare(App)
 
                 # "Get scared"
-                if pygame.time.get_ticks() - self.timer > 10000:
+                if pygame.time.get_ticks() - self.timer > 20000:
                     self.change_location_id(App, 8, forced=True)
+                    self._light = 100
+                
+                print(self._light)

@@ -8,6 +8,7 @@ class Mangle(Animatronic):
         self.time_to_scare = random.randint(12000, 30000)
 
     def movement(self, App):
+        
         match self.locationId:
             case 12:
                 if pygame.time.get_ticks() - self.timer > 5000:

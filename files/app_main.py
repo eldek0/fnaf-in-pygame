@@ -38,7 +38,7 @@ class App:
 		self.objects = GameObjects(self)
 
 		self.gameOver = False
-
+		pygame.mixer.set_num_channels(16)
 		pygame.mixer.music.set_volume(0.5)
 		pygame.mixer.music.play(-1)
 		pygame.mixer.Channel(1).set_volume(0.8)
@@ -48,6 +48,7 @@ class App:
 		pygame.mixer.Channel(5).set_volume(1) # Stare at an animatrionic
 		pygame.mixer.Channel(6).set_volume(1) # Mangle noise
 		pygame.mixer.Channel(7).set_volume(1) # Baloon boy laugh
+		pygame.mixer.Channel(8).set_volume(1) # Jumpscare scream
 
 		self.TIME_PLAYING = pygame.time.get_ticks()
 		self.ambiance_sound = pygame.time.get_ticks()
@@ -68,7 +69,7 @@ class App:
 			# Frames per second
 			self.game_fps = self.clock.tick(self.frames_per_second)
 
-			#pygame.display.set_caption(str(round(self.clock.get_fps(), 2)) ) # Win's name
+			pygame.display.set_caption(str(round(self.clock.get_fps(), 2)) ) # Win's name
 
 			#DeltaTime
 			self.get_deltatime()

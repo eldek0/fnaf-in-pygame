@@ -8,7 +8,6 @@ class WitheredFreddy(Animatronic):
     def movement(self, App):
         withered_chica = App.objects.Animatronics.animatronics_in_game["WITHERED_CHICA"]
         withered_bonnie = App.objects.Animatronics.animatronics_in_game["WITHERED_BONNIE"]
-
         match self.locationId:
             case 8:
                 if pygame.time.get_ticks() - self.timer > 5000:

@@ -61,7 +61,7 @@ class Office:
         mangle = App.objects.Animatronics.animatronics_in_game["MANGLE"]
         baloon_boy = App.objects.Animatronics.animatronics_in_game["BALOON_BOY"]
 
-        if mangle.locationId == -1 and not mangle._jumpscare:
+        if mangle.locationId == -1 and not mangle.isBeingJumpscared():
             App.surface.blit(App.assets.office_mangle, (400 + self.position[0], 0))
 
         if baloon_boy.locationId == -1:

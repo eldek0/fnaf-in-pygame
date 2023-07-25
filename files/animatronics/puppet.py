@@ -8,6 +8,7 @@ class Puppet(Animatronic):
 
     def movement(self, App):
         if App.objects.music_box.charge == 0:
+            self.secondPositionId = 3
             if self.secondPositionId == 1:
                 self.change_location_id(App, 11, secondPositionId=2)
                     

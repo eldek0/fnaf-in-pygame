@@ -5,7 +5,6 @@ from files.animatronics.animatronic_base import Animatronic
 class BaloonBoy(Animatronic):
     def __init__(self, App, activated:int=True):
         super().__init__(activated, 10, None, 10)
-        self.time_to_scare = random.randint(12000, 30000)
 
     def movement(self, App):
         match self.locationId:
