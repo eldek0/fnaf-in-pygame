@@ -61,6 +61,11 @@ class Camera:
 
         App.animations.static_anim_1.update(App.surface)
 
+        App.animations.static_stripes_animation.update(App)
+        App.animations.static_stripes_animation2.update(App)
+        App.animations.static_stripes_animation3.update(App)
+        App.animations.static_stripes_animation4.update(App)
+        
         App.surface.blit(App.assets.camera_borderline, (0, 0))
 
         self.camera_ui(App)

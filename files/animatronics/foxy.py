@@ -16,11 +16,12 @@ class Foxy(Animatronic):
 
             case 101:
                 if not App.objects.office.hallway_on:
-                    self._light -= 0.05 * (self.aggresivity/12)
-                    if self._light < 0:
-                        self._light = 0
+                    if not App.objects.office.occupied_office[0]:
+                        self._light -= 0.21 * (self.aggresivity/10)
+                        if self._light < 0:
+                            self._light = 0
                 else:
-                    self._light += 0.1 * (self.aggresivity/6)
+                    self._light += 0.20 * (self.aggresivity/3)
                     if self._light > 100:
                         self._light = 100
 
@@ -28,8 +29,6 @@ class Foxy(Animatronic):
                     self.jumpscare(App)
 
                 # "Get scared"
-                if pygame.time.get_ticks() - self.timer > 20000:
-                    self.change_location_id(App, 8, forced=True)
+                if pygame.time.get_ticks() - self.timer > 50000:
+                    self.change_location_id(App, 8)
                     self._light = 100
-                
-                print(self._light)

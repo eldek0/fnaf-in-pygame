@@ -109,18 +109,26 @@ class Animatronic(ABC):
                     return False
 
             return True
-        else:                       # It's office hallway
+        else:
+                                  # It's office hallway
+            found_match = False
             for animatrionic in animatrionics_in_room:
                 for aveliable_pos in self.aveliable_office_positions:
                     found_match = False
                     for name in aveliable_pos:
                         if animatrionic.name_id == name:
-                            return True
-            
+                            found_match = True
+                        else:
+                            break
+
+                    if found_match: break
+                if found_match: break
+
+            if found_match and self.name_id in aveliable_pos:
+                return True
             return False
 
     def change_location_id(self ,App, room_location:int, secondPositionId=1, forced=False):
-        print(forced)
         changing_to_location = room_location
         changing_to_position = secondPositionId
         self._previous_movement = [changing_to_location, self.locationId, changing_to_position, self.secondPositionId]
@@ -132,6 +140,9 @@ class Animatronic(ABC):
             self._wait_movement_time()
         is_free_room = self.verify_free_room(App, room_location)
         print(f"free-room ({self.name_id}): {is_free_room}, force: {forced}")
+        print("its me! it works!")
+        print(App.objects.Animatronics.every_animatrionic_position[room_location])
+        print(self.aveliable_office_positions)
         # If it's empty or its forced
         if forced or is_free_room:
             if not self.changing_position:
@@ -142,6 +153,7 @@ class Animatronic(ABC):
         else:
             # We need more time !
             self.timer = pygame.time.get_ticks()
+            self.changing_position = False
 
     def _wait_movement_time(self, force=False):
         """ Will provoke the static while moving """

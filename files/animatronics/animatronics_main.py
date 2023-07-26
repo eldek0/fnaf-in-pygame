@@ -32,7 +32,7 @@ class AnimatronicsMain:
         self.update_animatrionic_position()
 
     def console_animatrionic_position_log(self):
-        os.system("cls")
+        #os.system("cls")
         keys = list(self.every_animatrionic_position.keys())
         for i in range(len(self.every_animatrionic_position)):
             animatrionics_in_position = self.every_animatrionic_position[keys[i]]
@@ -77,7 +77,7 @@ class AnimatronicsMain:
             if jumpscared_:
                 self.jumpscared()
 
-        #self.console_animatrionic_position_log()
+        self.console_animatrionic_position_log()
 
     def game_over(self):
         self.gameOver = True

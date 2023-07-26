@@ -1,6 +1,5 @@
 from files.animations.sprites_animation import SpritesAnimation
 from files.animations.darkness_effect import DarknessAnimation
-from files.animations.static_stripe_animation import StaticStripesAnimation
 
 class animations_init:
     def __init__(self, App):
@@ -17,14 +16,6 @@ class animations_init:
         self.darkness = DarknessAnimation(App=App, position=(0,0), frame_wait=3, fading_time=15000)
 
         self.darkness_reversed = DarknessAnimation(App=App, position=(0,0), frame_wait=0, fading_time=15000, time_until_fade=0, reversed_=True)
-
-        self.static_stripes_animation = StaticStripesAnimation(App=App)
-
-        self.static_stripes_animation2 = StaticStripesAnimation(App=App, time_to_appear=5000, speed_frame=2, random_sprites_range=(2, 4), alpha=20)
-
-        self.static_stripes_animation3 = StaticStripesAnimation(App=App, time_to_appear=3700, speed_frame=5, random_sprites_range=(3, 4), alpha=10)
-
-        self.static_stripes_animation4 = StaticStripesAnimation(App=App, time_to_appear=3700, speed_frame=6, random_sprites_range=(4, 4), alpha=40)
 
         # -- Jumpscares --
         self.puppet_jump = SpritesAnimation(sprites=App.assets.puppet_screamer_animation, position=(0, 0), frame_wait=2)

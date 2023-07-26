@@ -380,6 +380,16 @@ class import_images:
 		# Telephone mute
 		self.telephone_mute = pygame.image.load(f"sprites/office/utils/20.png").convert_alpha()
 
+		self.lost_screen = pygame.image.load(f"sprites/menu/nights/10.png").convert()
+		self.game_over = pygame.image.load(f"sprites/menu/nights/11.png").convert_alpha()
+
+		self.static_stripes = []
+		for i in range(5):
+			self.static_stripes.append(
+				pygame.image.load(f"sprites/cameras/static/s2/{i+1}.png").convert_alpha()
+			)
+			
+
 		# Get crops from cropped images
 		import_images.cropped_images(self)
 		
@@ -425,10 +435,14 @@ class import_images:
 
 		self.joy_sound = pygame.mixer.Sound("sounds/yay.wav")
 
+		self.game_lost_static = pygame.mixer.Sound("sounds/static2.wav")
+
+		self.game_lost_static2 = pygame.mixer.Sound("sounds/ComputerInteriorLong.wav")
+
 		self.telephone_audios = []
 		for i in range(6):
 			self.telephone_audios.append(
-				pygame.mixer.Sound(f"sounds/call{i+1}b.wav")
+				f"sounds/call{i+1}b.wav"
 			)
 
 	def fonts(self):

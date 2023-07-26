@@ -12,7 +12,8 @@ class Telephone:
 
     def update(self, App, inNight:int):
         if not self.call_started and pygame.time.get_ticks() - self.timer > 3000:
-            pygame.mixer.Channel(9).play(App.assets.telephone_audios[inNight - 1])
+            pygame.mixer.music.load(App.assets.telephone_audios[inNight - 1])
+            pygame.mixer.music.play(1)
             self.call_started = True
 
         if self.call_started and not self.muted:
@@ -24,4 +25,4 @@ class Telephone:
             if self.mute_button.mouse_hovered:
                 if mouse[0]:
                     self.muted = True
-                    pygame.mixer.Channel(9).stop()
+                    pygame.mixer.music.unload()

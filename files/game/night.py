@@ -31,6 +31,8 @@ class NightAIChanger:
                 self.night_4(App)
             case 5:
                 self.night_5(App)
+            case 6:
+                self.night_6(App)
             case _:
                 print("No AI configured!")
 
@@ -153,3 +155,16 @@ class NightAIChanger:
             case 4: pass
 
             case 5: pass
+
+    def night_6(self, App):
+
+        self.animatronics_ai["WITHERED_FREDDY"] = 10
+        self.animatronics_ai["WITHERED_BONNIE"] = 10
+        self.animatronics_ai["WITHERED_CHICA"] = 10
+        self.animatronics_ai["FOXY"] = 10
+        self.animatronics_ai["BALOON_BOY"] = 0
+        self.animatronics_ai["TOY_FREDDY"] = 0
+        self.animatronics_ai["TOY_BONNIE"] = 0
+        self.animatronics_ai["TOY_CHICA"] = 0
+        self.animatronics_ai["MANGLE"] = 0
+        self.animatronics_ai["PUPPET"] = 0

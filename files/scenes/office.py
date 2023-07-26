@@ -2,7 +2,7 @@ import pygame
 
 class Office:
     def __init__(self, App):
-        self.position = [0, 0]
+        self.position = [-240, 0]
         self.move_speed = 10
         self.office_sprite = App.assets.office1
         self.right_vent_button, self.left_vent_button = App.assets.right_vent_button_off, App.assets.left_vent_button_off

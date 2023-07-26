@@ -3,6 +3,7 @@ import pygame
 import files.utils as f
 from files.game.sound_effects import sounds_effects_updater
 from files.menu.night_beaten_animation import NightBeatenAnimation
+from files.menu.you_lost_animation import YouLostAnimation
 from files.game.night import NightAIChanger
 from files.game.telephone import Telephone
 
@@ -17,9 +18,13 @@ class Game:
 
         self.night_beaten = False
 
+        self.you_lost = False
+
         self.sounds_shutted = True
 
         self.beaten_animation = NightBeatenAnimation(App)
+
+        self.you_lost_animation = YouLostAnimation(App)
 
         self.ai_updater = NightAIChanger(App)
 
@@ -28,10 +33,8 @@ class Game:
     def set_audio(self, App):
         self.sounds_shutted = False
         pygame.mixer.set_num_channels(16)
-        pygame.mixer.music.load(App.assets.background_music)
 
-        pygame.mixer.music.set_volume(0.5)
-        pygame.mixer.music.play(-1)
+        pygame.mixer.music.set_volume(1)
         pygame.mixer.Channel(1).set_volume(0.8)
         pygame.mixer.Channel(2).set_volume(0) # Music box
         pygame.mixer.Channel(3).set_volume(1) # Sounds effects
@@ -40,7 +43,6 @@ class Game:
         pygame.mixer.Channel(6).set_volume(1) # Mangle noise
         pygame.mixer.Channel(7).set_volume(1) # Baloon boy laugh
         pygame.mixer.Channel(8).set_volume(1) # Jumpscare scream
-        pygame.mixer.Channel(9).set_volume(1) # Telephone guy
 
     def stop_sounds(self):
         self.sounds_shutted = True
@@ -52,7 +54,6 @@ class Game:
         pygame.mixer.Channel(5).set_volume(0) # Stare at an animatrionic
         pygame.mixer.Channel(6).set_volume(0) # Mangle noise
         pygame.mixer.Channel(7).set_volume(0) # Baloon boy laugh
-        pygame.mixer.Channel(9).set_volume(0) # Telephone guy
 
     def updater(self, App):
         self.game_update(App)
@@ -61,27 +62,36 @@ class Game:
                 App.animations.darkness_reversed.fade_screen()
             self.night_beaten = True
 
-        if (App.objects.Animatronics.being_jumpscared or self.night_beaten) and not self.sounds_shutted:
-            self.stop_sounds()
-            pygame.mixer.Channel(1).set_volume(1)
-            pygame.mixer.Channel(1).play(App.assets.clock_chimes)
-
         if self.night_beaten:
+            if not self.sounds_shutted:
+                pygame.mixer.Channel(1).set_volume(1)
+                pygame.mixer.Channel(1).play(App.assets.clock_chimes)
             App.animations.darkness_reversed.update(App)
             self.beaten_animation.update(App)
 
-        self.ai_updater.update(App, App.menu.inNight)
-        self.telephone.update(App, App.menu.inNight)
+        if App.objects.Animatronics.being_jumpscared and not self.sounds_shutted:
+            self.stop_sounds()
+
+        if not self.night_beaten and self.sounds_shutted and self.you_lost:
+            self.you_lost_animation.update(App)
+
+        if not self.night_beaten and not self.you_lost:
+            self.ai_updater.update(App, App.menu.inNight)
+            self.telephone.update(App, App.menu.inNight)
+
+        if not pygame.mixer.music.get_busy():
+            pygame.mixer.music.load(App.assets.background_music)
+            pygame.mixer.music.play(-1)
 
     def game_update(self, App):
-        if not self.night_beaten:
+        if not self.night_beaten and not self.you_lost:
             if not self.audio_set:
                 self.set_audio(App)
                 self.audio_set = True
 
             if App.objects.Animatronics.gameOver and not pygame.mixer.Channel(8).get_busy():
-                App.animations.static_anim_1.alpha = 255
-                App.animations.static_anim_1.update(App.surface)
+                # YOU LOST
+                self.you_lost = True
             else:
                 # Background
                 App.objects.camera.timers_update(App)

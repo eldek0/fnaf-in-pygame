@@ -6,7 +6,7 @@ from files.animations.animations_init import animations_init
 
 class Menu:
     def __init__(self, App): 
-        self.option:bool = True
+        self.option:bool = True # What button is the mouse hovering
 
         new_game_dims = App.assets.new_game_option.get_rect()
         self.new_game_button = Button((80, 370), (new_game_dims.width, new_game_dims.height), App.assets.new_game_option)
@@ -16,11 +16,14 @@ class Menu:
 
         self.background_id = 0
         self.random_value_number = random.randint(500, 2000)
+        self.random_value_number2 = random.randint(200, 800)
         self.return_normal_background = False
 
         self.objects_alpha = 0
 
-        self.start_state = 7
+        self.background_alpha = 255
+
+        self.start_state = 0
 
         self.timer = pygame.time.get_ticks()
 
@@ -28,17 +31,33 @@ class Menu:
 
         self.start_game = False
 
+        self.static_with_change = False
+
+        self.played_once = False
+
         pygame.mixer.music.load(App.assets.background_music_menu)
         pygame.mixer.music.play(-1)
+
+    def static_animation(self, App):
+        App.animations.static_anim_1.update(App.surface)
+        App.animations.static_anim_1.alpha = 100
+
+        # More static animation
+        App.animations.static_stripes_animation.update(App)
+        App.animations.static_stripes_animation2.update(App)
+        App.animations.static_stripes_animation3.update(App)
+        App.animations.static_stripes_animation4.update(App)
 
     def update(self, App):
         if self.start_state == 0:
             self.change_background(App)
 
         if self.start_state < 2:
+            
+            App.assets.background_menu[self.background_id].set_alpha(self.background_alpha)
             App.surface.blit(App.assets.background_menu[self.background_id], (0,0))
-            App.animations.static_anim_1.update(App.surface)
-            App.animations.static_anim_1.alpha = 100
+            
+            self.static_animation(App)
 
             # Labels
             App.surface.blit(App.assets.fnaf_title, (80, 30))
@@ -53,9 +72,12 @@ class Menu:
                 if mouse[0]:
                     self.start_state = 1
             elif self.continue_button.mouse_hovered:
-                self.option = False
-                if mouse[0]:
-                    self.start_state = 1
+                if self.played_once:
+                    self.option = False
+                    if mouse[0]:
+                        pygame.mixer.music.unload()
+                        self.start_state = 2
+                        self.objects_alpha = 255
 
             if self.option:
                 App.surface.blit(App.assets.option_selected, (28, 373))
@@ -64,6 +86,17 @@ class Menu:
 
         if self.start_state > 0:
             self.begin_game(App)
+
+        self.static(App)
+
+    def static(self, App):
+        if self.static_with_change:
+            App.animations.static_anim_2.update(App.surface)
+
+            if App.animations.static_anim_2.sprite_num == len(App.animations.static_anim_2.sprites) - 1:
+                App.animations.static_anim_2.sprite_num = 0
+                App.assets.camera_sound_1.play()
+                self.static_with_change = False
 
     def change_background(self, App):
         if pygame.time.get_ticks() - self.timer > self.random_value_number:
@@ -75,6 +108,11 @@ class Menu:
         if pygame.time.get_ticks() - self.timer > 60 and self.return_normal_background:
             self.background_id = 0
             self.return_normal_background = False
+
+        if pygame.time.get_ticks() - self.timer > self.random_value_number2:
+            choice = random.randint(0, 10)
+            self.background_alpha = 24*choice
+            self.random_value_number2 = random.randint(200, 800)
 
     def begin_game(self, App):
         if self.start_state == 1:
@@ -144,6 +182,7 @@ class Menu:
 
             case 7:
                 self.start_game = True
+                self.played_once = True
                 App.animations = animations_init(App)
                 App.objects = GameObjects(App)
                 App.game = Game(App)

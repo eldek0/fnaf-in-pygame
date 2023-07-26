@@ -25,13 +25,13 @@ class GameTimer:
 
     def draw_night_label(self, App):
         App.surface.blit(App.assets.night_label, (self.position[0] - 66 + 20, self.position[1] + 5))
-        App.surface.blit(App.assets.numbers[self.night], (self.position[0] + 35 + 20, self.position[1] - 3 + 5))
+        App.surface.blit(App.assets.numbers[self.night], (self.position[0] + 35 + 20, self.position[1] - 3 + 2))
 
     def draw_time(self, App):
         x_extra = 0
         reversed_time = str(self.time)[::-1]
         for number in reversed_time:
             App.surface.blit(App.assets.numbers[int(number)], (self.position[0] - x_extra, self.position[1] + 40))
-            x_extra += App.assets.numbers[int(number)].get_width() + 7
+            x_extra += App.assets.numbers[int(number)].get_width()
 
         App.surface.blit(App.assets.am_label, (self.position[0] + 33, self.position[1] + 44))

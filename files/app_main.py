@@ -8,11 +8,14 @@ from files.animations.animations_init import animations_init
 from files.game.game_objects import GameObjects
 from files.game.game_controller import Game
 from files.menu.menu import Menu
+from files.save.save import save, read
 
 
 class App:
 	def __init__(self, initial_dimentions=(1024, 768), caption="Five Nights at Freddy's - made with pygame"):
 		self.playing = True
+
+		data = read(self)
 
 		# Surface init
 		pygame.init() # Starts the pygame timer
@@ -42,6 +45,10 @@ class App:
 
 		self.menu = Menu(self)
 
+		if data:
+			self.menu.inNight = data["Night"]
+			self.menu.played_once = data["Played"]
+
 	def get_deltatime(self):
 		self.now_time = time.time()
 		self.deltaTime = self.now_time - self.prev_time
@@ -58,7 +65,7 @@ class App:
 			# Frames per second
 			self.game_fps = self.clock.tick(self.frames_per_second)
 
-			pygame.display.set_caption(str(round(self.clock.get_fps(), 2)) ) # Win's name
+			#pygame.display.set_caption(str(round(self.clock.get_fps(), 2)) ) # Win's name
 
 			#DeltaTime
 			self.get_deltatime()
@@ -70,6 +77,7 @@ class App:
 	def game_events(self, events):
 		for event in events:
 			if event.type == QUIT:
+				save(self)
 				self.playing = False
 				
 	def update(self, events):

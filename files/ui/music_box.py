@@ -24,7 +24,7 @@ class MusicBoxButton:
         if self.button.mouse_hovered:
             if mouse_click[0]:
                 self.button.sprite = App.assets.music_box_button_on
-                self.recharge_time()
+                self.recharge_time(App)
                 if not pygame.mixer.Channel(3).get_busy() and pygame.time.get_ticks() - self.timer_sound > 450:
                     pygame.mixer.Channel(3).play(App.assets.charge)
                     self.timer_sound = pygame.time.get_ticks()
@@ -46,18 +46,17 @@ class MusicBoxButton:
                 self.timer = pygame.time.get_ticks()
 
             if self.charge == 0:
-                if not self.times_out:
-                    pygame.mixer.music.unload()
                 self.times_out = True
 
-    def recharge_time(self):
+    def recharge_time(self, App):
+        puppet = App.objects.Animatronics.animatronics_in_game["PUPPET"]
         if not self.times_out:
             if not self.recharging_time:
                 self.timer = pygame.time.get_ticks()
                 self.recharging_time = True
 
             if self.recharging_time:
-                if pygame.time.get_ticks() - self.timer > 300:
+                if pygame.time.get_ticks() - self.timer > 150 * (puppet.aggresivity//10):
                     if not self.charge >= 21:
                         self.charge += 1
                     self.timer = pygame.time.get_ticks()
