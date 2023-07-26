@@ -8,17 +8,18 @@ class MaskButton:
         self.mask_being_pressed = False
         self.quitting_mask = False
 
-    def update(self, App):
+    def update(self, App, canInteract=True):
         self.mask_button.update(App.surface, App.mouse_hitbox)
-        if self.inMask and not self.quitting_mask:
-            App.animations.mask.update(App.surface)
-            App.surface.blit(App.assets.mask_sprites[9], (-100, -100))
+        if canInteract:
+            if self.inMask and not self.quitting_mask:
+                App.animations.mask.update(App.surface)
+                App.surface.blit(App.assets.mask_sprites[9], (-100, -100))
 
-        self.animation(App)
+        self.animation(App, canInteract=canInteract)
 
-    def animation(self, App):
+    def animation(self, App, canInteract=True):
         if not self.inMask:
-            if self.mask_button.mouse_hovered:
+            if self.mask_button.mouse_hovered and canInteract:
                 if not self.mask_being_pressed:
                     App.animations.mask.update(App.surface)
 

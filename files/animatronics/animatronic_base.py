@@ -164,18 +164,8 @@ class Animatronic(ABC):
 
     def jumpscare(self, App):
         if not self._jumpscare:
-            self.stop_sounds()
             pygame.mixer.Channel(8).play(App.assets.xScream1)
             self._jumpscare = True
-
-    def stop_sounds(self):
-        pygame.mixer.Channel(1).set_volume(0)
-        pygame.mixer.Channel(2).set_volume(0) # Music box
-        pygame.mixer.Channel(3).set_volume(0) # Sounds effects
-        pygame.mixer.Channel(4).set_volume(0) # Mask breathing
-        pygame.mixer.Channel(5).set_volume(0) # Stare at an animatrionic
-        pygame.mixer.Channel(6).set_volume(0) # Mangle noise
-        pygame.mixer.Channel(7).set_volume(0) # Baloon boy laugh
 
     def prepare_to_jumpscare(self, App):
         self.change_location_id(App, -1, forced=True)

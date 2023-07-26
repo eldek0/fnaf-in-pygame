@@ -9,25 +9,26 @@ class CameraButton:
         self.camera_being_pressed = False
         self.quitting_camera = False
 
-    def update(self, App):
+    def update(self, App, canInteract=True):
 
         self.monitor_button.update(App.surface, App.mouse_hitbox)
-        if App.objects.battery.charge == 0:
-            self.quitting_camera = True
-            if self.monitor_button.mouse_hovered:
-                if not self.camera_being_pressed:
-                    App.assets.error_sound.play()
-                    self.camera_being_pressed = True
-            else:
-                self.camera_being_pressed = False
+        if canInteract:
+            if App.objects.battery.charge == 0:
+                self.quitting_camera = True
+                if self.monitor_button.mouse_hovered:
+                    if not self.camera_being_pressed:
+                        App.assets.error_sound.play()
+                        self.camera_being_pressed = True
+                else:
+                    self.camera_being_pressed = False
         
-        self.animation(App)
+        self.animation(App, canInteract=canInteract)
         
 
-    def animation(self, App):
+    def animation(self, App, canInteract=True):
         # Monitor animation
         if not self.inCamera:
-            if self.monitor_button.mouse_hovered:
+            if self.monitor_button.mouse_hovered and canInteract:
                 if not self.camera_being_pressed:
                     App.animations.monitor.update(App.surface)
 

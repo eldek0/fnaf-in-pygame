@@ -350,6 +350,31 @@ class import_images:
 			self.nights_12am.append(
 				pygame.image.load(f"sprites/menu/nights/{i+1}.png").convert()
 			)
+		
+		# Numbers 
+		self.numbers = []
+		for i in range(10):
+			self.numbers.append(
+				pygame.image.load(f"sprites/numbers/medium/{i}.png").convert_alpha()
+			)
+
+		self.night_label = pygame.image.load(f"sprites/clock/20.png").convert_alpha()
+		self.am_label = pygame.image.load(f"sprites/clock/2.png").convert_alpha()
+
+		# 5 am to 6 am animation
+		self.five_animation = []
+		for i in range(3, 8):
+			self.five_animation.append(
+				pygame.image.load(f"sprites/clock/{i}.png").convert_alpha()
+			)
+
+		self.six_animation = []
+		for i in range(8, 14):
+			self.six_animation.append(
+				pygame.image.load(f"sprites/clock/{i}.png").convert_alpha()
+			)
+
+		self.big_am = pygame.image.load(f"sprites/clock/1.png").convert_alpha()
 
 		# Get crops from cropped images
 		import_images.cropped_images(self)
@@ -391,6 +416,10 @@ class import_images:
 		self.baloon_laugh = pygame.mixer.Sound("sounds/echo4b.wav")
 
 		self.scary_ambiance = pygame.mixer.Sound("sounds/ScaryAmbiance.wav")
+
+		self.clock_chimes = pygame.mixer.Sound("sounds/Clocks_Chimes.wav")
+
+		self.joy_sound = pygame.mixer.Sound("sounds/yay.wav")
 
 	def fonts(self):
 		self.Arial = "fonts/arial.ttf"

@@ -2,6 +2,7 @@ import pygame, random
 from files.ui.button import Button
 from files.game_objects import GameObjects
 from files.game_controller import Game
+from files.animations.animations_init import animations_init
 
 class Menu:
     def __init__(self, App): 
@@ -90,50 +91,59 @@ class Menu:
                 self.objects_alpha += 1
                 self.timer = pygame.time.get_ticks()
         else:
-            if pygame.time.get_ticks() - self.timer > 200:
+            if pygame.time.get_ticks() - self.timer > 4000:
                 App.animations.darkness_reversed.fade_screen()
                 App.animations.darkness_reversed.update(App)
 
                 if App.animations.darkness_reversed.fade_alpha > 240:
-                    App.animations.static_anim_2.update(App.surface)
+                    pygame.mixer.music.unload()
+                    self.start_state += 1
 
-                    if App.animations.static_anim_2.sprite_num == len(App.animations.static_anim_2.sprites) - 1:
-                        self.timer = pygame.time.get_ticks()
-                        App.animations.static_anim_2.sprite_num = 0
-                        App.assets.camera_sound_1.play()
-                        pygame.mixer.music.unload()
-                        self.start_state += 1
+                
 
     def show_night(self, App):
         App.assets.nights_12am[self.inNight - 1].set_alpha(self.objects_alpha)
         night_dims = App.assets.nights_12am[self.inNight - 1].get_rect()
         App.surface.blit(App.assets.nights_12am[self.inNight - 1], (App.dimentions[0] / 2 - night_dims.w / 2, App.dimentions[1] / 2 - night_dims.h / 2))
 
-        if self.start_state == 2:
-            if pygame.time.get_ticks() - self.timer > 2000:
-                self.start_state = 3
+        match self.start_state:
+            case 2:
+                App.animations.darkness_reversed.update(App)
+                App.animations.static_anim_2.update(App.surface)
 
-        elif self.start_state == 3:
-            if self.objects_alpha > 20:
-                if pygame.time.get_ticks() - self.timer > 5:
-                    self.objects_alpha -= 5
+                if App.animations.static_anim_2.sprite_num == len(App.animations.static_anim_2.sprites) - 1:
                     self.timer = pygame.time.get_ticks()
-            else:
-                self.start_state = 4
-                
-        elif self.start_state == 4:
-            self.objects_alpha = 0
-            if pygame.time.get_ticks() - self.timer < 4000:
-                App.surface.blit(App.assets.loading_icon, (App.dimentions[0] - (App.assets.loading_icon.get_width() + 20 ), App.dimentions[1] - (App.assets.loading_icon.get_height() + 20 ) ))
-            else:
-                self.timer = pygame.time.get_ticks()
-                self.start_state = 5
+                    App.animations.static_anim_2.sprite_num = 0
+                    App.assets.camera_sound_1.play()
+                    self.start_state += 1
+                    
 
-        elif self.start_state == 5:
-            if pygame.time.get_ticks() - self.timer > 3000:
-                self.start_state = 6
+            case 3:
+                if pygame.time.get_ticks() - self.timer > 2000:
+                    self.start_state = 4
 
-        elif self.start_state == 6:
-            self.start_game = True
-            App.objects = GameObjects(App)
-            App.game = Game(App)
+            case 4:
+                if self.objects_alpha > 20:
+                    if pygame.time.get_ticks() - self.timer > 5:
+                        self.objects_alpha -= 5
+                        self.timer = pygame.time.get_ticks()
+                else:
+                    self.start_state = 5
+                    
+            case 5:
+                self.objects_alpha = 0
+                if pygame.time.get_ticks() - self.timer < 4000:
+                    App.surface.blit(App.assets.loading_icon, (App.dimentions[0] - (App.assets.loading_icon.get_width() + 20 ), App.dimentions[1] - (App.assets.loading_icon.get_height() + 20 ) ))
+                else:
+                    self.timer = pygame.time.get_ticks()
+                    self.start_state = 6
+
+            case 6:
+                if pygame.time.get_ticks() - self.timer > 3000:
+                    self.start_state = 7
+
+            case 7:
+                self.start_game = True
+                App.animations = animations_init(App)
+                App.objects = GameObjects(App)
+                App.game = Game(App)

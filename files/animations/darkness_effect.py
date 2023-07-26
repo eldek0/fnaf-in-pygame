@@ -45,7 +45,10 @@ class DarknessAnimation:
             else:
                 min_time = self.hold_black_screen_time
                 max_time = self.hold_black_screen_time + self.fading_time
-                steps = max_time // (self.fade_alpha)
+                if self.reversed:
+                    steps = max_time // (255 - self.fade_alpha)
+                else:
+                    steps = max_time // (self.fade_alpha)
                 if pygame.time.get_ticks() - self.timer >= min_time + steps:
                     if self.reversed:
                         self.fade_alpha += 1

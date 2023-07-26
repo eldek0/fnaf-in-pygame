@@ -6,6 +6,7 @@ from files.animatronics.animatronics_main import AnimatronicsMain
 from files.ui.music_box import MusicBoxButton
 from files.ui.mask_button import MaskButton
 from files.ui.battery import Battery
+from files.ui.game_timer import GameTimer
 
 class GameObjects:
     def __init__(self, App):
@@ -22,6 +23,8 @@ class GameObjects:
         self.camera = Camera(App)
         
         self.battery = Battery(App)
+
+        self.gameTimer = GameTimer(App)
 
         # Animatronics manager
         self.Animatronics = AnimatronicsMain(App)

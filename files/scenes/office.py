@@ -22,7 +22,7 @@ class Office:
         self.timer = pygame.time.get_ticks()
         self.hallway_animatrionic_coyote_time = 0
 
-    def update(self, App, canInteract=True, draw=True):
+    def update(self, App, canInteract=True, draw=True, animate=True):
         if self.animatronic_in_office:
             canInteract = False
         
@@ -49,6 +49,8 @@ class Office:
             self.animatrionics_in_office(App)
 
             self.desk_update(App)
+            if not animate:
+                App.animations.desk.animate = False
 
         self.animatronic_detect(App)
         if self.hallway_animatrionic_fade:
