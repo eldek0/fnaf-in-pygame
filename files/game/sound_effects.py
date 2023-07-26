@@ -29,9 +29,6 @@ def sounds_effects_updater(App):
         if not App.objects.office.animatronic_in_office:
             pygame.mixer.Channel(5).stop()
 
-        if App.objects.Animatronics.animatronics_in_game["PUPPET"].activated:
-            App.objects.music_box.run_time(App)
-
         mangle = App.objects.Animatronics.animatronics_in_game["MANGLE"]
         if mangle.locationId == -1:
             pygame.mixer.Channel(6).set_volume(1)

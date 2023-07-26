@@ -2,7 +2,7 @@ import pygame
 from abc import ABC
 
 class Animatronic(ABC):
-    def __init__(self, activated:bool, locationId:int, jumpscare_animation:list, rest_room:int):
+    def __init__(self, aggresivity:int, locationId:int, jumpscare_animation:list, rest_room:int):
         """
         locationId:
             - From 1 to 12 are room locations
@@ -18,7 +18,6 @@ class Animatronic(ABC):
 
         self.locationId = locationId
         self.secondPositionId = 1
-        self.activated = activated
         self.timer = pygame.time.get_ticks()
         self.changing_position:bool = False
         self.action_error:bool = False # When the animatronic is moving
@@ -34,14 +33,24 @@ class Animatronic(ABC):
         self.time_with_mask_goal = 120
         self.time_with_mask = 0
         self.rest_room = rest_room # The room where the animatrionic rests after a screamer attempt
+        self.aggresivity = aggresivity
+        self.movement_time = 50_000
 
         # Aveliable animatrionics with the same office position (101)
         self.aveliable_office_positions = [
             ["FOXY", "WITHERED_BONNIE"], ["FOXY", "MANGLE"]
         ]
 
+    def _print_when_animatrionic_get_to_office(self, App, movements:int):
+        time_in_office = (((self.movement_time + self.occupied_camera_time)*movements)/self.aggresivity)/App.objects.gameTimer.hour
+        sum_ = 0
+        if int(str(time_in_office)[0]) == 0:
+            sum_ = 12
+        
+        print(f" {self.name_id} gets to office at aprox {round(time_in_office, 2) + sum_} am")
+
     def jumpscare_update(self, App):
-        if self.activated:
+        if self.aggresivity != 0:
             if self._jumpscare:
                 self.jumpscare_animation.update(App.surface)
                 App.objects.open_monitor_button.quitting_camera = True
@@ -50,7 +59,7 @@ class Animatronic(ABC):
                     self._gameOver = True
 
     def update(self, App):
-        if self.activated:      
+        if self.aggresivity != 0:      
             if not self._jumpscare:
                 if self._prepare_to_jumpscare:
                     print("prepare")
@@ -143,7 +152,7 @@ class Animatronic(ABC):
 
         elif self.changing_position:
             if not force:
-                time_to_change = self.occupied_camera_time
+                time_to_change = self.occupied_camera_time/self.aggresivity
             else:
                 time_to_change = 0
 

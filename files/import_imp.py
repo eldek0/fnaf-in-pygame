@@ -65,7 +65,7 @@ class import_images:
 
 		# Desk animation
 		self.desk_animation = []
-		for i in range(3):
+		for i in range(4):
 			self.desk_animation.append(
 				pygame.image.load(f"sprites/office/utils/{10 + i}.png").convert_alpha()
 			)
@@ -94,6 +94,7 @@ class import_images:
 		# Camera room buttons and labels
 
 		self.room_button_unselected, self.room_button_selected = pygame.image.load("sprites/cameras/Labels/13.png").convert(), pygame.image.load("sprites/cameras/Labels/14.png").convert()
+		self.clicknhold = pygame.image.load(f"sprites/cameras/labels/18.png").convert_alpha()
 
 		self.room_buttons_labels = []
 		for i in range(12):
@@ -376,6 +377,9 @@ class import_images:
 
 		self.big_am = pygame.image.load(f"sprites/clock/1.png").convert_alpha()
 
+		# Telephone mute
+		self.telephone_mute = pygame.image.load(f"sprites/office/utils/20.png").convert_alpha()
+
 		# Get crops from cropped images
 		import_images.cropped_images(self)
 		
@@ -420,6 +424,12 @@ class import_images:
 		self.clock_chimes = pygame.mixer.Sound("sounds/Clocks_Chimes.wav")
 
 		self.joy_sound = pygame.mixer.Sound("sounds/yay.wav")
+
+		self.telephone_audios = []
+		for i in range(6):
+			self.telephone_audios.append(
+				pygame.mixer.Sound(f"sounds/call{i+1}b.wav")
+			)
 
 	def fonts(self):
 		self.Arial = "fonts/arial.ttf"

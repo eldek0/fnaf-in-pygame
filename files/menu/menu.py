@@ -1,7 +1,7 @@
 import pygame, random
 from files.ui.button import Button
-from files.game_objects import GameObjects
-from files.game_controller import Game
+from files.game.game_objects import GameObjects
+from files.game.game_controller import Game
 from files.animations.animations_init import animations_init
 
 class Menu:
@@ -20,7 +20,7 @@ class Menu:
 
         self.objects_alpha = 0
 
-        self.start_state = 0
+        self.start_state = 7
 
         self.timer = pygame.time.get_ticks()
 

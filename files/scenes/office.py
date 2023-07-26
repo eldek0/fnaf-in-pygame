@@ -243,7 +243,7 @@ class Office:
         return 0
 
     def get_flashed_right_vent(self, App):
-        ToyBunny = App.objects.Animatronics.animatronics_in_game["TOY_BUNNY"]
+        ToyBunny = App.objects.Animatronics.animatronics_in_game["TOY_BONNIE"]
         Mangle = App.objects.Animatronics.animatronics_in_game["MANGLE"]
         if ToyBunny.locationId == 102:
             return 1
@@ -263,15 +263,15 @@ class Office:
         return 0
 
     def animatronic_detect(self, App):
-        self.toy_bunny(App)
+        self.TOY_BONNIE(App)
         animatrionic_in_hall = ["WITHERED_FREDDY", "WITHERED_BONNIE", "WITHERED_CHICA", "TOY_FREDDY"]
 
         for i in range(len(animatrionic_in_hall)):
             self.withered_animatrionic_in_office(App, animatrionic_in_hall[i], i)
         
 
-    def toy_bunny(self, App):
-        ToyBunny = App.objects.Animatronics.animatronics_in_game["TOY_BUNNY"]
+    def TOY_BONNIE(self, App):
+        ToyBunny = App.objects.Animatronics.animatronics_in_game["TOY_BONNIE"]
 
         if ToyBunny.locationId == 104 and not ToyBunny.changing_position and not ToyBunny._prepare_to_jumpscare:
             if not self.animatronic_in_office:

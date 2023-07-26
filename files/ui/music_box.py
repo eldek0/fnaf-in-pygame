@@ -11,11 +11,14 @@ class MusicBoxButton:
         self.timer_sound = pygame.time.get_ticks()
         self.recharging_time = False
         self.times_out = False
+        self.descharge_ticks = 2000
 
     def update(self, App):
 
         self.button.update(App.surface, App.mouse_hitbox)
         App.surface.blit(App.assets.music_box_label, [self.position[0] + 10, self.position[1] + 10])
+        App.surface.blit(App.assets.clicknhold, [self.position[0], self.position[1] + 72])
+        
 
         mouse_click = pygame.mouse.get_pressed()
         if self.button.mouse_hovered:
@@ -38,7 +41,7 @@ class MusicBoxButton:
 
     def run_time(self, App):
         if not self.times_out:
-            if pygame.time.get_ticks() - self.timer > 10 and not self.charge == 0 and not self.recharging_time:
+            if pygame.time.get_ticks() - self.timer > self.descharge_ticks and not self.charge == 0 and not self.recharging_time:
                 self.charge -= 1
                 self.timer = pygame.time.get_ticks()
 

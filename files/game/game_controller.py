@@ -1,8 +1,10 @@
 import pygame
 
 import files.utils as f
-from files.sound_effects import sounds_effects_updater
+from files.game.sound_effects import sounds_effects_updater
 from files.menu.night_beaten_animation import NightBeatenAnimation
+from files.game.night import NightAIChanger
+from files.game.telephone import Telephone
 
 class Game:
     def __init__(self, App):
@@ -19,6 +21,10 @@ class Game:
 
         self.beaten_animation = NightBeatenAnimation(App)
 
+        self.ai_updater = NightAIChanger(App)
+
+        self.telephone = Telephone(App)
+
     def set_audio(self, App):
         self.sounds_shutted = False
         pygame.mixer.set_num_channels(16)
@@ -34,6 +40,7 @@ class Game:
         pygame.mixer.Channel(6).set_volume(1) # Mangle noise
         pygame.mixer.Channel(7).set_volume(1) # Baloon boy laugh
         pygame.mixer.Channel(8).set_volume(1) # Jumpscare scream
+        pygame.mixer.Channel(9).set_volume(1) # Telephone guy
 
     def stop_sounds(self):
         self.sounds_shutted = True
@@ -45,6 +52,7 @@ class Game:
         pygame.mixer.Channel(5).set_volume(0) # Stare at an animatrionic
         pygame.mixer.Channel(6).set_volume(0) # Mangle noise
         pygame.mixer.Channel(7).set_volume(0) # Baloon boy laugh
+        pygame.mixer.Channel(9).set_volume(0) # Telephone guy
 
     def updater(self, App):
         self.game_update(App)
@@ -61,6 +69,9 @@ class Game:
         if self.night_beaten:
             App.animations.darkness_reversed.update(App)
             self.beaten_animation.update(App)
+
+        self.ai_updater.update(App, App.menu.inNight)
+        self.telephone.update(App, App.menu.inNight)
 
     def game_update(self, App):
         if not self.night_beaten:

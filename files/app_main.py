@@ -2,11 +2,11 @@ import pygame
 import time
 from pygame.locals import QUIT
 
-import files.draw as dr
+import files.game.draw as dr
 from files.import_imp import import_images
 from files.animations.animations_init import animations_init
-from files.game_objects import GameObjects
-from files.game_controller import Game
+from files.game.game_objects import GameObjects
+from files.game.game_controller import Game
 from files.menu.menu import Menu
 
 

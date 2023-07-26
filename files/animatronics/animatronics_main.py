@@ -2,7 +2,7 @@ import os
 
 from files.animatronics.toy_freddy import ToyFreddy
 from files.animatronics.puppet import Puppet
-from files.animatronics.toy_bunny import ToyBunny
+from files.animatronics.toy_bonnie import ToyBonnie
 from files.animatronics.toy_chica import ToyChica
 from files.animatronics.withered_freddy import WitheredFreddy
 from files.animatronics.withered_bonnie import WitheredBonnie
@@ -15,16 +15,16 @@ class AnimatronicsMain:
     def __init__(self, App):
 
         self.animatronics_in_game = {
-            "TOY_FREDDY":ToyFreddy(App, activated=False), 
-            "PUPPET":Puppet(App, activated=False),
-            "TOY_BUNNY":ToyBunny(App, activated=False),
-            "TOY_CHICA":ToyChica(App, activated=False),
-            "WITHERED_BONNIE":WitheredBonnie(App, activated=False),
-            "WITHERED_CHICA":WitheredChica(App, activated=False),
-            "WITHERED_FREDDY":WitheredFreddy(App, activated=False),
-            "FOXY":Foxy(App, activated=False),
-            "MANGLE":Mangle(App, activated=True),
-            "BALOON_BOY":BaloonBoy(App, activated=False)
+            "TOY_FREDDY":ToyFreddy(App=App, aggresivity=0), 
+            "PUPPET":Puppet(App=App, aggresivity=0),
+            "TOY_BONNIE":ToyBonnie(App=App, aggresivity=0),
+            "TOY_CHICA":ToyChica(App=App, aggresivity=0),
+            "WITHERED_BONNIE":WitheredBonnie(App=App, aggresivity=0),
+            "WITHERED_CHICA":WitheredChica(App=App, aggresivity=0),
+            "WITHERED_FREDDY":WitheredFreddy(App=App, aggresivity=0),
+            "FOXY":Foxy(App=App, aggresivity=0),
+            "MANGLE":Mangle(App=App, aggresivity=0),
+            "BALOON_BOY":BaloonBoy(App=App, aggresivity=0)
         }
         self.gameOver = False
         self.being_jumpscared = False
@@ -77,7 +77,7 @@ class AnimatronicsMain:
             if jumpscared_:
                 self.jumpscared()
 
-        self.console_animatrionic_position_log()
+        #self.console_animatrionic_position_log()
 
     def game_over(self):
         self.gameOver = True

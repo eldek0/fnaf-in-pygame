@@ -1,10 +1,10 @@
-import pygame
+import pygame, math
 
 from files.animatronics.animatronic_base import Animatronic
 
 class Puppet(Animatronic):
-    def __init__(self, App, activated=True):
-        super().__init__(activated=activated, locationId=11, jumpscare_animation=App.animations.puppet_jump, rest_room=None)
+    def __init__(self, App, aggresivity:int):
+        super().__init__(aggresivity=aggresivity, locationId=11, jumpscare_animation=App.animations.puppet_jump, rest_room=None)
 
     def movement(self, App):
         if App.objects.music_box.charge == 0:
@@ -22,4 +22,7 @@ class Puppet(Animatronic):
 
         elif App.objects.music_box.charge != 0:
             self.timer = pygame.time.get_ticks()
+
+        App.objects.music_box.descharge_ticks = 6000/(math.log((self.aggresivity + 1)**6))
+        App.objects.music_box.run_time(App)
         
