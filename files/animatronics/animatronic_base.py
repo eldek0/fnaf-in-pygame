@@ -41,14 +41,6 @@ class Animatronic(ABC):
             ["FOXY", "WITHERED_BONNIE"], ["FOXY", "MANGLE"]
         ]
 
-    def _print_when_animatrionic_get_to_office(self, App, movements:int):
-        time_in_office = (((self.movement_time + self.occupied_camera_time)*movements)/self.aggresivity)/App.objects.gameTimer.hour
-        sum_ = 0
-        if int(str(time_in_office)[0]) == 0:
-            sum_ = 12
-        
-        print(f" {self.name_id} gets to office at aprox {round(time_in_office, 2) + sum_} am")
-
     def jumpscare_update(self, App):
         if self.aggresivity != 0:
             if self._jumpscare:
@@ -139,10 +131,12 @@ class Animatronic(ABC):
         else:
             self._wait_movement_time()
         is_free_room = self.verify_free_room(App, room_location)
+        """
         print(f"free-room ({self.name_id}): {is_free_room}, force: {forced}")
         print("its me! it works!")
         print(App.objects.Animatronics.every_animatrionic_position[room_location])
         print(self.aveliable_office_positions)
+        """
         # If it's empty or its forced
         if forced or is_free_room:
             if not self.changing_position:

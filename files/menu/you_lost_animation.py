@@ -15,7 +15,7 @@ class YouLostAnimation:
                 App.animations.static_anim_1.update(App.surface)
                 App.animations.static_anim_1.alpha = 255
                 App.assets.game_lost_static.play()
-                App.assets.game_lost_static2.play()
+                
                 self.state = 1
                 self.timer = pygame.time.get_ticks()
             case 1:
@@ -23,7 +23,7 @@ class YouLostAnimation:
                 if pygame.time.get_ticks() - self.timer > 10000:
                     self.state = 2
                     self.timer = pygame.time.get_ticks()
-                    App.assets.game_lost_static.stop()
+                    App.assets.menu_static.stop()
                     App.assets.game_lost_static2.stop()
             
             case 2:

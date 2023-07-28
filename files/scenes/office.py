@@ -25,6 +25,7 @@ class Office:
     def update(self, App, canInteract=True, draw=True, animate=True):
         if self.animatronic_in_office:
             canInteract = False
+            App.objects.open_monitor_button.quitting_camera = True
         
         if canInteract:
             self.camera_movement(App)
@@ -62,12 +63,16 @@ class Office:
     def animatrionics_in_office(self, App):
         mangle = App.objects.Animatronics.animatronics_in_game["MANGLE"]
         baloon_boy = App.objects.Animatronics.animatronics_in_game["BALOON_BOY"]
+        golden_freddy = App.objects.Animatronics.animatronics_in_game["GOLDEN_FREDDY"]
 
         if mangle.locationId == -1 and not mangle.isBeingJumpscared():
             App.surface.blit(App.assets.office_mangle, (400 + self.position[0], 0))
 
         if baloon_boy.locationId == -1:
             App.surface.blit(App.assets.office_baloon_boy, (320 + self.position[0], 280))
+
+        if golden_freddy.locationId == -1 and not golden_freddy.isBeingJumpscared():
+            App.surface.blit(App.assets.office_golden_freddy, (320 + self.position[0], 280))
 
     def camera_movement(self, App):
         move_left, move_right = pygame.Rect(0, 0, 300, App.dimentions[1]), pygame.Rect(App.dimentions[0] - 300, 0, 300, App.dimentions[1])
@@ -321,16 +326,16 @@ class Office:
             self.animatronic_in_office = True
         
 
-        time_to_put_mask = 2500
+        time_to_put_mask = 2000/(animatrionic.aggresivity/12)
         if self.animatronic_in_office and animatrionic.locationId == 104:
             self.office_sprite = App.assets.animatrionic_offices[office_sprite_id]
             if pygame.time.get_ticks() - self.timer > time_to_put_mask:
                 if not App.objects.mask_button.inMask or App.objects.mask_button.quitting_mask:
                     animatrionic.prepare_to_jumpscare(App)
-                    if pygame.time.get_ticks() - self.timer > time_to_put_mask + 2000:
+                    if pygame.time.get_ticks() - self.timer > time_to_put_mask:
                         App.animations.darkness.fade_screen()
                 else:
-                    if pygame.time.get_ticks() - self.timer > 1000 + 4000:
+                    if pygame.time.get_ticks() - self.timer > 1000:
                         App.animations.darkness.fade_screen()
 
             if App.animations.darkness._isFading:

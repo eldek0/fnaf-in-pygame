@@ -6,7 +6,7 @@ from files.animations.animations_init import animations_init
 
 class Menu:
     def __init__(self, App): 
-        self.option:bool = True # What button is the mouse hovering
+        self.option:int = 0 # What button is the mouse hovering
 
         new_game_dims = App.assets.new_game_option.get_rect()
         self.new_game_button = Button((80, 370), (new_game_dims.width, new_game_dims.height), App.assets.new_game_option)
@@ -35,22 +35,30 @@ class Menu:
 
         self.played_once = False
 
+        self.option_ready_to_select = 0
+
         pygame.mixer.music.load(App.assets.background_music_menu)
         pygame.mixer.music.play(-1)
+        pygame.mixer.Channel(2).play(App.assets.menu_static_1)
+        pygame.mixer.Channel(2).queue(App.assets.menu_static_2)
+        
 
     def static_animation(self, App):
         App.animations.static_anim_1.update(App.surface)
-        App.animations.static_anim_1.alpha = 100
+        App.animations.static_anim_1.alpha = 160
 
         # More static animation
-        App.animations.static_stripes_animation.update(App)
-        App.animations.static_stripes_animation2.update(App)
-        App.animations.static_stripes_animation3.update(App)
-        App.animations.static_stripes_animation4.update(App)
+        App.animations.static_stripes_animation5.update(App)
+        App.animations.random_static_animation.update(App)
+
+    def music(self, App):
+        if not pygame.mixer.Channel(2).get_busy():
+            pygame.mixer.Channel(2).play(App.assets.menu_static_2)
 
     def update(self, App):
         if self.start_state == 0:
             self.change_background(App)
+            self.music(App)
 
         if self.start_state < 2:
             
@@ -64,30 +72,48 @@ class Menu:
             self.new_game_button.update(App.surface, App.mouse_hitbox)
             self.continue_button.update(App.surface, App.mouse_hitbox)
 
-            mouse = pygame.mouse.get_pressed()
             #print(mouse)
             # Mouse option
             if self.new_game_button.mouse_hovered:
-                self.option = True
-                if mouse[0]:
-                    self.start_state = 1
+                self.option_to_select(App, lambda:self.option_1(), 1)
+
             elif self.continue_button.mouse_hovered:
                 if self.played_once:
-                    self.option = False
-                    if mouse[0]:
-                        pygame.mixer.music.unload()
-                        self.start_state = 2
-                        self.objects_alpha = 255
+                    self.option_to_select(App, lambda:self.option_2(), 2)
 
-            if self.option:
+            if self.option == 1:
                 App.surface.blit(App.assets.option_selected, (28, 373))
-            else:
+            elif self.option == 2:
                 App.surface.blit(App.assets.option_selected, (28, 433))
 
         if self.start_state > 0:
+            pygame.mixer.Channel(2).stop()
             self.begin_game(App)
 
         self.static(App)
+        
+
+    def option_1(self):
+        self.inNight = 1
+        self.start_state = 1
+
+    def option_2(self):
+        pygame.mixer.music.unload()
+        self.start_state = 2
+        self.objects_alpha = 255
+
+    def option_to_select(self,App, func, option:int):
+        mouse = pygame.mouse.get_pressed()
+        if mouse[0]:
+            self.option = option
+            if self.option_ready_to_select == option:
+                func()
+
+
+        if self.option == option and not self.option_ready_to_select == option and not mouse[0]:
+            self.option_ready_to_select = option
+            App.assets.camera_sound_1.play()
+
 
     def static(self, App):
         if self.static_with_change:
@@ -111,7 +137,7 @@ class Menu:
 
         if pygame.time.get_ticks() - self.timer > self.random_value_number2:
             choice = random.randint(0, 10)
-            self.background_alpha = 24*choice
+            self.background_alpha = 25*choice
             self.random_value_number2 = random.randint(200, 800)
 
     def begin_game(self, App):
@@ -130,10 +156,10 @@ class Menu:
                 self.timer = pygame.time.get_ticks()
         else:
             if pygame.time.get_ticks() - self.timer > 4000:
-                App.animations.darkness_reversed.fade_screen()
-                App.animations.darkness_reversed.update(App)
+                App.animations.in_fade_effect.fade_screen()
+                App.animations.in_fade_effect.update(App)
 
-                if App.animations.darkness_reversed.fade_alpha > 240:
+                if App.animations.in_fade_effect.fade_alpha > 240:
                     pygame.mixer.music.unload()
                     self.start_state += 1
 
@@ -146,7 +172,7 @@ class Menu:
 
         match self.start_state:
             case 2:
-                App.animations.darkness_reversed.update(App)
+                App.animations.in_fade_effect.update(App)
                 App.animations.static_anim_2.update(App.surface)
 
                 if App.animations.static_anim_2.sprite_num == len(App.animations.static_anim_2.sprites) - 1:

@@ -29,6 +29,6 @@ class Foxy(Animatronic):
                     self.jumpscare(App)
 
                 # "Get scared"
-                if pygame.time.get_ticks() - self.timer > 50000:
+                if pygame.time.get_ticks() - self.timer > 10000:
                     self.change_location_id(App, 8)
                     self._light = 100

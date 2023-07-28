@@ -8,6 +8,7 @@ class CameraButton:
         self.inCamera = False
         self.camera_being_pressed = False
         self.quitting_camera = False
+        self.entering_camera = False
 
     def update(self, App, canInteract=True):
 
@@ -28,8 +29,9 @@ class CameraButton:
     def animation(self, App, canInteract=True):
         # Monitor animation
         if not self.inCamera:
-            if self.monitor_button.mouse_hovered and canInteract:
+            if (self.monitor_button.mouse_hovered and canInteract) or self.entering_camera:
                 if not self.camera_being_pressed:
+                    self.entering_camera = True
                     App.animations.monitor.update(App.surface)
 
                     # Get in camera
@@ -37,6 +39,7 @@ class CameraButton:
                         if not App.objects.battery.charge == 0:
                             self.inCamera = True
                             App.objects.camera.static_animation = True
+                            self.entering_camera = False
                         App.animations.monitor.desactivate = True
 
                         self.camera_being_pressed = True

@@ -1,6 +1,6 @@
 # Nights controller
 
-import pygame
+import pygame, random
 
 class NightAIChanger:
     def __init__(self, App):
@@ -33,6 +33,8 @@ class NightAIChanger:
                 self.night_5(App)
             case 6:
                 self.night_6(App)
+            case 7:
+                self.night_7(App)
             case _:
                 print("No AI configured!")
 
@@ -158,13 +160,43 @@ class NightAIChanger:
 
     def night_6(self, App):
 
-        self.animatronics_ai["WITHERED_FREDDY"] = 10
-        self.animatronics_ai["WITHERED_BONNIE"] = 10
-        self.animatronics_ai["WITHERED_CHICA"] = 10
-        self.animatronics_ai["FOXY"] = 10
-        self.animatronics_ai["BALOON_BOY"] = 0
-        self.animatronics_ai["TOY_FREDDY"] = 0
-        self.animatronics_ai["TOY_BONNIE"] = 0
-        self.animatronics_ai["TOY_CHICA"] = 0
-        self.animatronics_ai["MANGLE"] = 0
-        self.animatronics_ai["PUPPET"] = 0
+        match self.time:
+            case 12:
+                self.animatronics_ai["WITHERED_FREDDY"] = 5
+                self.animatronics_ai["WITHERED_BONNIE"] = 5
+                self.animatronics_ai["WITHERED_CHICA"] = 5
+                self.animatronics_ai["FOXY"] = 10
+                self.animatronics_ai["BALOON_BOY"] = 5
+                self.animatronics_ai["TOY_FREDDY"] = 0
+                self.animatronics_ai["TOY_BONNIE"] = 0
+                self.animatronics_ai["TOY_CHICA"] = 0
+                self.animatronics_ai["MANGLE"] = 3
+                self.animatronics_ai["PUPPET"] = 15
+                self.animatronics_ai["GOLDEN_FREDDY"] = random.randint(1, 10)
+
+            case 1: 
+                self.animatronics_ai["GOLDEN_FREDDY"] = random.randint(1, 10)
+
+            case 2:
+                self.animatronics_ai["WITHERED_FREDDY"] = 10
+                self.animatronics_ai["WITHERED_BONNIE"] = 10
+                self.animatronics_ai["WITHERED_CHICA"] = 10
+                self.animatronics_ai["FOXY"] = 15
+                self.animatronics_ai["BALOON_BOY"] = 9
+                self.animatronics_ai["TOY_FREDDY"] = 5
+                self.animatronics_ai["TOY_BONNIE"] = 5
+                self.animatronics_ai["TOY_CHICA"] = 5
+                self.animatronics_ai["MANGLE"] = 10
+                self.animatronics_ai["GOLDEN_FREDDY"] = 3
+
+            case 3:
+                pass
+
+            case 4: pass
+
+            case 5: pass
+
+    def night_7(self, App):
+        self.animatronics_ai["WITHERED_BONNIE"] = 20
+
+        

@@ -26,5 +26,5 @@ class BaloonBoy(Animatronic):
                     self.change_location_id(App, self.rest_room)
 
             case -1:
-                if pygame.time.get_ticks() - self.timer > 10 and App.objects.open_monitor_button.inCamera:
+                if pygame.time.get_ticks() - self.timer > 15000 and App.objects.open_monitor_button.inCamera:
                     self.change_location_id(App, 0, forced=True)

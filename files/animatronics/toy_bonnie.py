@@ -7,7 +7,6 @@ class ToyBonnie(Animatronic):
         super().__init__(aggresivity, 9, App.animations.toy_bunny_jump, 3)
 
     def movement(self, App):
-        self._print_when_animatrionic_get_to_office(App, 6)
 
         match self.locationId:
             case 9:

@@ -10,6 +10,7 @@ from files.animatronics.withered_chica import WitheredChica
 from files.animatronics.foxy import Foxy
 from files.animatronics.mangle import Mangle
 from files.animatronics.baloon_boy import BaloonBoy
+from files.animatronics.golden_freddy import GoldenFreddy
 
 class AnimatronicsMain:
     def __init__(self, App):
@@ -24,7 +25,8 @@ class AnimatronicsMain:
             "WITHERED_FREDDY":WitheredFreddy(App=App, aggresivity=0),
             "FOXY":Foxy(App=App, aggresivity=0),
             "MANGLE":Mangle(App=App, aggresivity=0),
-            "BALOON_BOY":BaloonBoy(App=App, aggresivity=0)
+            "BALOON_BOY":BaloonBoy(App=App, aggresivity=0),
+            "GOLDEN_FREDDY":GoldenFreddy(App=App, aggresivity=0)
         }
         self.gameOver = False
         self.being_jumpscared = False
@@ -77,7 +79,7 @@ class AnimatronicsMain:
             if jumpscared_:
                 self.jumpscared()
 
-        self.console_animatrionic_position_log()
+        #self.console_animatrionic_position_log()
 
     def game_over(self):
         self.gameOver = True

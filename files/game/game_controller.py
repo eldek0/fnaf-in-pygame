@@ -57,16 +57,17 @@ class Game:
 
     def updater(self, App):
         self.game_update(App)
-        if App.objects.gameTimer.time == 6:
-            if not self.night_beaten:
-                App.animations.darkness_reversed.fade_screen()
+        if App.objects.gameTimer.time == 6:   
             self.night_beaten = True
 
         if self.night_beaten:
             if not self.sounds_shutted:
+                print("-----")
+                pygame.mixer.stop()
+                pygame.mixer.music.unload()
                 pygame.mixer.Channel(1).set_volume(1)
                 pygame.mixer.Channel(1).play(App.assets.clock_chimes)
-            App.animations.darkness_reversed.update(App)
+                self.sounds_shutted = True
             self.beaten_animation.update(App)
 
         if App.objects.Animatronics.being_jumpscared and not self.sounds_shutted:
@@ -75,11 +76,11 @@ class Game:
         if not self.night_beaten and self.sounds_shutted and self.you_lost:
             self.you_lost_animation.update(App)
 
-        if not self.night_beaten and not self.you_lost:
+        if not self.night_beaten and not self.you_lost and App.menu.inNight != 7:
             self.ai_updater.update(App, App.menu.inNight)
             self.telephone.update(App, App.menu.inNight)
 
-        if not pygame.mixer.music.get_busy():
+        if not pygame.mixer.music.get_busy() and not self.night_beaten:
             pygame.mixer.music.load(App.assets.background_music)
             pygame.mixer.music.play(-1)
 

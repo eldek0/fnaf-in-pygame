@@ -239,6 +239,9 @@ class import_images:
 		self.office_bunny = pygame.image.load(f"sprites/office/inside/3.png").convert_alpha()
 		self.office_bunny = pygame.transform.scale(self.office_bunny, (self.office_bunny.get_width() * 0.87, self.office_bunny.get_height() * 0.87))
 
+		# -- Golden Freddy in office --
+		self.office_golden_freddy = pygame.image.load(f"sprites/office/inside/6.png").convert_alpha()
+
 		# Battery
 		self.battery_stages = []
 		for i in range(5):
@@ -329,6 +332,13 @@ class import_images:
 				pygame.image.load(f"sprites/jumpscares/mangle/{i+1}.png").convert_alpha()
 			)
 
+		# Golden Freddy jumpscare animation
+		self.golden_freddy_animation = []
+		for i in range(13):
+			self.golden_freddy_animation.append(
+				pygame.image.load(f"sprites/jumpscares/withered_golden_freddy/{i+1}.png").convert_alpha()
+			)
+
 		# -- MENU UTILITIES -- 
 		self.background_menu = []
 		for i in range(4):
@@ -343,8 +353,11 @@ class import_images:
 		self.new_game_option = pygame.image.load("sprites/menu/logos/5.png").convert_alpha()
 		self.continue_option = pygame.image.load("sprites/menu/logos/6.png").convert_alpha()
 
-		self.newspaper = pygame.image.load("sprites/menu/help_wanted.png").convert()
+		self.newspaper = pygame.image.load("sprites/menu/paychecks/1.png").convert()
 		self.loading_icon = pygame.image.load("sprites/menu/logos/0.png").convert_alpha()
+
+		self.night_five_paycheck = pygame.image.load("sprites/menu/paychecks/2.png").convert()
+		self.night_six_paycheck = pygame.image.load("sprites/menu/paychecks/3.png").convert()
 
 		self.nights_12am = []
 		for i in range(7):
@@ -435,9 +448,13 @@ class import_images:
 
 		self.joy_sound = pygame.mixer.Sound("sounds/yay.wav")
 
-		self.game_lost_static = pygame.mixer.Sound("sounds/static2.wav")
+		self.menu_static_1 = pygame.mixer.Sound("sounds/static2_1.wav")
 
-		self.game_lost_static2 = pygame.mixer.Sound("sounds/ComputerInteriorLong.wav")
+		self.menu_static_2 = pygame.mixer.Sound("sounds/static2_2.wav")
+
+		self.game_lost_static = pygame.mixer.Sound("sounds/gameOver.wav")
+
+		self.music_box2 = pygame.mixer.Sound("sounds/musicbox2.wav")
 
 		self.telephone_audios = []
 		for i in range(6):

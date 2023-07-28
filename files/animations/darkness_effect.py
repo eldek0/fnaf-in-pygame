@@ -75,7 +75,7 @@ class DarknessAnimation:
             App.surface.blit(self.black_screen, self.position)
 
         if not self._isFading:
-            if pygame.time.get_ticks() - self.timer < self.time_until_fade:
+            if pygame.time.get_ticks() - self.timer <= self.time_until_fade:
                 self.frame += 1
                 if self.frame == self.frame_wait:
                     # Change the sprite
