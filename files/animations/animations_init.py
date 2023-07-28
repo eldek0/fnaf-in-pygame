@@ -26,10 +26,10 @@ class animations_init:
 
         self.static_stripes_animation = StaticStripesAnimation(App=App)
 
-        self.static_stripes_animation2 = StaticStripesAnimation(App=App, time_to_appear=5567, speed_frame=2, random_sprites_range=(2, 4), alpha=10)
+        self.static_stripes_animation2 = StaticStripesAnimation(App=App, time_to_appear=5567, speed_frame=2, random_sprites_range=(2, 4), alpha=2)
         self.static_stripes_animation2.big_stripe_y_location = random.randint(100, 500)
 
-        self.static_stripes_animation3 = StaticStripesAnimation(App=App, time_to_appear=3709, speed_frame=5, random_sprites_range=(3, 4), alpha=5)
+        self.static_stripes_animation3 = StaticStripesAnimation(App=App, time_to_appear=3709, speed_frame=5, random_sprites_range=(3, 4), alpha=2)
         self.static_stripes_animation3.big_stripe_y_location = random.randint(400, 700)
 
         self.static_stripes_animation4 = StaticStripesAnimation(App=App, time_to_appear=4200, speed_frame=6, random_sprites_range=(4, 4), alpha=20)

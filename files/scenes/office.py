@@ -272,7 +272,8 @@ class Office:
         animatrionic_in_hall = ["WITHERED_FREDDY", "WITHERED_BONNIE", "WITHERED_CHICA", "TOY_FREDDY"]
 
         for i in range(len(animatrionic_in_hall)):
-            self.withered_animatrionic_in_office(App, animatrionic_in_hall[i], i)
+            if App.objects.Animatronics.animatronics_in_game[animatrionic_in_hall[i]].aggresivity != 0:
+                self.withered_animatrionic_in_office(App, animatrionic_in_hall[i], i)
         
 
     def TOY_BONNIE(self, App):
