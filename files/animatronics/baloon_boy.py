@@ -3,8 +3,8 @@ import pygame, random
 from files.animatronics.animatronic_base import Animatronic
 
 class BaloonBoy(Animatronic):
-    def __init__(self, App, aggresivity:int):
-        super().__init__(aggresivity, 10, None, 10)
+    def __init__(self, App, aggresivity:int, custom_index:int):
+        super().__init__(aggresivity, 10, None, 10, custom_index)
 
     def movement(self, App):
         match self.locationId:

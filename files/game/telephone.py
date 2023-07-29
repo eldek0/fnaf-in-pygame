@@ -10,9 +10,9 @@ class Telephone:
         self.mute_button = Button(position=(160, 43), dimentions=(dims.w, dims.h), sprite=App.assets.telephone_mute)
         self.timer = pygame.time.get_ticks()
 
-    def update(self, App, inNight:int):
+    def update(self, App, nightToPlay:int):
         if not self.call_started and pygame.time.get_ticks() - self.timer > 3000:
-            pygame.mixer.music.load(App.assets.telephone_audios[inNight - 1])
+            pygame.mixer.music.load(App.assets.telephone_audios[nightToPlay - 1])
             pygame.mixer.music.play(1)
             self.call_started = True
 

@@ -3,6 +3,7 @@ from files.ui.button import Button
 from files.game.game_objects import GameObjects
 from files.game.game_controller import Game
 from files.animations.animations_init import animations_init
+from files.menu.custom_night import CustomNight
 
 class Menu:
     def __init__(self, App): 
@@ -13,6 +14,12 @@ class Menu:
 
         continue_dims = App.assets.continue_option.get_rect()
         self.continue_button = Button((80, 430), (continue_dims.width, continue_dims.height), App.assets.continue_option)
+
+        night_six_dims = App.assets.night_six_option.get_rect()
+        self.night_six_button = Button((80, 490), (night_six_dims.width, night_six_dims.height), App.assets.night_six_option)
+
+        custom_night_dims = App.assets.custom_night_option.get_rect()
+        self.custom_night_button = Button((80, 550), (custom_night_dims.width, custom_night_dims.height), App.assets.custom_night_option)
 
         self.background_id = 0
         self.random_value_number = random.randint(500, 2000)
@@ -28,6 +35,7 @@ class Menu:
         self.timer = pygame.time.get_ticks()
 
         self.inNight = 1
+        self.nightToPlay = 1
 
         self.start_game = False
 
@@ -41,6 +49,8 @@ class Menu:
         pygame.mixer.music.play(-1)
         pygame.mixer.Channel(2).play(App.assets.menu_static_1)
         pygame.mixer.Channel(2).queue(App.assets.menu_static_2)
+
+        self.custom_night_menu = CustomNight(App)
         
 
     def static_animation(self, App):
@@ -71,6 +81,10 @@ class Menu:
             App.surface.blit(App.assets.fnaf_title, (80, 30))
             self.new_game_button.update(App.surface, App.mouse_hitbox)
             self.continue_button.update(App.surface, App.mouse_hitbox)
+            if self.inNight >= 6:
+                self.night_six_button.update(App.surface, App.mouse_hitbox)
+            if self.inNight >= 7:
+                self.custom_night_button.update(App.surface, App.mouse_hitbox)
 
             #print(mouse)
             # Mouse option
@@ -81,10 +95,22 @@ class Menu:
                 if self.played_once:
                     self.option_to_select(App, lambda:self.option_2(), 2)
 
+            elif self.night_six_button.mouse_hovered and self.inNight >= 6:
+                if self.played_once:
+                    self.option_to_select(App, lambda:self.option_3(), 3)
+
+            elif self.custom_night_button.mouse_hovered and self.inNight >= 7:
+                if self.played_once:
+                    self.option_to_select(App, lambda:self.option_4(), 4)
+
             if self.option == 1:
                 App.surface.blit(App.assets.option_selected, (28, 373))
             elif self.option == 2:
                 App.surface.blit(App.assets.option_selected, (28, 433))
+            elif self.option == 3:
+                App.surface.blit(App.assets.option_selected, (28, 493))
+            elif self.option == 4:
+                App.surface.blit(App.assets.option_selected, (28, 553))
 
         if self.start_state > 0:
             pygame.mixer.Channel(2).stop()
@@ -95,12 +121,25 @@ class Menu:
 
     def option_1(self):
         self.inNight = 1
+        self.nightToPlay = 1
         self.start_state = 1
 
     def option_2(self):
-        pygame.mixer.music.unload()
         self.start_state = 2
         self.objects_alpha = 255
+        self.nightToPlay = self.inNight
+        if self.inNight > 5:
+            self.nightToPlay = 5
+
+    def option_3(self):
+        self.start_state = 2
+        self.objects_alpha = 255
+        self.nightToPlay = 6
+
+    def option_4(self):
+        self.start_state = 10
+        self.objects_alpha = 255
+        self.nightToPlay = 7
 
     def option_to_select(self,App, func, option:int):
         mouse = pygame.mouse.get_pressed()
@@ -154,25 +193,28 @@ class Menu:
             if pygame.time.get_ticks() - self.timer > 5:
                 self.objects_alpha += 1
                 self.timer = pygame.time.get_ticks()
+                App.animations.fade_effect.stop_effect()
         else:
             if pygame.time.get_ticks() - self.timer > 4000:
-                App.animations.in_fade_effect.fade_screen()
-                App.animations.in_fade_effect.update(App)
+                App.animations.fade_effect.continue_effect(out_effect=False)
+                App.animations.fade_effect.update(App)
 
-                if App.animations.in_fade_effect.fade_alpha > 240:
+                if App.animations.fade_effect.fade_alpha > 240:
                     pygame.mixer.music.unload()
                     self.start_state += 1
+                    App.animations.fade_effect.stop_effect()
 
                 
 
     def show_night(self, App):
-        App.assets.nights_12am[self.inNight - 1].set_alpha(self.objects_alpha)
-        night_dims = App.assets.nights_12am[self.inNight - 1].get_rect()
-        App.surface.blit(App.assets.nights_12am[self.inNight - 1], (App.dimentions[0] / 2 - night_dims.w / 2, App.dimentions[1] / 2 - night_dims.h / 2))
+        App.assets.nights_12am[self.nightToPlay - 1].set_alpha(self.objects_alpha)
+        night_dims = App.assets.nights_12am[self.nightToPlay - 1].get_rect()
+        App.surface.blit(App.assets.nights_12am[self.nightToPlay - 1], (App.dimentions[0] / 2 - night_dims.w / 2, App.dimentions[1] / 2 - night_dims.h / 2))
 
         match self.start_state:
             case 2:
-                App.animations.in_fade_effect.update(App)
+                pygame.mixer.music.unload()
+                App.animations.fade_effect.update(App)
                 App.animations.static_anim_2.update(App.surface)
 
                 if App.animations.static_anim_2.sprite_num == len(App.animations.static_anim_2.sprites) - 1:
@@ -212,3 +254,11 @@ class Menu:
                 App.animations = animations_init(App)
                 App.objects = GameObjects(App)
                 App.game = Game(App)
+            case 10: 
+                # Init objects for custom night menu
+                App.surface.fill((0, 0, 0))
+                App.objects = GameObjects(App)
+                self.start_state = 11
+
+            case 11: # Custom night
+                self.custom_night_menu.update(App)

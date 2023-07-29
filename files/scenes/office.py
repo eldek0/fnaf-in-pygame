@@ -57,7 +57,6 @@ class Office:
         if self.hallway_animatrionic_fade:
             App.animations.darkness.update(App)
             if not App.animations.darkness.is_animating:
-                print("desactivated")
                 self.hallway_animatrionic_fade = False
 
     def animatrionics_in_office(self, App):

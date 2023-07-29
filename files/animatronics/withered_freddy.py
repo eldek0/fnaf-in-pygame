@@ -2,8 +2,8 @@ import pygame
 from files.animatronics.animatronic_base import Animatronic
 
 class WitheredFreddy(Animatronic):
-    def __init__(self, App, aggresivity:int):
-        super().__init__(aggresivity, 8, App.animations.withered_freddy_jump, 7)
+    def __init__(self, App, aggresivity:int, custom_index:int):
+        super().__init__(aggresivity, 8, App.animations.withered_freddy_jump, 7, custom_index)
 
     def movement(self, App):
         withered_chica = App.objects.Animatronics.animatronics_in_game["WITHERED_CHICA"]

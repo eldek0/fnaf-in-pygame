@@ -3,8 +3,8 @@ import pygame, math
 from files.animatronics.animatronic_base import Animatronic
 
 class Puppet(Animatronic):
-    def __init__(self, App, aggresivity:int):
-        super().__init__(aggresivity=aggresivity, locationId=11, jumpscare_animation=App.animations.puppet_jump, rest_room=None)
+    def __init__(self, App, aggresivity:int, custom_index:int):
+        super().__init__(aggresivity=aggresivity, locationId=11, jumpscare_animation=App.animations.puppet_jump, rest_room=None, custom_index=custom_index)
 
     def movement(self, App):
         if App.objects.music_box.charge == 0:

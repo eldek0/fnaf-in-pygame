@@ -31,7 +31,7 @@ class PaycheckAnimations:
             
             if not self.last_fade:
                 if pygame.time.get_ticks() - self.timer > 18000:
-                    App.animations.fade_effect.continue_effect()
+                    App.animations.fade_effect.continue_effect(out_effect=False)
                     self.last_fade = True
                     
             else:

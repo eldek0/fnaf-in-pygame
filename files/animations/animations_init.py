@@ -19,9 +19,6 @@ class animations_init:
 
         self.darkness = DarknessAnimation(App=App, position=(0,0), frame_wait=3, fading_time=15000)
 
-        self.in_fade_effect = DarknessAnimation(App=App, position=(0,0), frame_wait=0, fading_time=15000, time_until_fade=0, reversed_=True)
-        self.out_fade_effect = DarknessAnimation(App=App, position=(0,0), frame_wait=0, fading_time=15000, time_until_fade=0, reversed_=False)
-
         self.fade_effect = FadeEffect(App=App, position=(0, 0))
 
         self.static_stripes_animation = StaticStripesAnimation(App=App)

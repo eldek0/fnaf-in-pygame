@@ -3,8 +3,8 @@ import pygame
 from files.animatronics.animatronic_base import Animatronic
 
 class ToyChica(Animatronic):
-    def __init__(self, App, aggresivity:int):
-        super().__init__(aggresivity, 9, App.animations.toy_chica_jump, 4)
+    def __init__(self, App, aggresivity:int, custom_index:int):
+        super().__init__(aggresivity, 9, App.animations.toy_chica_jump, 4, custom_index)
 
     def movement(self, App):
         toy_bonnie = App.objects.Animatronics.animatronics_in_game["TOY_BONNIE"]

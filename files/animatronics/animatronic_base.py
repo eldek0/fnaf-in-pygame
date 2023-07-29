@@ -2,7 +2,7 @@ import pygame
 from abc import ABC
 
 class Animatronic(ABC):
-    def __init__(self, aggresivity:int, locationId:int, jumpscare_animation:list, rest_room:int):
+    def __init__(self, aggresivity:int, locationId:int, jumpscare_animation:list, rest_room:int, custom_index:int):
         """
         locationId:
             - From 1 to 12 are room locations
@@ -35,6 +35,7 @@ class Animatronic(ABC):
         self.rest_room = rest_room # The room where the animatrionic rests after a screamer attempt
         self.aggresivity = aggresivity
         self.movement_time = 50_000
+        self.custom_index = custom_index # For custom night
 
         # Aveliable animatrionics with the same office position (101)
         self.aveliable_office_positions = [
@@ -54,7 +55,6 @@ class Animatronic(ABC):
         if self.aggresivity != 0:      
             if not self._jumpscare:
                 if self._prepare_to_jumpscare:
-                    print("prepare")
                     self.jumpscare_time(App)
                 else:
                     self.movement(App)
@@ -95,7 +95,6 @@ class Animatronic(ABC):
         if animatrionics_in_room == []: return True
 
         if not room_location == 101: # It's not office hallway
-            print(animatrionics_in_room)
             for animatrionic in animatrionics_in_room:
                 if animatrionic.name_id != self.name_id:
                     return False

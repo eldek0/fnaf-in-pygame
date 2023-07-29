@@ -3,9 +3,9 @@ import pygame, random
 from files.animatronics.animatronic_base import Animatronic
 
 class GoldenFreddy(Animatronic):
-    def __init__(self, App, aggresivity:int):
-        super().__init__(aggresivity, 0, App.animations.golden_freddy_jump, 0)
-        self.time_to_react = 600
+    def __init__(self, App, aggresivity:int, custom_index:int):
+        super().__init__(aggresivity, 0, App.animations.golden_freddy_jump, 0, custom_index)
+        self.time_to_react = 1000
         self.in_office = False
         self.attempted_once = False
         self.leave = False
@@ -35,5 +35,4 @@ class GoldenFreddy(Animatronic):
             self.jumpscare(App)
 
         if self.locationId == 0:
-            print("reset")
             self.timer = pygame.time.get_ticks()

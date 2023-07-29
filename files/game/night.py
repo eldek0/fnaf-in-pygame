@@ -18,9 +18,9 @@ class NightAIChanger:
         for key in self.animatronics_keys:
             self.animatronics[key].aggresivity = self.animatronics_ai[key]
 
-    def update(self, App, inNight:int):
+    def update(self, App, nightToPlay:int):
         self.time = App.objects.gameTimer.time
-        match inNight:
+        match nightToPlay:
             case 1:
                 self.night_1(App)
             case 2:
@@ -35,6 +35,7 @@ class NightAIChanger:
                 self.night_6(App)
             case 7:
                 self.night_7(App)
+                print(self.animatronics_ai)
             case _:
                 print("No AI configured!")
 
@@ -197,6 +198,10 @@ class NightAIChanger:
             case 5: pass
 
     def night_7(self, App):
-        self.animatronics_ai["WITHERED_BONNIE"] = 20
-
+        """ Get the data from custom night """
+        for key in self.animatronics_keys:
+            try:
+                self.animatronics_ai[key] = App.menu.custom_night_menu.animatrionics_data[key]["aggresive"]
+            except KeyError as e:
+                print(e)
         

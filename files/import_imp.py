@@ -352,6 +352,8 @@ class import_images:
 		self.option_selected = pygame.image.load("sprites/menu/logos/3.png").convert_alpha()
 		self.new_game_option = pygame.image.load("sprites/menu/logos/5.png").convert_alpha()
 		self.continue_option = pygame.image.load("sprites/menu/logos/6.png").convert_alpha()
+		self.night_six_option = pygame.image.load("sprites/menu/nights/12.png").convert_alpha()
+		self.custom_night_option = pygame.image.load("sprites/menu/nights/13.png").convert_alpha()
 
 		self.newspaper = pygame.image.load("sprites/menu/paychecks/1.png").convert()
 		self.loading_icon = pygame.image.load("sprites/menu/logos/0.png").convert_alpha()
@@ -401,7 +403,30 @@ class import_images:
 			self.static_stripes.append(
 				pygame.image.load(f"sprites/cameras/static/s2/{i+1}.png").convert_alpha()
 			)
-			
+
+		# CUSTOM NIGHT
+		# Animatrionics icons and labels
+		self.animatrionic_icons = []
+		for i in range(10):
+			self.animatrionic_icons.append(
+				pygame.image.load(f"sprites/custom_night/icons/{i+1}.png").convert()
+			)
+
+		self.animatrionic_labels = []
+		for i in range(10):
+			self.animatrionic_labels.append(
+				pygame.image.load(f"sprites/custom_night/names/{i+1}.png").convert_alpha()
+			)
+
+		self.numbers2 = []
+		for i in range(10):
+			self.numbers2.append(
+				pygame.image.load(f"sprites/numbers/2nd/{i}.png").convert()
+			)
+
+		self.arrow_right = pygame.image.load(f"sprites/custom_night/labels/2.png").convert()
+		self.arrow_left = pygame.image.load(f"sprites/custom_night/labels/3.png").convert()
+		self.ready_button = pygame.image.load(f"sprites/custom_night/labels/4.png").convert()
 
 		# Get crops from cropped images
 		import_images.cropped_images(self)

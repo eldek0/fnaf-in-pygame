@@ -5,13 +5,14 @@ class YouLostAnimation:
     def __init__(self, App):
         self.timer = pygame.time.get_ticks()
         self.state = 0
-        self.inNight = 1
+        self.nightToPlay = 1
         self.played_once = True
 
     def update(self, App):
         match self.state:
             case 0:
-                self.inNight = App.menu.inNight
+                pygame.mixer.stop()
+                self.nightToPlay = App.menu.nightToPlay
                 App.animations.static_anim_1.update(App.surface)
                 App.animations.static_anim_1.alpha = 255
                 App.assets.game_lost_static.play()
@@ -23,8 +24,7 @@ class YouLostAnimation:
                 if pygame.time.get_ticks() - self.timer > 10000:
                     self.state = 2
                     self.timer = pygame.time.get_ticks()
-                    App.assets.menu_static.stop()
-                    App.assets.game_lost_static2.stop()
+                    App.assets.game_lost_static.stop()
             
             case 2:
                 App.surface.blit(App.assets.lost_screen, (0, 0))
@@ -41,7 +41,7 @@ class YouLostAnimation:
                     App.menu.start_game = False
                     App.menu.static_with_change = True
                     App.menu.option = False
-                    App.menu.inNight = self.inNight
+                    App.menu.inNight = self.nightToPlay
                     App.menu.played_once = self.played_once
                     
                     

@@ -1,7 +1,7 @@
 import pygame
 
 class FadeEffect:
-    def __init__(self, App,position:tuple, effect_out=True, alpha_speed=2):
+    def __init__(self, App,position:tuple, effect_out=True, alpha_speed=1):
         self.black_screen = pygame.Surface((App.dimentions[0], App.dimentions[1]))
         self.alpha = 0
         self.effect_out = effect_out
@@ -13,15 +13,22 @@ class FadeEffect:
         else:
             self.fade_alpha = 0
 
-    def continue_effect(self, change_effect=True):
-        self._stop = False
-        if change_effect:
-            if self.effect_out:
-                self.effect_out = False
-            else:
+    def continue_effect(self, out_effect:bool= None):
+        if out_effect == None:
+            out_effect = not self.effect_out
+
+        if self._stop:
+            if out_effect:
                 self.effect_out = True
+                self.fade_alpha = 255
+            else:
+                self.effect_out = False
+                self.fade_alpha = 0
+            self._stop = False
 
     def effect_stopped(self): return self._stop
+
+    def stop_effect(self): self._stop = True
 
     def update(self, App):
         self.black_screen.set_alpha(self.fade_alpha)

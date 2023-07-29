@@ -16,17 +16,17 @@ class AnimatronicsMain:
     def __init__(self, App):
 
         self.animatronics_in_game = {
-            "TOY_FREDDY":ToyFreddy(App=App, aggresivity=0), 
-            "PUPPET":Puppet(App=App, aggresivity=0),
-            "TOY_BONNIE":ToyBonnie(App=App, aggresivity=0),
-            "TOY_CHICA":ToyChica(App=App, aggresivity=0),
-            "WITHERED_BONNIE":WitheredBonnie(App=App, aggresivity=0),
-            "WITHERED_CHICA":WitheredChica(App=App, aggresivity=0),
-            "WITHERED_FREDDY":WitheredFreddy(App=App, aggresivity=0),
-            "FOXY":Foxy(App=App, aggresivity=0),
-            "MANGLE":Mangle(App=App, aggresivity=0),
-            "BALOON_BOY":BaloonBoy(App=App, aggresivity=0),
-            "GOLDEN_FREDDY":GoldenFreddy(App=App, aggresivity=0)
+            "TOY_FREDDY":ToyFreddy(App=App, aggresivity=0, custom_index=5), 
+            "PUPPET":Puppet(App=App, aggresivity=0, custom_index=None),
+            "TOY_BONNIE":ToyBonnie(App=App, aggresivity=0, custom_index=4),
+            "TOY_CHICA":ToyChica(App=App, aggresivity=0, custom_index=7),
+            "WITHERED_BONNIE":WitheredBonnie(App=App, aggresivity=0, custom_index=1),
+            "WITHERED_CHICA":WitheredChica(App=App, aggresivity=0, custom_index=0),
+            "WITHERED_FREDDY":WitheredFreddy(App=App, aggresivity=0, custom_index=6),
+            "FOXY":Foxy(App=App, aggresivity=0, custom_index=2),
+            "MANGLE":Mangle(App=App, aggresivity=0, custom_index=8),
+            "BALOON_BOY":BaloonBoy(App=App, aggresivity=0, custom_index=3),
+            "GOLDEN_FREDDY":GoldenFreddy(App=App, aggresivity=0, custom_index=9)
         }
         self.gameOver = False
         self.being_jumpscared = False

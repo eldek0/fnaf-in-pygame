@@ -56,13 +56,11 @@ class Game:
         pygame.mixer.Channel(7).set_volume(0) # Baloon boy laugh
 
     def updater(self, App):
-        self.game_update(App)
         if App.objects.gameTimer.time == 6:   
             self.night_beaten = True
 
         if self.night_beaten:
             if not self.sounds_shutted:
-                print("-----")
                 pygame.mixer.stop()
                 pygame.mixer.music.unload()
                 pygame.mixer.Channel(1).set_volume(1)
@@ -73,12 +71,15 @@ class Game:
         if App.objects.Animatronics.being_jumpscared and not self.sounds_shutted:
             self.stop_sounds()
 
+        if not self.night_beaten and not self.you_lost:
+            self.ai_updater.update(App, App.menu.nightToPlay)
+            if App.menu.nightToPlay != 7:
+                self.telephone.update(App, App.menu.nightToPlay)
+
+        self.game_update(App)
+
         if not self.night_beaten and self.sounds_shutted and self.you_lost:
             self.you_lost_animation.update(App)
-
-        if not self.night_beaten and not self.you_lost and App.menu.inNight != 7:
-            self.ai_updater.update(App, App.menu.inNight)
-            self.telephone.update(App, App.menu.inNight)
 
         if not pygame.mixer.music.get_busy() and not self.night_beaten:
             pygame.mixer.music.load(App.assets.background_music)

@@ -3,8 +3,8 @@ import pygame
 from files.animatronics.animatronic_base import Animatronic
 
 class ToyBonnie(Animatronic):
-    def __init__(self, App, aggresivity:int):
-        super().__init__(aggresivity, 9, App.animations.toy_bunny_jump, 3)
+    def __init__(self, App, aggresivity:int, custom_index:int):
+        super().__init__(aggresivity, 9, App.animations.toy_bunny_jump, 3, custom_index)
 
     def movement(self, App):
 
