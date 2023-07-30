@@ -5,6 +5,7 @@ from files.animatronics.animatronic_base import Animatronic
 class BaloonBoy(Animatronic):
     def __init__(self, App, aggresivity:int, custom_index:int):
         super().__init__(aggresivity, 10, None, 10, custom_index)
+        self.time_with_mask_goal = 3000
 
     def movement(self, App):
         match self.locationId:

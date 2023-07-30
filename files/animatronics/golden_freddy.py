@@ -25,7 +25,7 @@ class GoldenFreddy(Animatronic):
                 self.leave = False
             self.attempted_once = True
 
-        if (App.objects.open_monitor_button.inCamera and not App.objects.open_monitor_button.quitting_camera):
+        if (App.objects.open_monitor_button.inCamera and not App.objects.open_monitor_button.quitting_camera) or (App.objects.mask_button.inMask and not App.objects.mask_button.quitting_mask):
             self.change_location_id(App, 0, forced=True)
             self.in_office = False
             self.attempted_once = False

@@ -10,16 +10,16 @@ class Menu:
         self.option:int = 0 # What button is the mouse hovering
 
         new_game_dims = App.assets.new_game_option.get_rect()
-        self.new_game_button = Button((80, 370), (new_game_dims.width, new_game_dims.height), App.assets.new_game_option)
+        self.new_game_button = Button((80, 420), (new_game_dims.width, new_game_dims.height), App.assets.new_game_option)
 
         continue_dims = App.assets.continue_option.get_rect()
-        self.continue_button = Button((80, 430), (continue_dims.width, continue_dims.height), App.assets.continue_option)
+        self.continue_button = Button((80, 480), (continue_dims.width, continue_dims.height), App.assets.continue_option)
 
         night_six_dims = App.assets.night_six_option.get_rect()
-        self.night_six_button = Button((80, 490), (night_six_dims.width, night_six_dims.height), App.assets.night_six_option)
+        self.night_six_button = Button((80, 540), (night_six_dims.width, night_six_dims.height), App.assets.night_six_option)
 
         custom_night_dims = App.assets.custom_night_option.get_rect()
-        self.custom_night_button = Button((80, 550), (custom_night_dims.width, custom_night_dims.height), App.assets.custom_night_option)
+        self.custom_night_button = Button((80, 600), (custom_night_dims.width, custom_night_dims.height), App.assets.custom_night_option)
 
         self.background_id = 0
         self.random_value_number = random.randint(500, 2000)
@@ -34,14 +34,14 @@ class Menu:
 
         self.timer = pygame.time.get_ticks()
 
-        self.inNight = 1
+        self.inNight = 3
         self.nightToPlay = 1
+
+        self.played_once = True
 
         self.start_game = False
 
         self.static_with_change = False
-
-        self.played_once = False
 
         self.option_ready_to_select = 0
 
@@ -65,6 +65,15 @@ class Menu:
         if not pygame.mixer.Channel(2).get_busy():
             pygame.mixer.Channel(2).play(App.assets.menu_static_2)
 
+    def draw_menu_stars(self, App):
+        title_dims = App.assets.fnaf_title.get_rect()
+        if self.inNight >= 5:
+            App.surface.blit(App.assets.star, (80, title_dims.h + 35))
+        if self.inNight >= 6:
+            App.surface.blit(App.assets.star, (80 + 65, title_dims.h + 35))
+        if self.custom_night_menu.completed_nights == [True, True, True, True, True, True, True, True, True, True]:
+            App.surface.blit(App.assets.star, (80 + 65*2, title_dims.h + 35))
+
     def update(self, App):
         if self.start_state == 0:
             self.change_background(App)
@@ -86,31 +95,34 @@ class Menu:
             if self.inNight >= 7:
                 self.custom_night_button.update(App.surface, App.mouse_hitbox)
 
+            self.draw_menu_stars(App)
+
             #print(mouse)
             # Mouse option
-            if self.new_game_button.mouse_hovered:
-                self.option_to_select(App, lambda:self.option_1(), 1)
+            if self.start_state == 0:
+                if self.new_game_button.mouse_hovered:
+                    self.option_to_select(App, lambda:self.option_1(App), 1)
 
-            elif self.continue_button.mouse_hovered:
-                if self.played_once:
-                    self.option_to_select(App, lambda:self.option_2(), 2)
+                elif self.continue_button.mouse_hovered:
+                    if self.played_once:
+                        self.option_to_select(App, lambda:self.option_2(), 2)
 
-            elif self.night_six_button.mouse_hovered and self.inNight >= 6:
-                if self.played_once:
-                    self.option_to_select(App, lambda:self.option_3(), 3)
+                elif self.night_six_button.mouse_hovered and self.inNight >= 6:
+                    if self.played_once:
+                        self.option_to_select(App, lambda:self.option_3(), 3)
 
-            elif self.custom_night_button.mouse_hovered and self.inNight >= 7:
-                if self.played_once:
-                    self.option_to_select(App, lambda:self.option_4(), 4)
+                elif self.custom_night_button.mouse_hovered and self.inNight >= 7:
+                    if self.played_once:
+                        self.option_to_select(App, lambda:self.option_4(), 4)
 
             if self.option == 1:
-                App.surface.blit(App.assets.option_selected, (28, 373))
+                App.surface.blit(App.assets.option_selected, (28, self.new_game_button.position[1] + 3))
             elif self.option == 2:
-                App.surface.blit(App.assets.option_selected, (28, 433))
+                App.surface.blit(App.assets.option_selected, (28, self.continue_button.position[1] + 3))
             elif self.option == 3:
-                App.surface.blit(App.assets.option_selected, (28, 493))
+                App.surface.blit(App.assets.option_selected, (28, self.night_six_button.position[1] + 3))
             elif self.option == 4:
-                App.surface.blit(App.assets.option_selected, (28, 553))
+                App.surface.blit(App.assets.option_selected, (28, self.custom_night_button.position[1] + 3))
 
         if self.start_state > 0:
             pygame.mixer.Channel(2).stop()
@@ -119,10 +131,11 @@ class Menu:
         self.static(App)
         
 
-    def option_1(self):
+    def option_1(self, App):
         self.inNight = 1
         self.nightToPlay = 1
         self.start_state = 1
+        self.custom_night_menu = CustomNight(App)
 
     def option_2(self):
         self.start_state = 2

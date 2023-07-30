@@ -354,12 +354,14 @@ class import_images:
 		self.continue_option = pygame.image.load("sprites/menu/logos/6.png").convert_alpha()
 		self.night_six_option = pygame.image.load("sprites/menu/nights/12.png").convert_alpha()
 		self.custom_night_option = pygame.image.load("sprites/menu/nights/13.png").convert_alpha()
+		self.star = pygame.image.load("sprites/menu/misc/4.png").convert_alpha()
 
 		self.newspaper = pygame.image.load("sprites/menu/paychecks/1.png").convert()
 		self.loading_icon = pygame.image.load("sprites/menu/logos/0.png").convert_alpha()
 
 		self.night_five_paycheck = pygame.image.load("sprites/menu/paychecks/2.png").convert()
 		self.night_six_paycheck = pygame.image.load("sprites/menu/paychecks/3.png").convert()
+		self.night_seven_paycheck = pygame.image.load("sprites/menu/paychecks/4.png").convert()
 
 		self.nights_12am = []
 		for i in range(7):
@@ -424,9 +426,22 @@ class import_images:
 				pygame.image.load(f"sprites/numbers/2nd/{i}.png").convert()
 			)
 
+		self.custom_night_title = pygame.image.load(f"sprites/custom_night/labels/1.png").convert_alpha()
 		self.arrow_right = pygame.image.load(f"sprites/custom_night/labels/2.png").convert()
 		self.arrow_left = pygame.image.load(f"sprites/custom_night/labels/3.png").convert()
 		self.ready_button = pygame.image.load(f"sprites/custom_night/labels/4.png").convert()
+
+		self.arrow_right2 = pygame.image.load(f"sprites/custom_night/labels/5.png").convert()
+		self.arrow_left2 = pygame.image.load(f"sprites/custom_night/labels/6.png").convert()
+
+		self.custom_night_level_info = pygame.image.load(f"sprites/custom_night/labels/7.png").convert_alpha()
+
+		# Modes
+		self.modes_labels = []
+		for i in range(10):
+			self.modes_labels.append(
+				pygame.image.load(f"sprites/custom_night/modes/{i+1}.png").convert()
+			)
 
 		# Get crops from cropped images
 		import_images.cropped_images(self)
@@ -465,7 +480,7 @@ class import_images:
 
 		self.mangle_noise = pygame.mixer.Sound("sounds/elec_garble.wav")
 
-		self.baloon_laugh = pygame.mixer.Sound("sounds/echo4b.wav")
+		self.baloon_laugh = pygame.mixer.Sound("sounds/echo3.wav")
 
 		self.scary_ambiance = pygame.mixer.Sound("sounds/ScaryAmbiance.wav")
 
@@ -480,6 +495,32 @@ class import_images:
 		self.game_lost_static = pygame.mixer.Sound("sounds/gameOver.wav")
 
 		self.music_box2 = pygame.mixer.Sound("sounds/musicbox2.wav")
+
+		self.coin_sound = pygame.mixer.Sound("sounds/coin.wav")
+
+
+		self.vents_sounds = pygame.mixer.Sound("sounds/ventwalk1.wav")
+
+		self.walk_sounds = []
+		for i in range(5):
+			self.walk_sounds.append(
+				pygame.mixer.Sound(f"sounds/walk{i+1}.wav")
+			)
+
+		self.metal_walk_sounds = []
+		for i in range(3):
+			self.walk_sounds.append(
+				pygame.mixer.Sound(f"sounds/metalwalk{i+1}.wav")
+			)
+
+		self.metal_run_sound = pygame.mixer.Sound(f"sounds/metalrun.wav")
+
+		self.baloon_noises = []
+		for i in range(2):
+			self.baloon_noises.append(
+				f"sounds/echo{i+1}.wav"
+			)
+
 
 		self.telephone_audios = []
 		for i in range(6):

@@ -59,6 +59,19 @@ class Game:
         if App.objects.gameTimer.time == 6:   
             self.night_beaten = True
 
+        if App.objects.Animatronics.being_jumpscared and not self.sounds_shutted:
+            self.stop_sounds()
+
+        if not self.night_beaten and not self.you_lost:
+            self.ai_updater.update(App, App.menu.nightToPlay)
+            if App.menu.nightToPlay != 7 and App.objects.Animatronics.being_jumpscared:
+                self.telephone.update(App, App.menu.nightToPlay)
+
+        self.game_update(App)
+
+        if not App.objects.Animatronics.being_jumpscared and App.menu.nightToPlay != 7:
+            self.telephone.update(App, App.menu.nightToPlay)
+
         if self.night_beaten:
             if not self.sounds_shutted:
                 pygame.mixer.stop()
@@ -67,16 +80,6 @@ class Game:
                 pygame.mixer.Channel(1).play(App.assets.clock_chimes)
                 self.sounds_shutted = True
             self.beaten_animation.update(App)
-
-        if App.objects.Animatronics.being_jumpscared and not self.sounds_shutted:
-            self.stop_sounds()
-
-        if not self.night_beaten and not self.you_lost:
-            self.ai_updater.update(App, App.menu.nightToPlay)
-            if App.menu.nightToPlay != 7:
-                self.telephone.update(App, App.menu.nightToPlay)
-
-        self.game_update(App)
 
         if not self.night_beaten and self.sounds_shutted and self.you_lost:
             self.you_lost_animation.update(App)

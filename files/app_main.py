@@ -48,6 +48,7 @@ class App:
 		if data:
 			self.menu.inNight = data["Night"]
 			self.menu.played_once = data["Played"]
+			self.menu.custom_night_menu.completed_nights = data["Custom"]
 
 	def get_deltatime(self):
 		self.now_time = time.time()

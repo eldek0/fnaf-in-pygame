@@ -35,7 +35,6 @@ class NightAIChanger:
                 self.night_6(App)
             case 7:
                 self.night_7(App)
-                print(self.animatronics_ai)
             case _:
                 print("No AI configured!")
 
@@ -203,5 +202,5 @@ class NightAIChanger:
             try:
                 self.animatronics_ai[key] = App.menu.custom_night_menu.animatrionics_data[key]["aggresive"]
             except KeyError as e:
-                print(e)
+                self.animatronics_ai[key] = 0
         

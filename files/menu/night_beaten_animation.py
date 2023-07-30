@@ -47,11 +47,20 @@ class NightBeatenAnimation:
 
             if self.ended_animation:
                 if pygame.time.get_ticks() - self.timer > 4000:
-                    print("change start")
+                    if App.menu.nightToPlay == 7:
+                        index = App.menu.custom_night_menu.mode_index
+                        App.menu.custom_night_menu.completed_nights[index] = True
+
                     if App.menu.nightToPlay < 5: 
                         self.end_reset_variables(App)
                     else:
-                        self.pay_animation.inAnimation = True
+                        if App.menu.nightToPlay == 7 and App.menu.custom_night_menu.completed_nights == [True, True, True, True, True, True, True, True, True, True]:
+                            self.pay_animation.inAnimation = True
+                            self.pay_animation.paycheck_asset = App.assets.night_seven_paycheck
+                        elif App.menu.nightToPlay == 5 or App.menu.nightToPlay == 6:
+                            self.pay_animation.inAnimation = True
+                        else:
+                            self.end_reset_variables(App, toMenu=True)
 
         elif self.pay_animation.inAnimation:
             App.surface.fill((0,0,0))
@@ -67,12 +76,15 @@ class NightBeatenAnimation:
 
     def end_reset_variables(self, App, toMenu=False):
         if toMenu:
-            night = App.menu.nightToPlay
-            App.menu.__init__(App)
+            night = App.menu.inNight
+            custom_completed_nights = App.menu.custom_night_menu.completed_nights
+            App.menu.__init__(App) # Resets menu
             App.menu.start_state = 0
-            App.menu.nightToPlay = night
+            App.menu.inNight = night
+            App.menu.custom_night_menu.completed_nights = custom_completed_nights
         else:
             App.menu.start_state = 2
+
         App.menu.start_game = False
         App.menu.timer = pygame.time.get_ticks()
         App.menu.objects_alpha = 255

@@ -1,4 +1,4 @@
-import pygame
+import pygame, random
 from abc import ABC
 
 class Animatronic(ABC):
@@ -36,6 +36,8 @@ class Animatronic(ABC):
         self.aggresivity = aggresivity
         self.movement_time = 50_000
         self.custom_index = custom_index # For custom night
+        self.noise_timer = pygame.time.get_ticks()
+        self.time_to_make_noise = 10000
 
         # Aveliable animatrionics with the same office position (101)
         self.aveliable_office_positions = [
@@ -66,9 +68,25 @@ class Animatronic(ABC):
                 self._change_occupied_camera_or_office(App, False)
                 self.action_error = False
             
+            self.animatrionic_movement_sounds(App)
+
             # If in room 0
             if self.locationId == 0 and self.rest_room != None:
                 self.change_location_id(App, self.rest_room)
+
+    def animatrionic_movement_sounds(self, App):
+        if pygame.time.get_ticks() - self.noise_timer > self.time_to_make_noise:
+            if self.locationId == 5:
+                App.assets.vents_sounds.play()
+
+            elif self.changing_position:
+                ran = random.randint(0, 5)
+                if ran <= 4:
+                    App.assets.walk_sounds[ran].play()
+                else:
+                    App.assets.metal_walk_sounds[ran].play()
+
+            self.noise_timer = pygame.time.get_ticks()
 
     def jumpscare_time(self, App):
         if pygame.time.get_ticks() - self.timer > self.jumpscare_wait_time and App.objects.open_monitor_button.inCamera:
