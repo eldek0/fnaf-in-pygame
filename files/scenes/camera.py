@@ -191,7 +191,7 @@ class Camera:
                 self.camera_basics(App, App.assets.kids_cove_cameras,11, lambda:self.kids_cove(App))
                 self.label_to_draw = App.assets.kids_cove_label
 
-        if App.objects.music_box.charge != 0 and not self.occupied_camera[self.inCameraRoom-1]:
+        if not App.objects.music_box.times_out and not self.occupied_camera[self.inCameraRoom-1]:
             self.room_music()
 
         mangle = App.objects.Animatronics.animatronics_in_game["MANGLE"]

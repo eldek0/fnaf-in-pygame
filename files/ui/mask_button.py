@@ -13,7 +13,11 @@ class MaskButton:
         if canInteract:
             if self.inMask and not self.quitting_mask:
                 App.animations.mask.update(App.surface)
-                App.surface.blit(App.assets.mask_sprites[9], (-100, -100))
+                App.animations.mask_animation.update()
+                pos_sum = App.animations.mask_animation.position
+                App.surface.blit(App.assets.mask_sprites[9], (-100 + pos_sum[0], -100 + pos_sum[1]))
+            else:
+                App.animations.mask_animation.reset()
 
         self.animation(App, canInteract=canInteract)
 

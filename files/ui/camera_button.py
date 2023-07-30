@@ -58,7 +58,7 @@ class CameraButton:
             if self.quitting_camera:
                 App.animations.monitor.desactivate = False
                 
-                if App.objects.music_box.charge != 0:
+                if not App.objects.music_box.times_out:
                     pygame.mixer.Channel(2).set_volume(0)
 
                 App.animations.monitor.update(App.surface, reversed=True)

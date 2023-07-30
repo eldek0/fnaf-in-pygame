@@ -77,6 +77,12 @@ class CustomNight:
         self.check_in_mode(App)
         self.draw_mode_buttons(App)
 
+        keys = pygame.key.get_pressed()
+        if keys[pygame.K_ESCAPE]:
+            App.menu.start_state = 0
+            App.menu.static_with_change = True
+            
+
     def check_in_mode(self, App):
         aggresive_animatrionics = self.get_aggresiveness()
         for i in range(len(self.modes)):

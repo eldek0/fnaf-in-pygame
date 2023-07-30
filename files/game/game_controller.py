@@ -133,6 +133,9 @@ class Game:
                 App.objects.Animatronics.update(App)
                 App.gameOver = App.objects.Animatronics.gameOver
 
+                # Music box warning
+                App.objects.music_box.warning_sign(App)
+
                 # Sounds
                 sounds_effects_updater(App)
         else:

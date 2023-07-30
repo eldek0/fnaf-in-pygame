@@ -376,6 +376,18 @@ class import_images:
 				pygame.image.load(f"sprites/numbers/medium/{i}.png").convert_alpha()
 			)
 
+		self.numbers_small = []
+		for i in range(10):
+			self.numbers_small.append(
+				pygame.image.load(f"sprites/numbers/small/{i}.png").convert_alpha()
+			)
+
+		self.numbers2 = []
+		for i in range(10):
+			self.numbers2.append(
+				pygame.image.load(f"sprites/numbers/2nd/{i}.png").convert()
+			)
+
 		self.night_label = pygame.image.load(f"sprites/clock/20.png").convert_alpha()
 		self.am_label = pygame.image.load(f"sprites/clock/2.png").convert_alpha()
 
@@ -406,6 +418,20 @@ class import_images:
 				pygame.image.load(f"sprites/cameras/static/s2/{i+1}.png").convert_alpha()
 			)
 
+		self.warn_big = []
+		for i in range(24,26):
+			self.warn_big.append(
+				pygame.image.load(f"sprites/office/utils/{i}.png").convert_alpha()
+			)
+
+		self.warn_small = []
+		for i in range(30,32):
+			self.warn_small.append(
+				pygame.image.load(f"sprites/office/utils/{i}.png").convert_alpha()
+			)
+
+		self.night_label_2 = pygame.image.load("sprites/menu/logos/8.png").convert_alpha()
+
 		# CUSTOM NIGHT
 		# Animatrionics icons and labels
 		self.animatrionic_icons = []
@@ -418,12 +444,6 @@ class import_images:
 		for i in range(10):
 			self.animatrionic_labels.append(
 				pygame.image.load(f"sprites/custom_night/names/{i+1}.png").convert_alpha()
-			)
-
-		self.numbers2 = []
-		for i in range(10):
-			self.numbers2.append(
-				pygame.image.load(f"sprites/numbers/2nd/{i}.png").convert()
 			)
 
 		self.custom_night_title = pygame.image.load(f"sprites/custom_night/labels/1.png").convert_alpha()
@@ -441,6 +461,13 @@ class import_images:
 		for i in range(10):
 			self.modes_labels.append(
 				pygame.image.load(f"sprites/custom_night/modes/{i+1}.png").convert()
+			)
+
+		# Rewards
+		self.custom_night_rewards = []
+		for i in range(9):
+			self.custom_night_rewards.append(
+				pygame.image.load(f"sprites/custom_night/rewards/{i}.png").convert_alpha()
 			)
 
 		# Get crops from cropped images

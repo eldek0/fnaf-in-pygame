@@ -13,13 +13,13 @@ class Menu:
         self.new_game_button = Button((80, 420), (new_game_dims.width, new_game_dims.height), App.assets.new_game_option)
 
         continue_dims = App.assets.continue_option.get_rect()
-        self.continue_button = Button((80, 480), (continue_dims.width, continue_dims.height), App.assets.continue_option)
+        self.continue_button = Button((80, 490), (continue_dims.width, continue_dims.height), App.assets.continue_option)
 
         night_six_dims = App.assets.night_six_option.get_rect()
-        self.night_six_button = Button((80, 540), (night_six_dims.width, night_six_dims.height), App.assets.night_six_option)
+        self.night_six_button = Button((80, 560), (night_six_dims.width, night_six_dims.height), App.assets.night_six_option)
 
         custom_night_dims = App.assets.custom_night_option.get_rect()
-        self.custom_night_button = Button((80, 600), (custom_night_dims.width, custom_night_dims.height), App.assets.custom_night_option)
+        self.custom_night_button = Button((80, 630), (custom_night_dims.width, custom_night_dims.height), App.assets.custom_night_option)
 
         self.background_id = 0
         self.random_value_number = random.randint(500, 2000)
@@ -34,10 +34,10 @@ class Menu:
 
         self.timer = pygame.time.get_ticks()
 
-        self.inNight = 3
+        self.inNight = 1
         self.nightToPlay = 1
 
-        self.played_once = True
+        self.played_once = False
 
         self.start_game = False
 
@@ -71,7 +71,7 @@ class Menu:
             App.surface.blit(App.assets.star, (80, title_dims.h + 35))
         if self.inNight >= 6:
             App.surface.blit(App.assets.star, (80 + 65, title_dims.h + 35))
-        if self.custom_night_menu.completed_nights == [True, True, True, True, True, True, True, True, True, True]:
+        if self.custom_night_menu.completed_nights[0] == True: # 4/20 mode is completed
             App.surface.blit(App.assets.star, (80 + 65*2, title_dims.h + 35))
 
     def update(self, App):
@@ -119,6 +119,12 @@ class Menu:
                 App.surface.blit(App.assets.option_selected, (28, self.new_game_button.position[1] + 3))
             elif self.option == 2:
                 App.surface.blit(App.assets.option_selected, (28, self.continue_button.position[1] + 3))
+                App.surface.blit(App.assets.night_label_2, (80, 535))
+                night = self.inNight
+                if night > 5:
+                    night = 5
+                App.surface.blit(App.assets.numbers_small[night], (150, 537))
+
             elif self.option == 3:
                 App.surface.blit(App.assets.option_selected, (28, self.night_six_button.position[1] + 3))
             elif self.option == 4:
@@ -251,14 +257,14 @@ class Menu:
                     
             case 5:
                 self.objects_alpha = 0
-                if pygame.time.get_ticks() - self.timer < 4000:
+                if pygame.time.get_ticks() - self.timer < 4000: #4000
                     App.surface.blit(App.assets.loading_icon, (App.dimentions[0] - (App.assets.loading_icon.get_width() + 20 ), App.dimentions[1] - (App.assets.loading_icon.get_height() + 20 ) ))
                 else:
                     self.timer = pygame.time.get_ticks()
                     self.start_state = 6
 
             case 6:
-                if pygame.time.get_ticks() - self.timer > 3000:
+                if pygame.time.get_ticks() - self.timer > 3000: # 3000
                     self.start_state = 7
 
             case 7:

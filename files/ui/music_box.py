@@ -4,14 +4,19 @@ from files.ui.button import Button
 class MusicBoxButton:
     def __init__(self, App, position:list):
         self.charge = 21
+        self.fake_charge = 0
         self.position = position
         button_size = [App.assets.music_box_button_off.get_width(), App.assets.music_box_button_off.get_height()]
         self.button = Button(position, button_size, App.assets.music_box_button_off)
         self.timer = pygame.time.get_ticks()
         self.timer_sound = pygame.time.get_ticks()
+        self.warning_timer = pygame.time.get_ticks()
         self.recharging_time = False
         self.times_out = False
         self.descharge_ticks = 2000
+        self.warning_index = 0
+        self.warning_ticks = 500
+
 
     def update(self, App):
 
@@ -35,28 +40,56 @@ class MusicBoxButton:
                 self.timer = pygame.time.get_ticks()
                 self.recharging_time = False
 
-        if not self.times_out:
+        if self.charge != 0:
             # Draw timer
             App.surface.blit(App.assets.music_box_timer_sprites[self.charge-1], [self.position[0] - 100, self.position[1]])
 
     def run_time(self, App):
-        if not self.times_out:
-            if pygame.time.get_ticks() - self.timer > self.descharge_ticks and not self.charge == 0 and not self.recharging_time:
-                self.charge -= 1
-                self.timer = pygame.time.get_ticks()
+        if pygame.time.get_ticks() - self.timer > self.descharge_ticks and not self.charge == 0 and not self.recharging_time:
+            self.charge -= 1
+            self.timer = pygame.time.get_ticks()
 
-            if self.charge == 0:
-                self.times_out = True
+        if self.charge == 0:
+            self.times_out = True
+
 
     def recharge_time(self, App):
         puppet = App.objects.Animatronics.animatronics_in_game["PUPPET"]
-        if not self.times_out:
-            if not self.recharging_time:
-                self.timer = pygame.time.get_ticks()
-                self.recharging_time = True
+        if not self.recharging_time:
+            self.timer = pygame.time.get_ticks()
+            self.recharging_time = True
 
-            if self.recharging_time:
-                if pygame.time.get_ticks() - self.timer > 150 * (puppet.aggresivity//10):
-                    if not self.charge >= 21:
-                        self.charge += 1
-                    self.timer = pygame.time.get_ticks()
+        if self.recharging_time:
+            if pygame.time.get_ticks() - self.timer > 150 * (puppet.aggresivity//10):
+                if not self.charge >= 21:
+                    self.charge += 1
+                self.timer = pygame.time.get_ticks()
+
+            self.warning_timer = pygame.time.get_ticks()
+            self.warning_index = -1
+
+    def warning_sign(self, App):
+        if self.charge < 10 and not self.times_out:
+            if self.warning_index != -1:
+                if (not App.objects.open_monitor_button.inCamera or App.objects.open_monitor_button.quitting_camera):
+                    App.surface.blit(App.assets.warn_big[self.warning_index], (530, App.dimentions[1] - 130))
+                else:
+                    App.surface.blit(App.assets.warn_small[self.warning_index], (954 - 55,515 - 110))
+
+            # Warning index
+            if pygame.time.get_ticks() - self.warning_timer > self.warning_ticks:
+                if self.warning_index == -1:
+                    if self.charge >= 5:
+                        self.warning_index = 0
+                    else:
+                        self.warning_index = 1
+                else:
+                    self.warning_index = -1
+                self.warning_timer = pygame.time.get_ticks()
+
+            if self.charge >= 5:
+                self.warning_ticks = 500
+            else:
+                self.warning_ticks = 200
+        else:
+            self.warning_timer = pygame.time.get_ticks()

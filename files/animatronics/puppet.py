@@ -7,7 +7,7 @@ class Puppet(Animatronic):
         super().__init__(aggresivity=aggresivity, locationId=11, jumpscare_animation=App.animations.puppet_jump, rest_room=None, custom_index=custom_index)
 
     def movement(self, App):
-        if App.objects.music_box.charge == 0:
+        if App.objects.music_box.times_out:
             self.secondPositionId = 3
             if self.secondPositionId == 1:
                 self.change_location_id(App, 11, secondPositionId=2)
@@ -20,7 +20,7 @@ class Puppet(Animatronic):
                 if pygame.time.get_ticks() - self.timer > 10000 // (self.aggresivity/50) :
                     self.jumpscare(App)
 
-        elif App.objects.music_box.charge != 0:
+        elif not App.objects.music_box.times_out:
             self.timer = pygame.time.get_ticks()
 
         App.objects.music_box.descharge_ticks = 6000/(math.log((self.aggresivity + 1)**4))

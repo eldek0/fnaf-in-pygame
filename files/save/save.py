@@ -70,7 +70,11 @@ def read(App):
         en = f.read()
 
     print(en)
-    json_raw = rsa.decrypt(en, PRIVATE_KEY).decode("utf-8")
+    try:
+        json_raw = rsa.decrypt(en, PRIVATE_KEY).decode("utf-8")
+    except rsa.pkcs1.DecryptionError:
+        print("A DECRIPTION ERROR HAPPENED, RESETTING GAME VALUES")
+        return None
     print(json_raw)
     # Read the file from json
 

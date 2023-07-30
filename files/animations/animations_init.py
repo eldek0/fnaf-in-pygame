@@ -4,6 +4,7 @@ from files.animations.darkness_effect import DarknessAnimation
 from files.animations.static_stripe_animation import StaticStripesAnimation
 from files.animations.random_animation import RandomSpritesAnimation
 from files.animations.fade_effect import FadeEffect
+from files.animations.mask_animation import MaskAnimation
 
 class animations_init:
     def __init__(self, App):
@@ -35,6 +36,8 @@ class animations_init:
         self.static_stripes_animation5 = StaticStripesAnimation(App=App, random_sprites_range=(3, 3))
 
         self.random_static_animation = RandomSpritesAnimation(App=App, sprites=App.assets.static_2, position=(0, 0), speed_frame=5)
+
+        self.mask_animation = MaskAnimation(position=[0, 20])
 
         # -- Jumpscares --
         self.puppet_jump = SpritesAnimation(sprites=App.assets.puppet_screamer_animation, position=(0, 0), frame_wait=2)

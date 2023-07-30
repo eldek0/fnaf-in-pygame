@@ -50,6 +50,7 @@ class Office:
             self.animatrionics_in_office(App)
 
             self.desk_update(App)
+            self.desk_rewards(App)
             if not animate:
                 App.animations.desk.animate = False
 
@@ -58,6 +59,38 @@ class Office:
             App.animations.darkness.update(App)
             if not App.animations.darkness.is_animating:
                 self.hallway_animatrionic_fade = False
+
+    def desk_rewards(self, App):
+        custom_nights_completed = App.menu.custom_night_menu.completed_nights
+
+        x_sum = 470 + self.position[0]
+
+        if custom_nights_completed[2]: # New and Shiny (Toy bonnie)
+            App.surface.blit(App.assets.custom_night_rewards[5], (560+ x_sum, 470))
+
+        if custom_nights_completed[6]: # Freddy's Circus (Freddy Fazbear)
+            App.surface.blit(App.assets.custom_night_rewards[1], (170+ x_sum, 490))
+
+        if custom_nights_completed[1]: # Double trouble (unlocks bonnie)
+            App.surface.blit(App.assets.custom_night_rewards[2], (260 + x_sum, 480))
+
+        if custom_nights_completed[4]: # Ladies Night (chica)
+            App.surface.blit(App.assets.custom_night_rewards[3], (175+ x_sum, 526))
+
+        if custom_nights_completed[5]: # Foxy Foxy (foxy)
+            App.surface.blit(App.assets.custom_night_rewards[4], (320+ x_sum, 515))
+
+        if custom_nights_completed[3]: # Night of Misfits (BB)
+            App.surface.blit(App.assets.custom_night_rewards[6], (490+ x_sum, 520))
+
+        if custom_nights_completed[7]: # Cupcake Challenge (chica's cupcake)
+            App.surface.blit(App.assets.custom_night_rewards[0], (610+ x_sum, 510))
+
+        if custom_nights_completed[8]: # Fazbear Fever (microphone)
+            App.surface.blit(App.assets.custom_night_rewards[8], (360+ x_sum, 620))
+
+        if custom_nights_completed[9]: # Golden Freddy (golden freddy)
+            App.surface.blit(App.assets.custom_night_rewards[7], (720+ x_sum, 530))
 
     def animatrionics_in_office(self, App):
         mangle = App.objects.Animatronics.animatronics_in_game["MANGLE"]

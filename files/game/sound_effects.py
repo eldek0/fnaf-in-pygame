@@ -5,7 +5,7 @@ def sounds_effects_updater(App):
         if not pygame.mixer.Channel(1).get_busy():
             pygame.mixer.Channel(1).play(App.assets.fan_sound)
 
-        if App.objects.music_box.charge != 0:
+        if not App.objects.music_box.times_out:
             if not pygame.mixer.Channel(2).get_busy():
                 pygame.mixer.Channel(2).play(App.assets.music_box)
         else:

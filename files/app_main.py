@@ -15,7 +15,8 @@ class App:
 	def __init__(self, initial_dimentions=(1024, 768), caption="Five Nights at Freddy's - made with pygame"):
 		self.playing = True
 
-		data = read(self)
+		#data = read(self)
+		data = None
 
 		# Surface init
 		pygame.init() # Starts the pygame timer
