@@ -39,6 +39,16 @@ class animations_init:
 
         self.mask_animation = MaskAnimation(position=[0, 20])
 
+        # Confetti
+        confs = [App.assets.blue_conf, App.assets.yellow_conf, App.assets.green_conf, App.assets.pink_conf]
+        self.confs_animation = []
+        for con in confs:
+            for i in range(5):
+                self.confs_animation.append(
+                    SpritesAnimation(con, [random.randint(0, App.dimentions[0] - 40), 0], frame_wait=6, isLoop=True)
+                )
+
+
         # -- Jumpscares --
         self.puppet_jump = SpritesAnimation(sprites=App.assets.puppet_screamer_animation, position=(0, 0), frame_wait=2)
         self.toy_bunny_jump = SpritesAnimation(sprites=App.assets.toy_bunny_screamer_animation, position=(0, 0), frame_wait=2)

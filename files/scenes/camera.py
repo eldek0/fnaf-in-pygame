@@ -77,7 +77,7 @@ class Camera:
             if App.animations.static_anim_2.sprite_num == len(App.animations.static_anim_2.sprites) - 1:
                 App.animations.static_anim_2.sprite_num = 0
                 self.static_animation = False
-                App.assets.camera_sound_1.play()
+                App.assets.blip1.play()
 
         if self.occupied_camera[self.inCameraRoom-1]:
             signal_intr = App.assets.camera_signal_interrupted
@@ -265,8 +265,6 @@ class Camera:
                 if mouse_click[0] or ctrl_clicked:
                     if surface_id_on:
                         surface_id = surface_id_on
-                        if not self.camera_flashlighting:
-                            App.assets.buzzlight.play()
                         self.camera_flashlighting = True
 
             App.surface.blit(cameras_list[surface_id], (self.cameras_x_position[index], 0))
@@ -274,12 +272,9 @@ class Camera:
             App.animations.static_anim_1.alpha = 255
 
         # Flashlighting detection
-        if not flashlight_collide or not mouse_click[0] or self.occupied_camera[index] or not ctrl_clicked:
+        if not ( (flashlight_collide and mouse_click[0]) or ctrl_clicked ) and not self.occupied_camera[index]:
             surface_id = surface_id_off
             self.camera_flashlighting = False
-
-        if not self.camera_flashlighting:
-            App.assets.buzzlight.stop()
 
     # Normal
     def party_room_1(self, App):

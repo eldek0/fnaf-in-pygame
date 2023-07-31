@@ -33,11 +33,19 @@ def save(App):
 def default():
     data = {
         "Night":1,
-        "Played":False
+        "Played":False,
+        "Custom":[
+            False, False, False, False, False,
+            False, False, False, False, False
+        ]
     }
     return data
 
 def read(App):
+    # Create the file if it does not exist
+    """with open("files/utils.txt", "wb") as f:
+        f.close()"""
+
     with open("files/utils.txt", "rb") as f:
         en = f.read()
 

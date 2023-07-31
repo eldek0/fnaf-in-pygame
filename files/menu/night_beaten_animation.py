@@ -1,4 +1,4 @@
-import pygame
+import pygame, random
 from files.menu.paychecks_animation import PaycheckAnimations
 
 
@@ -15,6 +15,21 @@ class NightBeatenAnimation:
         self.start_animation = False
         self.ended_animation = False
         self.pay_animation = PaycheckAnimations(App)
+        self.confetti_timer = pygame.time.get_ticks()
+        self.confetti_direction = [
+            {"time_spawn":0, "add":(1, 1), "ran_time":random.randint(1, 100)},
+            {"time_spawn":500, "add":(1, 1), "ran_time":random.randint(1, 100)},
+            {"time_spawn":4800, "add":(-1, 1), "ran_time":random.randint(1, 100)},
+            {"time_spawn":1500, "add":(-1, 1), "ran_time":random.randint(1, 100)},
+            {"time_spawn":3000, "add":(1, 1), "ran_time":random.randint(1, 100)},
+            {"time_spawn":2300, "add":(-1, 1), "ran_time":random.randint(1, 100)},
+            {"time_spawn":2000, "add":(-1, 1), "ran_time":random.randint(1, 100)},
+            {"time_spawn":4000, "add":(1, 1), "ran_time":random.randint(1, 100)},
+            {"time_spawn":3400, "add":(-1, 1), "ran_time":random.randint(1, 100)},
+            {"time_spawn":5300, "add":(-1, 1), "ran_time":random.randint(1, 100)},
+            {"time_spawn":3400, "add":(-1, 1), "ran_time":random.randint(1, 100)},
+            {"time_spawn":4500, "add":(1, 1), "ran_time":random.randint(1, 100)}
+        ]
 
     def update(self, App):
         # Change alpha
@@ -24,6 +39,7 @@ class NightBeatenAnimation:
                 self.alpha = App.animations.fade_effect.fade_alpha
                 App.assets.five_animation[self.index].set_alpha(self.alpha)
                 App.assets.big_am.set_alpha(self.alpha)
+                self.confetti_timer = pygame.time.get_ticks()
 
             if self.alpha >= 250:
                 self.start_animation = True
@@ -72,7 +88,19 @@ class NightBeatenAnimation:
                 self.end_reset_variables(App, toMenu=True)
 
         self.pay_animation.update(App)
+        self.update_confetti(App)
                 
+    def update_confetti(self, App):
+        index = 0
+        time_to_spawn = 0
+        if self.start_animation:
+            for anim in App.animations.confs_animation:
+                data = self.confetti_direction[round(index%(len(self.confetti_direction)-1))]
+                if pygame.time.get_ticks() - self.confetti_timer > time_to_spawn + data["time_spawn"] + data["ran_time"] + anim.ran_value*8:
+                    anim.position[0] += data["add"][0]/2.5
+                    anim.position[1] += data["add"][1]*1.5
+                    anim.update(App.surface)
+                index += 1
 
     def end_reset_variables(self, App, toMenu=False):
         if toMenu:

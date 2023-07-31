@@ -3,7 +3,7 @@ import pygame
 class Office:
     def __init__(self, App):
         self.position = [-240, 0]
-        self.move_speed = 10
+        self.move_speed = 15
         self.office_sprite = App.assets.office1
         self.right_vent_button, self.left_vent_button = App.assets.right_vent_button_off, App.assets.left_vent_button_off
         self.right_vent_on, self.left_vent_on, self.hallway_on = False, False, False
@@ -139,8 +139,6 @@ class Office:
             if mouse_click[0] or ctrl_clicked:
                 if not (cannot_interact or App.objects.battery.charge == 0  or baloon_boy.locationId == -1):
                     self.hallway_on = True
-                    if not self.attempting_hallway_interact:
-                        App.assets.buzzlight.play()
 
                 else:
                     # Make an error sound
@@ -153,9 +151,6 @@ class Office:
         if (not hallway_collide or not mouse_click[0]) and not ctrl_clicked:
             self.attempting_hallway_interact = False
             self.hallway_on = False
-
-        if not self.hallway_on and not self.left_vent_on and not self.right_vent_on:
-            App.assets.buzzlight.stop()
 
     def right_vent_interact(self, App):
         baloon_boy = App.objects.Animatronics.animatronics_in_game["BALOON_BOY"]
@@ -174,10 +169,7 @@ class Office:
                 if not (self.occupied_office[1] or App.objects.battery.charge == 0  or baloon_boy.locationId == -1):
                     self.office_sprite = App.assets.right_vent_offices[self.get_flashed_right_vent(App)]
                     self.right_vent_on = True
-                    if not self.attempting_right_vent_interact:
-                        App.assets.buzzlight.play()
                 else:
-                    App.assets.buzzlight.stop()
                     self.right_vent_on = False
                     # Make an error sound
                     if not self.attempting_right_vent_interact:
@@ -190,7 +182,6 @@ class Office:
             self.attempting_right_vent_interact = False
 
         if not self.right_vent_on and not self.left_vent_on and not self.hallway_on:
-            App.assets.buzzlight.stop()
             self.office_sprite = App.assets.office1
             
     def left_vent_interact(self, App):
@@ -210,10 +201,7 @@ class Office:
                 if not (self.occupied_office[2] or App.objects.battery.charge == 0  or baloon_boy.locationId == -1):
                     self.office_sprite = App.assets.left_vent_offices[self.get_flashed_left_vent(App)]
                     self.left_vent_on = True
-                    if not self.attempting_left_vent_interact:
-                        App.assets.buzzlight.play()
                 else:
-                    App.assets.buzzlight.stop()
                     self.left_vent_on = False
                     # Make an error sound
                     if not self.attempting_left_vent_interact:
@@ -226,7 +214,6 @@ class Office:
             self.attempting_left_vent_interact = False
 
         if not self.left_vent_on and not self.hallway_on and not self.right_vent_on:
-            App.assets.buzzlight.stop()
             self.office_sprite = App.assets.office1
 
     def easter_egg_interact(self, App):

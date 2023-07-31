@@ -368,9 +368,36 @@ class import_images:
 		self.nights_12am = []
 		for i in range(7):
 			self.nights_12am.append(
-				pygame.image.load(f"sprites/menu/nights/{i+1}.png").convert()
+				pygame.image.load(f"sprites/menu/nights/{i+1}.png").convert_alpha()
 			)
 		
+		# Confetti
+		self.blue_conf = []
+		for i in range(0, 5):
+			self.blue_conf.append(
+				pygame.image.load(f"sprites/menu/sprinkles/{i}.png").convert_alpha()
+			)
+
+		self.green_conf = []
+		for i in range(10, 15):
+			self.green_conf.append(
+				pygame.image.load(f"sprites/menu/sprinkles/{i}.png").convert_alpha()
+			)
+
+		self.yellow_conf = []
+		for i in range(20, 25):
+			self.yellow_conf.append(
+				pygame.image.load(f"sprites/menu/sprinkles/{i}.png").convert_alpha()
+			)
+
+		self.pink_conf = []
+		for i in range(30, 35):
+			self.pink_conf.append(
+				pygame.image.load(f"sprites/menu/sprinkles/{i}.png").convert_alpha()
+			)
+
+		print(len(self.pink_conf), len(self.yellow_conf), len(self.green_conf), len(self.blue_conf))
+
 		# Numbers 
 		self.numbers = []
 		for i in range(10):
@@ -490,8 +517,9 @@ class import_images:
 		self.mask_on_sound = pygame.mixer.Sound("sounds/mask_on.wav")
 		self.mask_off_sound = pygame.mixer.Sound("sounds/mask_off.wav") 
 
-		self.camera_sound_1 = pygame.mixer.Sound("sounds/blip3.wav")
-		self.camera_sound_2 = pygame.mixer.Sound("sounds/computer_digital.wav")
+		self.blip1 = pygame.mixer.Sound("sounds/blip3.wav")
+		self.camera_sound_1 = pygame.mixer.Sound("sounds/cam_in.wav")
+		self.camera_sound_2 = pygame.mixer.Sound("sounds/cam_out.wav")
 
 		self.background_music = "sounds/In_The_Depths.wav"
 		
@@ -562,12 +590,9 @@ class import_images:
 				f"sounds/call{i+1}b.wav"
 			)
 
+		# -- Cutscene --
+		self.move_sound = pygame.mixer.Sound(f"sounds/machineturn2.wav")
+		self.cutscene_ambient = pygame.mixer.Sound(f"sounds/Scary_Space_B.wav")
+
 	def fonts(self):
-		self.Arial = "fonts/arial.ttf"
-
-		# get font types
-		self.font_types()
-
-	def font_types(self):
-		self.Arial60 = pygame.font.Font(self.Arial, 60)
-		self.Arial30 = pygame.font.Font(self.Arial, 30)
+		pass

@@ -1,16 +1,17 @@
-import pygame
+import pygame, random
 
 class SpritesAnimation:
-    def __init__(self, sprites:tuple, position:tuple, frame_wait=1, isLoop=False, alpha=255):
+    def __init__(self, sprites:tuple, position:list, frame_wait=1, isLoop=False, alpha=255):
         self.sprites:tuple = sprites
         self.frame_wait:int = frame_wait
-        self.position:tuple = position
+        self.position:list = position
         self.sprite_num:int = 0
         self.loop :bool= isLoop
         self.frame:int = 0
         self.alpha:int = alpha
         self.desactivate:bool = False
         self.animate:bool = True
+        self.ran_value:int = random.randint(1, 100)
 
         
     def update(self, surface:pygame.Surface, reversed=False):

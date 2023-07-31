@@ -33,6 +33,7 @@ class Menu:
         self.start_state = 0
 
         self.timer = pygame.time.get_ticks()
+        self.pressed_timer = pygame.time.get_ticks()
 
         self.inNight = 1
         self.nightToPlay = 1
@@ -74,10 +75,20 @@ class Menu:
         if self.custom_night_menu.completed_nights[0] == True: # 4/20 mode is completed
             App.surface.blit(App.assets.star, (80 + 65*2, title_dims.h + 35))
 
+    def reset_data_option(self, App):
+        key = pygame.key.get_pressed()
+        if key[pygame.K_DELETE]:
+            if pygame.time.get_ticks() - self.pressed_timer > 6000:
+                self.__init__(App)
+                self.static_with_change = True
+        else:
+            self.pressed_timer = pygame.time.get_ticks()
+
     def update(self, App):
         if self.start_state == 0:
             self.change_background(App)
             self.music(App)
+            self.reset_data_option(App)
 
         if self.start_state < 2:
             
@@ -177,7 +188,7 @@ class Menu:
 
         if self.option == option and not self.option_ready_to_select == option and not mouse[0]:
             self.option_ready_to_select = option
-            App.assets.camera_sound_1.play()
+            App.assets.blip1.play()
 
 
     def static(self, App):
@@ -186,7 +197,7 @@ class Menu:
 
             if App.animations.static_anim_2.sprite_num == len(App.animations.static_anim_2.sprites) - 1:
                 App.animations.static_anim_2.sprite_num = 0
-                App.assets.camera_sound_1.play()
+                App.assets.blip1.play()
                 self.static_with_change = False
 
     def change_background(self, App):
@@ -246,7 +257,7 @@ class Menu:
                 if App.animations.static_anim_2.sprite_num == len(App.animations.static_anim_2.sprites) - 1:
                     self.timer = pygame.time.get_ticks()
                     App.animations.static_anim_2.sprite_num = 0
-                    App.assets.camera_sound_1.play()
+                    App.assets.blip1.play()
                     self.start_state += 1
                     
 

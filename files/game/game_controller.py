@@ -43,6 +43,7 @@ class Game:
         pygame.mixer.Channel(6).set_volume(1) # Mangle noise
         pygame.mixer.Channel(7).set_volume(1) # Baloon boy laugh
         pygame.mixer.Channel(8).set_volume(1) # Jumpscare scream
+        pygame.mixer.Channel(9).set_volume(1) # Flashlight
 
     def stop_sounds(self):
         self.sounds_shutted = True
@@ -54,6 +55,7 @@ class Game:
         pygame.mixer.Channel(5).set_volume(0) # Stare at an animatrionic
         pygame.mixer.Channel(6).set_volume(0) # Mangle noise
         pygame.mixer.Channel(7).set_volume(0) # Baloon boy laugh
+        pygame.mixer.Channel(9).set_volume(0) # Flashlight
 
     def updater(self, App):
         if App.objects.gameTimer.time == 6:   
@@ -108,6 +110,9 @@ class Game:
                         App.objects.office.update(App, canInteract=False, draw=True)
                     elif App.objects.open_monitor_button.inCamera:
                         App.objects.office.update(App, canInteract=False, draw=False)
+                        App.objects.office.hallway_on = False
+                        App.objects.office.right_vent_on = False
+                        App.objects.office.left_vent_on = False
                 else:
                     App.objects.office.update(App, canInteract=False, draw=True)
 

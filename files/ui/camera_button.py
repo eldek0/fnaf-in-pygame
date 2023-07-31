@@ -40,6 +40,7 @@ class CameraButton:
                             self.inCamera = True
                             App.objects.camera.static_animation = True
                             self.entering_camera = False
+                            App.assets.camera_sound_1.play()
                         App.animations.monitor.desactivate = True
 
                         self.camera_being_pressed = True

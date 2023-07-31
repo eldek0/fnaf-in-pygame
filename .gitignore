@@ -9,4 +9,8 @@ dict/
 # Sprites / Sounds / Fonts stuff (leave only the code)
 sounds/
 sprites/
-fonts/
+
+# Save file
+files/utils.txt
+files/save/key.py
+public.pem
