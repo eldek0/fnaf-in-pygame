@@ -11,7 +11,7 @@ class WitheredFreddy(Animatronic):
         match self.locationId:
             case 8:
                 if pygame.time.get_ticks() - self.timer > self.movement_time / self.aggresivity:
-                    if withered_chica.locationId != 8 and withered_bonnie.locationId != 8:
+                    if (withered_chica.locationId != 8 and withered_bonnie.locationId != 8) or App.menu.inNight == 7:
                         self.change_location_id(App, 7)
                     else:
                         self.timer = pygame.time.get_ticks()

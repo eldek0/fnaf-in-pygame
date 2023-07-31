@@ -88,6 +88,13 @@ class Menu:
 
             # Labels
             App.surface.blit(App.assets.fnaf_title, (80, 30))
+            dims = App.assets.scott_credits.get_rect()
+            App.surface.blit(App.assets.scott_credits, (App.dimentions[0] - dims.w - 10, App.dimentions[1] - dims.h - 20))
+            dims = App.assets.delete_data_label.get_rect()
+            App.surface.blit(App.assets.delete_data_label, (App.dimentions[0]/2 - dims.w/2, App.dimentions[1] - dims.h - 20))
+            dims = App.assets.version.get_rect()
+            App.surface.blit(App.assets.version, (10, App.dimentions[1] - dims.h - 20))
+
             self.new_game_button.update(App.surface, App.mouse_hitbox)
             self.continue_button.update(App.surface, App.mouse_hitbox)
             if self.inNight >= 6:
@@ -123,7 +130,7 @@ class Menu:
                 night = self.inNight
                 if night > 5:
                     night = 5
-                App.surface.blit(App.assets.numbers_small[night], (150, 537))
+                App.surface.blit(App.assets.numbers2_small[night], (150, 537))
 
             elif self.option == 3:
                 App.surface.blit(App.assets.option_selected, (28, self.night_six_button.position[1] + 3))

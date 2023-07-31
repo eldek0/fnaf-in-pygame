@@ -9,14 +9,13 @@ from files.game.game_objects import GameObjects
 from files.game.game_controller import Game
 from files.menu.menu import Menu
 from files.save.save import save, read
+from files.menu.warning_init import WarningInit
 
 
 class App:
 	def __init__(self, initial_dimentions=(1024, 768), caption="Five Nights at Freddy's - made with pygame"):
 		self.playing = True
-
-		#data = read(self)
-		data = None
+		self.loaded = False
 
 		# Surface init
 		pygame.init() # Starts the pygame timer
@@ -29,6 +28,10 @@ class App:
 		self.clock = pygame.time.Clock()
 		self.frames_per_second = 60
 
+		self.warning_init = WarningInit(self)
+		self.inital_warning = pygame.image.load("sprites/menu/logos/4.png").convert_alpha()
+		self.update(self)
+		
 		self.assets = import_images()
 		self.scene = 0
 		# Mouse
@@ -40,16 +43,12 @@ class App:
 		# Animations
 		self.animations = animations_init(self)
 
-		# Will be initialized in menu
+		# Menu will be initialized in draw, and game / gameObjects in menu
 		self.objects:GameObjects = None
 		self.game:Game = None
+		self.menu:Menu = None
 
-		self.menu = Menu(self)
-
-		if data:
-			self.menu.inNight = data["Night"]
-			self.menu.played_once = data["Played"]
-			self.menu.custom_night_menu.completed_nights = data["Custom"]
+		self.loaded = True
 
 	def get_deltatime(self):
 		self.now_time = time.time()
@@ -79,7 +78,8 @@ class App:
 	def game_events(self, events):
 		for event in events:
 			if event.type == QUIT:
-				save(self)
+				if self.warning_init.is_finished():
+					save(self)
 				self.playing = False
 				
 	def update(self, events):

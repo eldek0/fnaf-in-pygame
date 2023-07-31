@@ -4,7 +4,7 @@ from files.ui.button import Button
 class CameraButton:
     def __init__(self, App, draw_box=False):
         spr_monitor_dims = [App.assets.monitor_button.get_width(), App.assets.monitor_button.get_height()]
-        self.monitor_button = Button((510, App.dimentions[1] - spr_monitor_dims[1]- 20), [spr_monitor_dims[0], spr_monitor_dims[1] + 100], sprite=App.assets.monitor_button, draw_box=draw_box)
+        self.monitor_button = Button((510, App.dimentions[1] - spr_monitor_dims[1]- 20), [spr_monitor_dims[0], spr_monitor_dims[1] + 500], sprite=App.assets.monitor_button, draw_box=draw_box)
         self.inCamera = False
         self.camera_being_pressed = False
         self.quitting_camera = False

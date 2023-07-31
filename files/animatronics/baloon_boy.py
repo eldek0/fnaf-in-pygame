@@ -5,7 +5,6 @@ from files.animatronics.animatronic_base import Animatronic
 class BaloonBoy(Animatronic):
     def __init__(self, App, aggresivity:int, custom_index:int):
         super().__init__(aggresivity, 10, None, 10, custom_index)
-        self.time_with_mask_goal = 3000
 
     def movement(self, App):
         match self.locationId:
@@ -18,9 +17,10 @@ class BaloonBoy(Animatronic):
                     self.change_location_id(App, 103)
 
             case 103:
-                if pygame.time.get_ticks() - self.timer > self.movement_time / self.aggresivity and App.objects.open_monitor_button.inCamera:
+                if self.time_with_mask > self.movement_time / self.aggresivity and App.objects.open_monitor_button.inCamera:
                     self.change_location_id(App, -1, forced=True)
 
+                print(self.time_with_mask)
                 if App.objects.mask_button.inMask:
                     self.time_with_mask += 1
                 if self.time_with_mask >= self.time_with_mask_goal:

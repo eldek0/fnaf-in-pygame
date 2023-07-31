@@ -3,7 +3,7 @@ from files.ui.button import Button
 class MaskButton:
     def __init__(self, App, draw_box=False):
         spr_mask_dims = [App.assets.mask_button.get_width(), App.assets.mask_button.get_height()]
-        self.mask_button = Button((20, App.dimentions[1] - spr_mask_dims[1]- 20),  [spr_mask_dims[0], spr_mask_dims[1] + 100], sprite=App.assets.mask_button, draw_box=False)
+        self.mask_button = Button((20, App.dimentions[1] - spr_mask_dims[1]- 20),  [spr_mask_dims[0], spr_mask_dims[1] + 500], sprite=App.assets.mask_button, draw_box=False)
         self.inMask = False
         self.mask_being_pressed = False
         self.quitting_mask = False
@@ -16,8 +16,9 @@ class MaskButton:
                 App.animations.mask_animation.update()
                 pos_sum = App.animations.mask_animation.position
                 App.surface.blit(App.assets.mask_sprites[9], (-100 + pos_sum[0], -100 + pos_sum[1]))
-            else:
-                App.animations.mask_animation.reset()
+            
+        if not self.inMask:
+            App.animations.mask_animation.reset()
 
         self.animation(App, canInteract=canInteract)
 

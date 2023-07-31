@@ -105,7 +105,7 @@ def modes_data(index, animatronics_ai):
             animatronics_ai["WITHERED_CHICA"] = 0
             animatronics_ai["FOXY"] = 0
             animatronics_ai["BALOON_BOY"] = 0
-            animatronics_ai["TOY_FREDDY"] = 0
+            animatronics_ai["TOY_FREDDY"] = 20
             animatronics_ai["TOY_BONNIE"] = 0
             animatronics_ai["TOY_CHICA"] = 0
             animatronics_ai["MANGLE"] = 0

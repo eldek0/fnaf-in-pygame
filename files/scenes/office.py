@@ -260,7 +260,7 @@ class Office:
         if ToyFreddy.locationId == 101:
             if ToyFreddy.secondPositionId == 1:
                 return 3
-            elif ToyFreddy.secondPositionId == 1:
+            elif ToyFreddy.secondPositionId == 2:
                 return 4
         elif withered_freddy.locationId == 101:
             return 6

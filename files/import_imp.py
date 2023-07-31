@@ -355,6 +355,8 @@ class import_images:
 		self.night_six_option = pygame.image.load("sprites/menu/nights/12.png").convert_alpha()
 		self.custom_night_option = pygame.image.load("sprites/menu/nights/13.png").convert_alpha()
 		self.star = pygame.image.load("sprites/menu/misc/4.png").convert_alpha()
+		self.delete_data_label = pygame.image.load("sprites/menu/logos/7.png").convert_alpha()
+		self.version = pygame.image.load("sprites/menu/logos/9.png").convert_alpha()
 
 		self.newspaper = pygame.image.load("sprites/menu/paychecks/1.png").convert()
 		self.loading_icon = pygame.image.load("sprites/menu/logos/0.png").convert_alpha()
@@ -373,19 +375,25 @@ class import_images:
 		self.numbers = []
 		for i in range(10):
 			self.numbers.append(
-				pygame.image.load(f"sprites/numbers/medium/{i}.png").convert_alpha()
+				pygame.image.load(f"sprites/numbers/1rst/medium/{i}.png").convert_alpha()
 			)
 
 		self.numbers_small = []
 		for i in range(10):
 			self.numbers_small.append(
-				pygame.image.load(f"sprites/numbers/small/{i}.png").convert_alpha()
+				pygame.image.load(f"sprites/numbers/1rst/small/{i}.png").convert_alpha()
 			)
 
 		self.numbers2 = []
 		for i in range(10):
 			self.numbers2.append(
-				pygame.image.load(f"sprites/numbers/2nd/{i}.png").convert()
+				pygame.image.load(f"sprites/numbers/2nd/medium/{i}.png").convert_alpha()
+			)
+
+		self.numbers2_small = []
+		for i in range(10):
+			self.numbers2_small.append(
+				pygame.image.load(f"sprites/numbers/2nd/small/{i}.png").convert_alpha()
 			)
 
 		self.night_label = pygame.image.load(f"sprites/clock/20.png").convert_alpha()
@@ -533,8 +541,6 @@ class import_images:
 			self.walk_sounds.append(
 				pygame.mixer.Sound(f"sounds/walk{i+1}.wav")
 			)
-
-		self.metal_walk_sounds = []
 		for i in range(3):
 			self.walk_sounds.append(
 				pygame.mixer.Sound(f"sounds/metalwalk{i+1}.wav")
@@ -543,9 +549,10 @@ class import_images:
 		self.metal_run_sound = pygame.mixer.Sound(f"sounds/metalrun.wav")
 
 		self.baloon_noises = []
-		for i in range(2):
+		for i in range(3):
 			self.baloon_noises.append(
-				f"sounds/echo{i+1}.wav"
+				pygame.mixer.Sound(f"sounds/echo{i+1}.wav")
+				
 			)
 
 

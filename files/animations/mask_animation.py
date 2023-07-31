@@ -3,6 +3,7 @@ import pygame
 class MaskAnimation:
     def __init__(self, position:list):
         self.position = list(position)
+        self.initial_pos = self.position.copy()
         self.timer = pygame.time.get_ticks()
         self.speed = 0.15
         self.direction = [-1, -1] # Left and up
@@ -19,4 +20,4 @@ class MaskAnimation:
             self.timer = pygame.time.get_ticks()
 
     def reset(self):
-        self.__init__(position=self.position)
+        self.__init__(position=self.initial_pos)

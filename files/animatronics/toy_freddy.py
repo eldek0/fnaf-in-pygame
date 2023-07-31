@@ -13,9 +13,10 @@ class ToyFreddy(Animatronic):
         match self.locationId:
             case 9:
                 if pygame.time.get_ticks() - self.timer > self.movement_time / self.aggresivity:
-                    if toy_bonnie.locationId != 9 and toy_chica.locationId != 9:
+                    if (toy_bonnie.locationId != 9 and toy_chica.locationId != 9) or App.menu.inNight == 7:
                         # Moves to Game Area
                         self.change_location_id(App, 10)
+                        print("CHANGEING LOCATION")
                     else:
                         self.timer = pygame.time.get_ticks()
 
@@ -24,7 +25,11 @@ class ToyFreddy(Animatronic):
                     self.change_location_id(App, 101, secondPositionId=1)
 
             case 101:
-                if pygame.time.get_ticks() - self.timer > self.movement_time / self.aggresivity and App.objects.open_monitor_button.inCamera:
-                    self.change_location_id(App, 104)
+                if self.secondPositionId == 1:
+                    if pygame.time.get_ticks() - self.timer > self.movement_time / self.aggresivity:
+                        self.change_location_id(App, 101, secondPositionId=2)
+                elif self.secondPositionId == 2:
+                    if pygame.time.get_ticks() - self.timer > self.movement_time / self.aggresivity and App.objects.open_monitor_button.inCamera:
+                        self.change_location_id(App, 104)
         
                 

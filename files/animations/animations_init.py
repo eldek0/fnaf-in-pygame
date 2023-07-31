@@ -22,18 +22,18 @@ class animations_init:
 
         self.fade_effect = FadeEffect(App=App, position=(0, 0))
 
-        self.static_stripes_animation = StaticStripesAnimation(App=App)
+        self.static_stripes_animation = StaticStripesAnimation(App=App, alpha=8)
 
-        self.static_stripes_animation2 = StaticStripesAnimation(App=App, time_to_appear=5567, speed_frame=2, random_sprites_range=(2, 4), alpha=2)
+        self.static_stripes_animation2 = StaticStripesAnimation(App=App, time_to_appear=5567, speed_frame=2, random_sprites_range=(2, 4), alpha=10)
         self.static_stripes_animation2.big_stripe_y_location = random.randint(100, 500)
 
-        self.static_stripes_animation3 = StaticStripesAnimation(App=App, time_to_appear=3709, speed_frame=5, random_sprites_range=(3, 4), alpha=2)
+        self.static_stripes_animation3 = StaticStripesAnimation(App=App, time_to_appear=3709, speed_frame=5, random_sprites_range=(3, 4), alpha=10)
         self.static_stripes_animation3.big_stripe_y_location = random.randint(400, 700)
 
-        self.static_stripes_animation4 = StaticStripesAnimation(App=App, time_to_appear=4200, speed_frame=6, random_sprites_range=(4, 4), alpha=20)
+        self.static_stripes_animation4 = StaticStripesAnimation(App=App, time_to_appear=4200, speed_frame=6, random_sprites_range=(4, 4), alpha=10)
         self.static_stripes_animation4.big_stripe_y_location = random.randint(100, 300)
 
-        self.static_stripes_animation5 = StaticStripesAnimation(App=App, random_sprites_range=(3, 3))
+        self.static_stripes_animation5 = StaticStripesAnimation(App=App, random_sprites_range=(3, 3)) # Used on the menu and cameras
 
         self.random_static_animation = RandomSpritesAnimation(App=App, sprites=App.assets.static_2, position=(0, 0), speed_frame=5)
 

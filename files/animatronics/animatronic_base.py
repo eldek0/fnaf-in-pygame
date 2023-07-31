@@ -39,10 +39,11 @@ class Animatronic(ABC):
         self.noise_timer = pygame.time.get_ticks()
         self.time_to_make_noise = 10000
 
-        # Aveliable animatrionics with the same office position (101)
-        self.aveliable_office_positions = [
-            ["FOXY", "WITHERED_BONNIE"], ["FOXY", "MANGLE"]
-        ]
+        # Aveliable animatrionics with the same room position
+        self.aveliable_rooms_positions = {
+            101: [["FOXY", "WITHERED_BONNIE"], ["FOXY", "MANGLE"], ["TOY_FREDDY"]],
+            10 : [["BALOON_BOY", "TOY_FREDDY"]]
+            }
 
     def jumpscare_update(self, App):
         if self.aggresivity != 0:
@@ -76,15 +77,27 @@ class Animatronic(ABC):
 
     def animatrionic_movement_sounds(self, App):
         if pygame.time.get_ticks() - self.noise_timer > self.time_to_make_noise:
-            if self.locationId == 5:
-                App.assets.vents_sounds.play()
+            if not(self.name_id == "BALOON_BOY" and self.name_id == "MANGLE"):
+                if self.locationId == 5 or self.locationId == 6:
+                    App.assets.vents_sounds.play()
 
-            elif self.changing_position:
-                ran = random.randint(0, 5)
-                if ran <= 4:
+                elif self.changing_position:
+                    ran = random.randint(0, len(App.assets.walk_sounds) - 1)
                     App.assets.walk_sounds[ran].play()
-                else:
-                    App.assets.metal_walk_sounds[ran].play()
+            elif self.name_id == "BALOON_BOY":
+                if not self.locationId == -1:
+                    if self.changing_position:
+                        ran = random.randint(0, 3)
+                        if ran == 3:
+                            App.assets.baloon_laugh.play()
+                        else:
+                            App.assets.baloon_noises[ran].play()
+
+            elif self.name_id == "MANGLE":
+                if not self.locationId == -1 and not self.locationId == 6:
+                    if self.changing_position:
+                        App.assets.metal_run_sound.play()
+
 
             self.noise_timer = pygame.time.get_ticks()
 
@@ -112,19 +125,19 @@ class Animatronic(ABC):
         animatrionics_in_room = App.objects.Animatronics.every_animatrionic_position[room_location]
         if animatrionics_in_room == []: return True
 
-        if not room_location == 101: # It's not office hallway
+        if not room_location in list(self.aveliable_rooms_positions.keys()):
             for animatrionic in animatrionics_in_room:
                 if animatrionic.name_id != self.name_id:
                     return False
 
             return True
         else:
-                                  # It's office hallway
             found_match = False
             for animatrionic in animatrionics_in_room:
-                for aveliable_pos in self.aveliable_office_positions:
+                for aveliable_pos in self.aveliable_rooms_positions[room_location]:
                     found_match = False
                     for name in aveliable_pos:
+                        print(name)
                         if animatrionic.name_id == name:
                             found_match = True
                         else:
@@ -148,12 +161,12 @@ class Animatronic(ABC):
         else:
             self._wait_movement_time()
         is_free_room = self.verify_free_room(App, room_location)
-        """
-        print(f"free-room ({self.name_id}): {is_free_room}, force: {forced}")
+        
+        """print(f"free-room ({self.name_id}): {is_free_room}, force: {forced}")
         print("its me! it works!")
         print(App.objects.Animatronics.every_animatrionic_position[room_location])
-        print(self.aveliable_office_positions)
-        """
+        print(self.aveliable_rooms_positions)"""
+        
         # If it's empty or its forced
         if forced or is_free_room:
             if not self.changing_position:

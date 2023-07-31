@@ -57,16 +57,17 @@ class Camera:
         self.record_spr_timer = pygame.time.get_ticks()
 
     def update(self, App):
-        self.camera_room_managment(App)
 
-        App.animations.static_anim_1.update(App.surface)
+        self.camera_room_managment(App)
 
         App.animations.static_stripes_animation.update(App)
         App.animations.static_stripes_animation2.update(App)
         App.animations.static_stripes_animation3.update(App)
         App.animations.static_stripes_animation4.update(App)
-        
-        App.surface.blit(App.assets.camera_borderline, (0, 0))
+
+        App.animations.static_anim_1.update(App.surface)
+
+        App.animations.static_stripes_animation5.update(App)
 
         self.camera_ui(App)
 
@@ -136,6 +137,7 @@ class Camera:
                     else: self.wide_cameras_mov_direction[index] = 0
 
     def camera_ui(self, App):
+        App.surface.blit(App.assets.camera_borderline, (0, 0))
         self.cam_map(App)
         labels_position = (550, 280)
         App.surface.blit(self.label_to_draw, labels_position)
@@ -173,13 +175,20 @@ class Camera:
                 self.camera_basics(App, App.assets.right_air_vent_cameras,5, lambda:self.right_air_vent(App))
                 self.label_to_draw = App.assets.right_air_vent_label
             case 7:
-                self.camera_basics(App, App.assets.main_hall_cameras,6, lambda:self.main_hall(App))
+                if App.menu.nightToPlay != 7:
+                    self.camera_basics(App, App.assets.main_hall_cameras,6, lambda:self.main_hall(App))
+                else:
+                    App.animations.static_anim_1.alpha = 255
+
                 self.label_to_draw = App.assets.main_hall_label    
             case 8:
                 self.camera_basics(App, App.assets.partsnservice_cameras,7, lambda:self.parts_n_service(App))
                 self.label_to_draw = App.assets.parts_n_service_label
             case 9:
-                self.camera_basics(App, App.assets.show_stage_cameras,8, lambda:self.show_stage(App))
+                if App.menu.nightToPlay != 7:
+                    self.camera_basics(App, App.assets.show_stage_cameras,8, lambda:self.show_stage(App))
+                else:
+                    App.animations.static_anim_1.alpha = 255
                 self.label_to_draw = App.assets.show_stage_label
             case 10:
                 self.camera_basics(App, App.assets.game_area_cameras,9, lambda:self.game_area(App))
