@@ -21,8 +21,12 @@ class App:
 		pygame.init() # Starts the pygame timer
 		pygame.mixer.init() # Init the mixer
 		self.dimentions = initial_dimentions
-		self.surface = pygame.display.set_mode( self.dimentions ,vsync=True )
+		self.surface = pygame.display.set_mode( self.dimentions ,vsync=True, flags=pygame.FULLSCREEN )
 		pygame.display.set_caption(caption) # Win's name
+
+		# Icon
+		icon = pygame.image.load("icon.ico")
+		pygame.display.set_icon(icon)
 
 		# Fps configurations
 		self.clock = pygame.time.Clock()

@@ -5,6 +5,7 @@
 Main.spec
 build/
 dict/
+.exe/
 
 # Sprites / Sounds / Fonts stuff (leave only the code)
 sounds/
