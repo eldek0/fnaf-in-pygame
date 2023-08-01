@@ -16,6 +16,7 @@ def save(App):
     data["Night"] = App.menu.inNight
     data["Played"] = App.menu.played_once
     data["Custom"] = App.menu.custom_night_menu.completed_nights
+    data["Cutscenes"] = App.menu.cutscenes_data
 
     # Get key
     with open("public.pem", "r") as pk:
@@ -37,7 +38,8 @@ def default():
         "Custom":[
             False, False, False, False, False,
             False, False, False, False, False
-        ]
+        ],
+        "Cutscenes":[False, False, False, False]
     }
     return data
 

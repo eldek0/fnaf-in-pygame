@@ -4,6 +4,7 @@ from files.game.game_objects import GameObjects
 from files.game.game_controller import Game
 from files.animations.animations_init import animations_init
 from files.menu.custom_night import CustomNight
+from files.menu.cutscene import Cutscene
 
 class Menu:
     def __init__(self, App): 
@@ -35,24 +36,29 @@ class Menu:
         self.timer = pygame.time.get_ticks()
         self.pressed_timer = pygame.time.get_ticks()
 
-        self.inNight = 1
-        self.nightToPlay = 1
-
-        self.played_once = False
-
         self.start_game = False
 
         self.static_with_change = False
 
         self.option_ready_to_select = 0
 
-        pygame.mixer.music.load(App.assets.background_music_menu)
-        pygame.mixer.music.play(-1)
-        pygame.mixer.Channel(2).play(App.assets.menu_static_1)
-        pygame.mixer.Channel(2).queue(App.assets.menu_static_2)
+        self.music_started = False
 
-        self.custom_night_menu = CustomNight(App)
+        self.essentials_variables(App)
+
         
+        
+    def essentials_variables(self, App):
+        self.custom_night_menu = CustomNight(App)
+
+        self.cutscene = Cutscene(App)
+
+        self.cutscenes_data = [False, False, False, False]
+
+        self.inNight = 1
+        self.nightToPlay = 1
+
+        self.played_once = False
 
     def static_animation(self, App):
         App.animations.static_anim_1.update(App.surface)
@@ -70,7 +76,7 @@ class Menu:
         title_dims = App.assets.fnaf_title.get_rect()
         if self.inNight >= 5:
             App.surface.blit(App.assets.star, (80, title_dims.h + 35))
-        if self.inNight >= 6:
+        if self.inNight >= 7:
             App.surface.blit(App.assets.star, (80 + 65, title_dims.h + 35))
         if self.custom_night_menu.completed_nights[0] == True: # 4/20 mode is completed
             App.surface.blit(App.assets.star, (80 + 65*2, title_dims.h + 35))
@@ -79,16 +85,34 @@ class Menu:
         key = pygame.key.get_pressed()
         if key[pygame.K_DELETE]:
             if pygame.time.get_ticks() - self.pressed_timer > 6000:
+                cutscenes = self.cutscenes_data
                 self.__init__(App)
+                self.cutscenes_data = cutscenes
                 self.static_with_change = True
         else:
             self.pressed_timer = pygame.time.get_ticks()
 
+    def start_music(self, App):
+        pygame.mixer.music.load(App.assets.background_music_menu)
+        pygame.mixer.music.play(-1)
+        pygame.mixer.Channel(2).play(App.assets.menu_static_1)
+        pygame.mixer.Channel(2).queue(App.assets.menu_static_2)
+
+    def check_cutscene(self):
+        if self.inNight < 5:
+            if not self.cutscenes_data[self.inNight - 1]:
+                self.start_state = 100
+
     def update(self, App):
+        self.check_cutscene()
+
         if self.start_state == 0:
             self.change_background(App)
             self.music(App)
             self.reset_data_option(App)
+            if not self.music_started:
+                self.start_music(App)
+                self.music_started = True
 
         if self.start_state < 2:
             
@@ -149,7 +173,8 @@ class Menu:
                 App.surface.blit(App.assets.option_selected, (28, self.custom_night_button.position[1] + 3))
 
         if self.start_state > 0:
-            pygame.mixer.Channel(2).stop()
+            if self.start_state != 100:
+                pygame.mixer.Channel(2).stop()
             self.begin_game(App)
 
         self.static(App)
@@ -241,7 +266,19 @@ class Menu:
                     self.start_state += 1
                     App.animations.fade_effect.stop_effect()
 
-                
+    def init_menu_and_save_vars(self, App):
+        night = self.inNight
+        played_once = self.played_once
+        cutscenes_data = self.cutscenes_data
+        custom_completed_nights = self.custom_night_menu.completed_nights
+
+        self.__init__(App)
+
+        self.inNight = night
+        self.played_once = played_once
+        self.cutscenes_data = cutscenes_data
+        self.custom_night_menu.completed_nights = custom_completed_nights
+
 
     def show_night(self, App):
         App.assets.nights_12am[self.nightToPlay - 1].set_alpha(self.objects_alpha)
@@ -299,3 +336,10 @@ class Menu:
 
             case 11: # Custom night
                 self.custom_night_menu.update(App)
+
+            case 100: # Cutscenes
+                self.cutscene.update(App, self.inNight)
+                if self.cutscene.finished:
+                    self.init_menu_and_save_vars(App)
+                    self.cutscenes_data[self.inNight - 1] = True
+                    

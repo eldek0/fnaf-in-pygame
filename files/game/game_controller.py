@@ -48,30 +48,30 @@ class Game:
     def stop_sounds(self):
         self.sounds_shutted = True
         pygame.mixer.music.unload()
-        pygame.mixer.Channel(1).set_volume(0)
-        pygame.mixer.Channel(2).set_volume(0) # Music box
-        pygame.mixer.Channel(3).set_volume(0) # Sounds effects
-        pygame.mixer.Channel(4).set_volume(0) # Mask breathing
-        pygame.mixer.Channel(5).set_volume(0) # Stare at an animatrionic
-        pygame.mixer.Channel(6).set_volume(0) # Mangle noise
-        pygame.mixer.Channel(7).set_volume(0) # Baloon boy laugh
-        pygame.mixer.Channel(9).set_volume(0) # Flashlight
+        pygame.mixer.Channel(1).stop()
+        pygame.mixer.Channel(2).stop() # Music box
+        pygame.mixer.Channel(3).stop() # Sounds effects
+        pygame.mixer.Channel(4).stop() # Mask breathing
+        pygame.mixer.Channel(5).stop() # Stare at an animatrionic
+        pygame.mixer.Channel(6).stop() # Mangle noise
+        pygame.mixer.Channel(7).stop() # Baloon boy laugh
+        pygame.mixer.Channel(9).stop() # Flashlight
 
     def updater(self, App):
-        if App.objects.gameTimer.time == 6:   
+        if App.objects.gameTimer.time == 6:
             self.night_beaten = True
 
         if App.objects.Animatronics.being_jumpscared and not self.sounds_shutted:
             self.stop_sounds()
 
-        if not self.night_beaten and not self.you_lost:
+        if not (self.night_beaten and self.you_lost):
             self.ai_updater.update(App, App.menu.nightToPlay)
             if App.menu.nightToPlay != 7 and App.objects.Animatronics.being_jumpscared:
                 self.telephone.update(App, App.menu.nightToPlay)
 
         self.game_update(App)
 
-        if not App.objects.Animatronics.being_jumpscared and App.menu.nightToPlay != 7:
+        if (not App.objects.Animatronics.being_jumpscared and App.menu.nightToPlay != 7) and not self.night_beaten:
             self.telephone.update(App, App.menu.nightToPlay)
 
         if self.night_beaten:

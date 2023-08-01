@@ -505,6 +505,29 @@ class import_images:
 				pygame.image.load(f"sprites/custom_night/rewards/{i}.png").convert_alpha()
 			)
 
+		# -- CUTSCENES --
+		self.cutscene_chica = []
+		for i in range(10, 13):
+			self.cutscene_chica.append(
+				pygame.image.load(f"sprites/cutscenes/{i}.png").convert_alpha()
+			)
+
+		self.cutscene_bonnie = []
+		for i in range(20, 23):
+			self.cutscene_bonnie.append(
+				pygame.image.load(f"sprites/cutscenes/{i}.png").convert_alpha()
+			)
+
+		self.cutscene_freddy = pygame.image.load(f"sprites/cutscenes/30.png").convert_alpha()
+
+		self.cutscene_puppet = pygame.image.load(f"sprites/cutscenes/40.png").convert_alpha()
+
+		self.cutscene_background = pygame.image.load(f"sprites/cutscenes/1.png").convert()
+		self.cutscene_black = pygame.image.load(f"sprites/cutscenes/0.png").convert()
+		self.cutscene_mask = pygame.image.load(f"sprites/cutscenes/2.png").convert_alpha()
+		self.err_img = pygame.image.load(f"sprites/cutscenes/3.png").convert_alpha()
+		self.its_me = pygame.image.load(f"sprites/cutscenes/4.png").convert_alpha()
+
 		# Get crops from cropped images
 		import_images.cropped_images(self)
 		
@@ -593,6 +616,10 @@ class import_images:
 		# -- Cutscene --
 		self.move_sound = pygame.mixer.Sound(f"sounds/machineturn2.wav")
 		self.cutscene_ambient = pygame.mixer.Sound(f"sounds/Scary_Space_B.wav")
+		self.ambiance_2 = pygame.mixer.Sound(f"sounds/ambience2.wav")
+		self.robot_err = pygame.mixer.Sound("sounds/Robot.wav")
+		self.static_end = pygame.mixer.Sound("sounds/staticend2.wav")
+		
 
 	def fonts(self):
 		pass

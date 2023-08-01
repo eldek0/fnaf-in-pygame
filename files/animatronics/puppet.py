@@ -13,11 +13,11 @@ class Puppet(Animatronic):
                 self.change_location_id(App, 11, secondPositionId=2)
                     
             elif self.secondPositionId == 2:
-                if pygame.time.get_ticks() - self.timer > 10000 // (self.aggresivity/50):
+                if pygame.time.get_ticks() - self.timer > 10000:
                     self.change_location_id(App, 11, secondPositionId=3)
 
             elif self.secondPositionId == 3:
-                if pygame.time.get_ticks() - self.timer > 10000 // (self.aggresivity/50) :
+                if pygame.time.get_ticks() - self.timer > 9000:
                     self.jumpscare(App)
 
         elif not App.objects.music_box.times_out:

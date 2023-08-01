@@ -26,7 +26,7 @@ class Battery:
         ]
         for state in usage_detections:
             if state:
-                self.charge -= 0.006
+                self.charge -= 0.0018
         
         if self.charge < 0:
             self.charge = 0

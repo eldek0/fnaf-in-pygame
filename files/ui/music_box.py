@@ -1,4 +1,4 @@
-import pygame
+import pygame, math
 from files.ui.button import Button
 
 class MusicBoxButton:
@@ -60,7 +60,7 @@ class MusicBoxButton:
             self.recharging_time = True
 
         if self.recharging_time:
-            if pygame.time.get_ticks() - self.timer > 150 * (puppet.aggresivity//10):
+            if pygame.time.get_ticks() - self.timer > 150 * (math.log((puppet.aggresivity + 1)/1.2))  :
                 if not self.charge >= 21:
                     self.charge += 1
                 self.timer = pygame.time.get_ticks()

@@ -39,6 +39,10 @@ class animations_init:
 
         self.mask_animation = MaskAnimation(position=[0, 20])
 
+        self.cutscene_mask_animation = MaskAnimation(position=[-30, -20], move=(0.06, 0.02))
+
+        self.static_anim_2_looped = SpritesAnimation(sprites=App.assets.static_2, position=(0, 0), frame_wait=3, isLoop=True)
+
         # Confetti
         confs = [App.assets.blue_conf, App.assets.yellow_conf, App.assets.green_conf, App.assets.pink_conf]
         self.confs_animation = []

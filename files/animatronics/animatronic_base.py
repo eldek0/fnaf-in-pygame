@@ -208,7 +208,7 @@ class Animatronic(ABC):
         return [-1 , -1]
 
     def jumpscare(self, App):
-        if not self._jumpscare:
+        if not self._jumpscare and App.objects.Animatronics.every_animatrionic_position[104] == []:
             pygame.mixer.Channel(8).play(App.assets.xScream1)
             self._jumpscare = True
 

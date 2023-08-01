@@ -77,6 +77,7 @@ class NightBeatenAnimation:
                             self.pay_animation.inAnimation = True
                         else:
                             self.end_reset_variables(App, toMenu=True)
+                            print("to menu")
 
         elif self.pay_animation.inAnimation:
             App.surface.fill((0,0,0))
@@ -104,21 +105,16 @@ class NightBeatenAnimation:
 
     def end_reset_variables(self, App, toMenu=False):
         if toMenu:
-            night = App.menu.inNight
-            custom_completed_nights = App.menu.custom_night_menu.completed_nights
-            App.menu.__init__(App) # Resets menu
-            App.menu.start_state = 0
-            App.menu.inNight = night
-            App.menu.custom_night_menu.completed_nights = custom_completed_nights
+            App.menu.init_menu_and_save_vars(App)
         else:
             App.menu.start_state = 2
 
         App.menu.start_game = False
         App.menu.timer = pygame.time.get_ticks()
         App.menu.objects_alpha = 255
-        App.menu.played_once = True
         if App.menu.nightToPlay <= 5:
             App.menu.nightToPlay += 1
+            App.menu.inNight += 1
 
     def change_numbers(self, App):
         if self.reversed:

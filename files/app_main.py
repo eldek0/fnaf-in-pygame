@@ -35,7 +35,7 @@ class App:
 		self.assets = import_images()
 		self.scene = 0
 		# Mouse
-		self.mouse_hitbox = pygame.Rect((0,0), (1,1))
+		self.mouse_hitbox = pygame.Rect((self.dimentions[0]/2,self.dimentions[1]/2), (1,1))
 
 		# DeltaTime variables
 		self.prev_time, self.now_time = 0, 0

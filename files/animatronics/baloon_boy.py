@@ -20,9 +20,9 @@ class BaloonBoy(Animatronic):
                 if self.time_with_mask > self.movement_time / self.aggresivity and App.objects.open_monitor_button.inCamera:
                     self.change_location_id(App, -1, forced=True)
 
-                print(self.time_with_mask)
                 if App.objects.mask_button.inMask:
                     self.time_with_mask += 1
+                    print(self.time_with_mask)
                 if self.time_with_mask >= self.time_with_mask_goal:
                     self.change_location_id(App, self.rest_room)
 
