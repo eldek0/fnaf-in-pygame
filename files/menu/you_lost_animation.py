@@ -21,7 +21,7 @@ class YouLostAnimation:
                 self.timer = pygame.time.get_ticks()
             case 1:
                 App.animations.static_anim_1.update(App.surface)
-                if pygame.time.get_ticks() - self.timer > 10000:
+                if pygame.time.get_ticks() - self.timer > 5000:
                     self.state = 2
                     self.timer = pygame.time.get_ticks()
                     App.assets.game_lost_static.stop()
@@ -36,12 +36,7 @@ class YouLostAnimation:
 
                 if pygame.time.get_ticks() - self.timer > 8000:
                     # Return to menu
-                    App.menu.__init__(App)
-                    App.menu.start_state = 0
-                    App.menu.start_game = False
+                    App.menu.init_menu_and_save_vars(App)
                     App.menu.static_with_change = True
-                    App.menu.option = False
-                    App.menu.inNight = self.nightToPlay
-                    App.menu.played_once = self.played_once
                     
                     
