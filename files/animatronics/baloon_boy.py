@@ -9,7 +9,7 @@ class BaloonBoy(Animatronic):
     def movement(self, App):
         match self.locationId:
             case 10:
-                if pygame.time.get_ticks() - self.timer > self.movement_time / self.aggresivity:
+                if pygame.time.get_ticks() - self.timer > (self.movement_time + 26_000) / self.aggresivity:
                     self.change_location_id(App, 5)
 
             case 5:

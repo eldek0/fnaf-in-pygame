@@ -58,7 +58,7 @@ class Menu:
         self.inNight = 1
         self.nightToPlay = 1
 
-        self.played_once = True
+        self.played_once = False
 
     def static_animation(self, App):
         App.animations.static_anim_1.update(App.surface)

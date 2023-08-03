@@ -276,9 +276,6 @@ class Camera:
             surface_id = surface_id_off
             self.camera_flashlighting = False
 
-        if self.occupied_camera[index]:
-            pygame.mixer.Channel(10).play()
-
     # Normal
     def party_room_1(self, App):
         """ 1 """
