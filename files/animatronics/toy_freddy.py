@@ -16,7 +16,6 @@ class ToyFreddy(Animatronic):
                     if (toy_bonnie.locationId != 9 and toy_chica.locationId != 9) or App.menu.inNight == 7:
                         # Moves to Game Area
                         self.change_location_id(App, 10)
-                        print("CHANGEING LOCATION")
                     else:
                         self.timer = pygame.time.get_ticks()
 

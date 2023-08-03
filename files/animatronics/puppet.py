@@ -23,6 +23,6 @@ class Puppet(Animatronic):
         elif not App.objects.music_box.times_out:
             self.timer = pygame.time.get_ticks()
 
-        App.objects.music_box.descharge_ticks = 6000/(math.log((self.aggresivity + 1)**4))
+        App.objects.music_box.descharge_ticks = 17800/(math.log((self.aggresivity + 2)**6))
         App.objects.music_box.run_time(App)
         

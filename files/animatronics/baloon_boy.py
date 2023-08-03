@@ -17,15 +17,14 @@ class BaloonBoy(Animatronic):
                     self.change_location_id(App, 103)
 
             case 103:
-                if self.time_with_mask > self.movement_time / self.aggresivity and App.objects.open_monitor_button.inCamera:
+                if pygame.time.get_ticks() - self.timer > self.vent_time_to_scare and App.objects.open_monitor_button.inCamera:
                     self.change_location_id(App, -1, forced=True)
 
                 if App.objects.mask_button.inMask:
                     self.time_with_mask += 1
-                    print(self.time_with_mask)
                 if self.time_with_mask >= self.time_with_mask_goal:
-                    self.change_location_id(App, self.rest_room)
+                    self.return_to_rest_room(App)
 
             case -1:
-                if pygame.time.get_ticks() - self.timer > 15000 and App.objects.open_monitor_button.inCamera:
-                    self.change_location_id(App, 0, forced=True)
+                if pygame.time.get_ticks() - self.timer > 10000 + (self.aggresivity*150) and App.objects.open_monitor_button.inCamera:
+                    self.return_to_rest_room(App)

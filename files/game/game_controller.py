@@ -30,9 +30,11 @@ class Game:
 
         self.telephone = Telephone(App)
 
+        self.num_of_channels = 32
+
     def set_audio(self, App):
         self.sounds_shutted = False
-        pygame.mixer.set_num_channels(16)
+        pygame.mixer.set_num_channels(self.num_of_channels)
 
         pygame.mixer.music.set_volume(1)
         pygame.mixer.Channel(1).set_volume(0.8)
@@ -44,18 +46,13 @@ class Game:
         pygame.mixer.Channel(7).set_volume(1) # Baloon boy laugh
         pygame.mixer.Channel(8).set_volume(1) # Jumpscare scream
         pygame.mixer.Channel(9).set_volume(1) # Flashlight
+        pygame.mixer.Channel(10).set_volume(1) # Camera's static
 
     def stop_sounds(self):
         self.sounds_shutted = True
         pygame.mixer.music.unload()
-        pygame.mixer.Channel(1).stop()
-        pygame.mixer.Channel(2).stop() # Music box
-        pygame.mixer.Channel(3).stop() # Sounds effects
-        pygame.mixer.Channel(4).stop() # Mask breathing
-        pygame.mixer.Channel(5).stop() # Stare at an animatrionic
-        pygame.mixer.Channel(6).stop() # Mangle noise
-        pygame.mixer.Channel(7).stop() # Baloon boy laugh
-        pygame.mixer.Channel(9).stop() # Flashlight
+        for i in range(self.num_of_channels):
+            pygame.mixer.Channel(i).stop()
 
     def updater(self, App):
         if App.objects.gameTimer.time == 6:

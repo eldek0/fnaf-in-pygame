@@ -202,5 +202,5 @@ class NightAIChanger:
             try:
                 self.animatronics_ai[key] = App.menu.custom_night_menu.animatrionics_data[key]["aggresive"]
             except KeyError as e:
-                self.animatronics_ai[key] = 0 # change
+                self.animatronics_ai[key] = 20 # change
         

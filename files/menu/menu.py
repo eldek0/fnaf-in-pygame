@@ -58,7 +58,7 @@ class Menu:
         self.inNight = 1
         self.nightToPlay = 1
 
-        self.played_once = False
+        self.played_once = True
 
     def static_animation(self, App):
         App.animations.static_anim_1.update(App.surface)
@@ -74,7 +74,7 @@ class Menu:
 
     def draw_menu_stars(self, App):
         title_dims = App.assets.fnaf_title.get_rect()
-        if self.inNight >= 5:
+        if self.inNight >= 6:
             App.surface.blit(App.assets.star, (80, title_dims.h + 35))
         if self.inNight >= 7:
             App.surface.blit(App.assets.star, (80 + 65, title_dims.h + 35))
@@ -312,14 +312,14 @@ class Menu:
                     
             case 5:
                 self.objects_alpha = 0
-                if pygame.time.get_ticks() - self.timer < 4000: #4000
+                if pygame.time.get_ticks() - self.timer < 2000:
                     App.surface.blit(App.assets.loading_icon, (App.dimentions[0] - (App.assets.loading_icon.get_width() + 20 ), App.dimentions[1] - (App.assets.loading_icon.get_height() + 20 ) ))
                 else:
                     self.timer = pygame.time.get_ticks()
                     self.start_state = 6
 
             case 6:
-                if pygame.time.get_ticks() - self.timer > 3000: # 3000
+                if pygame.time.get_ticks() - self.timer > 1500:
                     self.start_state = 7
 
             case 7:

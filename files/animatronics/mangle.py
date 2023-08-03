@@ -43,13 +43,13 @@ class Mangle(Animatronic):
                     self.change_location_id(App, 102)
 
             case 102:
-                if pygame.time.get_ticks() - self.timer > self.movement_time / self.aggresivity and App.objects.open_monitor_button.inCamera:
+                if pygame.time.get_ticks() - self.timer > self.vent_time_to_scare and App.objects.open_monitor_button.inCamera:
                     self.change_location_id(App, -1, forced=True)
 
                 if App.objects.mask_button.inMask:
                     self.time_with_mask += 1
                 if self.time_with_mask >= self.time_with_mask_goal:
-                    self.change_location_id(App, 12)
+                    self.change_location_id(App, 0, forced=True)
 
             case -1:
                 if pygame.time.get_ticks() - self.timer > self.time_to_scare:

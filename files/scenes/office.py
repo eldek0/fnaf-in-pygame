@@ -346,7 +346,7 @@ class Office:
             self.animatronic_in_office = True
         
 
-        time_to_put_mask = 2000/(animatrionic.aggresivity/12)
+        time_to_put_mask = 3000 + (animatrionic.aggresivity* 67)
         if self.animatronic_in_office and animatrionic.locationId == 104:
             self.office_sprite = App.assets.animatrionic_offices[office_sprite_id]
             if pygame.time.get_ticks() - self.timer > time_to_put_mask:

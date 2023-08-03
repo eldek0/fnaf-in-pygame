@@ -54,8 +54,10 @@ def sounds_effects_updater(App):
         # Camera / Office flashlight
         office = App.objects.office
         camera = App.objects.camera
-        if not (office.left_vent_on or office.right_vent_on or office.hallway_on or camera.camera_flashlighting):
+        cam_button = App.objects.open_monitor_button
+        if not (office.left_vent_on or office.right_vent_on or office.hallway_on or camera.camera_flashlighting) or cam_button.quitting_camera:
             pygame.mixer.Channel(9).stop()
+            camera.camera_flashlighting = False
         else:
             if not pygame.mixer.Channel(9).get_busy():
                 pygame.mixer.Channel(9).play(App.assets.buzzlight)

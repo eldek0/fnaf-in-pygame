@@ -34,10 +34,12 @@ class Animatronic(ABC):
         self.time_with_mask = 0
         self.rest_room = rest_room # The room where the animatrionic rests after a screamer attempt
         self.aggresivity = aggresivity
-        self.movement_time = 50_000
+        self._base_movement_time = 50_000
+        self.vent_time_to_scare = 0
+        self.movement_time = self._base_movement_time
         self.custom_index = custom_index # For custom night
         self.noise_timer = pygame.time.get_ticks()
-        self.time_to_make_noise = 10000
+        self.time_to_make_noise = 18_000
 
         # Aveliable animatrionics with the same room position
         self.aveliable_rooms_positions = {
@@ -54,7 +56,13 @@ class Animatronic(ABC):
                 if self.jumpscare_animation.sprite_num == len(self.jumpscare_animation.sprites) - 1:
                     self._gameOver = True
 
+    def update_movement_time(self):
+        self.movement_time = self._base_movement_time
+        self.movement_time -= (self.aggresivity*157)
+        self.vent_time_to_scare = (self.movement_time*1.2) / (self.aggresivity + 1)
+
     def update(self, App):
+        self.update_movement_time()
         if self.aggresivity != 0:      
             if not self._jumpscare:
                 if self._prepare_to_jumpscare:
@@ -218,3 +226,7 @@ class Animatronic(ABC):
         self._prepare_to_jumpscare = True
 
     def isBeingJumpscared(self): return self._jumpscare
+
+    def return_to_rest_room(self, App):
+        """ Changeing to room 0 will imediatly force the animatrionic to change to rest room """
+        self.change_location_id(App, 0, forced=True)
