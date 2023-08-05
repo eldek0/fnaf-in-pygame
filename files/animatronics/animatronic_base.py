@@ -217,6 +217,8 @@ class Animatronic(ABC):
 
     def jumpscare(self, App):
         if not self._jumpscare and App.objects.Animatronics.every_animatrionic_position[104] == []:
+            print("jump")
+            pygame.mixer.Channel(8).set_volume(1)
             pygame.mixer.Channel(8).play(App.assets.xScream1)
             self._jumpscare = True
 

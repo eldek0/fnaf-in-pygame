@@ -52,7 +52,8 @@ class Game:
         self.sounds_shutted = True
         pygame.mixer.music.unload()
         for i in range(self.num_of_channels):
-            pygame.mixer.Channel(i).stop()
+            if i != 8:
+                pygame.mixer.Channel(i).stop()
 
     def updater(self, App):
         if App.objects.gameTimer.time == 6:

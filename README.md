@@ -11,4 +11,6 @@ This is a recreation of the Five Nights at Freddy's 2 game created by Scott Cawt
 
 # Changelog
 
-Version 1.0.01: https://eldek.itch.io/fnaf-2-in-python/devlog/569583/version-1001
+- Version 1.0.01: https://eldek.itch.io/fnaf-2-in-python/devlog/569583/version-1001
+- Version 1.0.02: https://eldek.itch.io/fnaf-2-in-python/devlog/569784/version-1002
+- Version 1.0.03: https://eldek.itch.io/fnaf-2-in-python/devlog/570831/version-1003
