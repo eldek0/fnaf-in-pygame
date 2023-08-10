@@ -22,8 +22,9 @@ class CustomNight:
             )
 
         self.modes = []
-        self.timer = pygame.time.get_ticks()
-        self.click_ = True
+        self.timer, self.pressed_timer = pygame.time.get_ticks(), pygame.time.get_ticks()
+        self.click_ = False
+        self.one_click_change = False
         self.mode_index = 0
         self.completed_nights = [
             False, False, False, False, False,
@@ -107,21 +108,21 @@ class CustomNight:
         self.right_button.update(App.surface, App.mouse_hitbox)
         self.left_button.update(App.surface, App.mouse_hitbox)
         
-        if self.right_button.mouse_hovered and mouse[0] and self.click_:
+        if self.right_button.mouse_hovered and mouse[0] and not self.one_click_change:
             self.mode_index += 1
             if self.mode_index > len(self.modes) -1:
                 self.mode_index = 0
 
-        if self.left_button.mouse_hovered and mouse[0] and self.click_:
+        if self.left_button.mouse_hovered and mouse[0] and not self.one_click_change:
             self.mode_index -= 1
             if self.mode_index < 0:
                 self.mode_index = len(self.modes) - 1
 
-        if (self.right_button.mouse_hovered or self.left_button.mouse_hovered) and mouse[0] and self.click_:
+        if (self.right_button.mouse_hovered or self.left_button.mouse_hovered) and mouse[0] and not self.one_click_change:
             for key in self.animatronics_keys:
                 self.animatrionics_data[key]["aggresive"] = self.modes[self.mode_index]["data"][key]
             App.assets.coin_sound.play()
-            self.click_ = False
+            self.one_click_change = True
 
     def draw_animatrionics_icons(self, App, y_position, _range=(0, 5), row=0):
         mouse = pygame.mouse.get_pressed()
@@ -135,12 +136,20 @@ class CustomNight:
             label = App.assets.animatrionic_labels[index]
             icon_dims = icon.get_rect()
             label_dims = label.get_rect()
-            
-            App.surface.blit(icon, (x_pos, y_position))
-            App.surface.blit(label, (x_pos + icon_dims.w/2 - label_dims.w/2, y_position + 130))
 
             # ~ ~ aggresive SLIDER ~ ~
             aggresive = self.animatrionics_data[key]["aggresive"]
+
+            if aggresive == 0:
+                alpha = 70
+            else:
+                alpha = 255
+
+            icon.set_alpha(alpha)
+            label.set_alpha(alpha)
+
+            App.surface.blit(icon, (x_pos, y_position))
+            App.surface.blit(label, (x_pos + icon_dims.w/2 - label_dims.w/2, y_position + 130))
 
             # Right button
             right_button_dims = App.assets.arrow_right.get_rect()
@@ -150,12 +159,7 @@ class CustomNight:
                 sprite=App.assets.arrow_right
             )
             right_button.update(App.surface, App.mouse_hitbox)
-
-            if right_button.mouse_hovered and mouse[0] and self.click_:
-                self.animatrionics_data[key]["aggresive"] -= 1
-                if self.animatrionics_data[key]["aggresive"] < 0: self.animatrionics_data[key]["aggresive"] = 0
-                App.assets.coin_sound.play()
-                self.click_ = False
+                
 
             # Left button
             left_button_dims = App.assets.arrow_left.get_rect()
@@ -165,12 +169,29 @@ class CustomNight:
                 sprite=App.assets.arrow_left
             )
             left_button.update(App.surface, App.mouse_hitbox)
+                
 
-            if left_button.mouse_hovered and mouse[0] and self.click_:
-                self.animatrionics_data[key]["aggresive"] += 1
-                if self.animatrionics_data[key]["aggresive"] > 20: self.animatrionics_data[key]["aggresive"] = 20
-                App.assets.coin_sound.play()
-                self.click_ = False
+            # Buttons click
+            if (right_button.mouse_hovered or left_button.mouse_hovered) and mouse[0]:
+                if pygame.time.get_ticks() - self.pressed_timer > 700: self.click_ = True
+
+                if (self.click_ and (pygame.time.get_ticks() - self.pressed_timer) > 70) or not self.one_click_change:
+                    self.one_click_change = True
+                    if right_button.mouse_hovered:
+                        self.animatrionics_data[key]["aggresive"] -= 1
+                        if self.animatrionics_data[key]["aggresive"] < 0: 
+                            self.animatrionics_data[key]["aggresive"] = 0
+                        else:
+                            App.assets.coin_sound.play()
+                    elif left_button.mouse_hovered:
+                        self.animatrionics_data[key]["aggresive"] += 1
+                        if self.animatrionics_data[key]["aggresive"] > 20: 
+                            self.animatrionics_data[key]["aggresive"] = 20
+                        else:
+                            App.assets.coin_sound.play()
+
+                    self.pressed_timer = pygame.time.get_ticks()
+
 
             x_extra = 0
             # Draw numbers 
@@ -179,4 +200,6 @@ class CustomNight:
                 x_extra += 20
 
         if not mouse[0]:
-            self.click_ = True
+            self.click_ = False
+            self.one_click_change = False
+            self.pressed_timer = pygame.time.get_ticks()

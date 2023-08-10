@@ -175,14 +175,14 @@ class Camera:
                 self.camera_basics(App, App.assets.right_air_vent_cameras,5, lambda:self.right_air_vent(App))
                 self.label_to_draw = App.assets.right_air_vent_label
             case 7:
+                self.camera_basics(App, App.assets.main_hall_cameras,6, lambda:self.main_hall(App))
+                self.label_to_draw = App.assets.main_hall_label    
+            case 8:
                 if App.menu.nightToPlay != 7:
-                    self.camera_basics(App, App.assets.main_hall_cameras,6, lambda:self.main_hall(App))
+                    self.camera_basics(App, App.assets.partsnservice_cameras,7, lambda:self.parts_n_service(App))
                 else:
                     App.animations.static_anim_1.alpha = 255
 
-                self.label_to_draw = App.assets.main_hall_label    
-            case 8:
-                self.camera_basics(App, App.assets.partsnservice_cameras,7, lambda:self.parts_n_service(App))
                 self.label_to_draw = App.assets.parts_n_service_label
             case 9:
                 if App.menu.nightToPlay != 7:

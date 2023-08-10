@@ -29,7 +29,7 @@ class Animatronic(ABC):
         self.inOfficeDesk:bool = False # If the animatronic is in office to attack
         self.name_id:str = "-"
         self._prepare_to_jumpscare = False # Get a random timer and jumpscare the player
-        self.jumpscare_wait_time = 3000
+        self.jumpscare_wait_time = random.randint(2000, 12000)
         self.time_with_mask_goal = 120
         self.time_with_mask = 0
         self.rest_room = rest_room # The room where the animatrionic rests after a screamer attempt
@@ -110,7 +110,7 @@ class Animatronic(ABC):
             self.noise_timer = pygame.time.get_ticks()
 
     def jumpscare_time(self, App):
-        if pygame.time.get_ticks() - self.timer > self.jumpscare_wait_time and App.objects.open_monitor_button.inCamera:
+        if pygame.time.get_ticks() - self.timer > self.jumpscare_wait_time and App.objects.open_monitor_button.inCamera and not App.objects.office.animatronic_in_office:
             self.jumpscare(App)
 
     def _change_occupied_camera_or_office(self, App, state:bool):

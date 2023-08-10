@@ -6,7 +6,7 @@ class Foxy(Animatronic):
     def __init__(self, App, aggresivity:int, custom_index:int):
         super().__init__(aggresivity, 8, App.animations.foxy_jump, 8, custom_index)
         self._light = 100
-        self.movement_time = 140_000
+        self.movement_time = 340_000
         
 
     def movement(self, App): 
@@ -18,11 +18,11 @@ class Foxy(Animatronic):
             case 101:
                 if not App.objects.office.hallway_on:
                     if not App.objects.office.occupied_office[0]:
-                        self._light -= 0.15 * ((self.aggresivity + 1)/5)
+                        self._light -= 0.15 * ((self.aggresivity + 1)/11.4)
                         if self._light < 0:
                             self._light = 0
                 else:
-                    self._light += 0.20 * ((self.aggresivity + 1)/1.4)
+                    self._light += 0.20 * ((self.aggresivity + 1)/2.12)
                     if self._light > 100:
                         self._light = 100
 
