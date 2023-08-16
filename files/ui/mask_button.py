@@ -7,6 +7,7 @@ class MaskButton:
         self.inMask = False
         self.mask_being_pressed = False
         self.quitting_mask = False
+        self.entering_mask = False
 
     def update(self, App, canInteract=True):
         self.mask_button.update(App.surface, App.mouse_hitbox)
@@ -16,28 +17,34 @@ class MaskButton:
                 App.animations.mask_animation.update()
                 pos_sum = App.animations.mask_animation.position
                 App.surface.blit(App.assets.mask_sprites[9], (-100 + pos_sum[0], -100 + pos_sum[1]))
+                # Foce quit camera
+                App.objects.open_monitor_button.inCamera = False
             
         if not self.inMask:
             App.animations.mask_animation.reset()
+
+        if App.animations.mask.sprite_num == 0 and self.quitting_mask:
+            self.quitting_mask = False
 
         self.animation(App, canInteract=canInteract)
 
     def animation(self, App, canInteract=True):
         if not self.inMask:
-            if self.mask_button.mouse_hovered and canInteract:
+            if (self.mask_button.mouse_hovered and canInteract) or self.entering_mask:
                 if not self.mask_being_pressed:
+                    self.entering_mask = True
                     App.animations.mask.update(App.surface)
 
                     # Get in mask
                     if App.animations.mask.sprite_num == len(App.animations.mask.sprites) - 1:
                         self.inMask = True
+                        self.entering_mask = False
                         self.mask_being_pressed = True
                         App.animations.mask.desactivate = True
                         App.assets.mask_on_sound.play()
             else:
                 self.mask_being_pressed = False
-                if App.animations.mask.sprite_num != 0:
-                    App.animations.mask.update(App.surface, reversed=True)
+
         else:
             if self.mask_button.mouse_hovered:
                 if not self.mask_being_pressed:

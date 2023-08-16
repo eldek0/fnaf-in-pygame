@@ -57,7 +57,7 @@ class Camera:
         self.record_spr_timer = pygame.time.get_ticks()
 
     def update(self, App):
-
+        print(self.occupied_camera)
         self.camera_room_managment(App)
 
         App.animations.static_stripes_animation.update(App)

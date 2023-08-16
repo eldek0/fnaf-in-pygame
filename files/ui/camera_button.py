@@ -22,6 +22,13 @@ class CameraButton:
                         self.camera_being_pressed = True
                 else:
                     self.camera_being_pressed = False
+
+        if self.inCamera:
+            # Foce quit mask
+            App.objects.mask_button.quitting_mask = True
+
+        if App.animations.monitor.sprite_num == 0 and self.quitting_camera:
+            self.quitting_camera = False
         
         self.animation(App, canInteract=canInteract)
         
@@ -46,8 +53,7 @@ class CameraButton:
                         self.camera_being_pressed = True
             else:
                 self.camera_being_pressed = False
-                if App.animations.monitor.sprite_num != 0:
-                    App.animations.monitor.update(App.surface, reversed=True)
+                
         else:
             if self.monitor_button.mouse_hovered or self.quitting_camera:
                 if not self.camera_being_pressed:

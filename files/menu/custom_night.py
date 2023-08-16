@@ -27,8 +27,8 @@ class CustomNight:
         self.one_click_change = False
         self.mode_index = 0
         self.completed_nights = [
-            False, False, False, False, False,
-            False, False, False, False, False
+            False, False, True, True, False,
+            True, False, False, True, False
         ]
         
 

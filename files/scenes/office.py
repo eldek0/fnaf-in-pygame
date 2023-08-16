@@ -15,7 +15,7 @@ class Office:
 
         self.animatronic_in_office = False
 
-        self.bunny_x_initial_position, self.bunny_speed = App.dimentions[0] + 300, 4
+        self.bunny_x_initial_position, self.bunny_speed = App.dimentions[0] + 300, 7
         self.bunny_x_position = self.bunny_x_initial_position
         self.bunny_moving_left = True
         self.hallway_animatrionic_fade = False
@@ -27,7 +27,7 @@ class Office:
             canInteract = False
             App.objects.open_monitor_button.quitting_camera = True
         
-        if canInteract:
+        if canInteract or self.animatronic_in_office:
             self.camera_movement(App)
 
         if draw:
@@ -287,15 +287,19 @@ class Office:
         return 0
 
     def animatronic_detect(self, App):
-        self.TOY_BONNIE(App)
+        self.toy_bonnie_in_hall(App)
         animatrionic_in_hall = ["WITHERED_FREDDY", "WITHERED_BONNIE", "WITHERED_CHICA", "TOY_FREDDY"]
 
-        for i in range(len(animatrionic_in_hall)):
-            if App.objects.Animatronics.animatronics_in_game[animatrionic_in_hall[i]].aggresivity != 0:
-                self.withered_animatrionic_in_office(App, animatrionic_in_hall[i], i)
+        baloon_boy = App.objects.Animatronics.animatronics_in_game["BALOON_BOY"]
+        golden_freddy = App.objects.Animatronics.animatronics_in_game["GOLDEN_FREDDY"]
+
+        if not (baloon_boy.locationId == -1 and golden_freddy.locationId == -1):
+            for i in range(len(animatrionic_in_hall)):
+                if App.objects.Animatronics.animatronics_in_game[animatrionic_in_hall[i]].aggresivity != 0:
+                    self.withered_animatrionic_in_office(App, animatrionic_in_hall[i], i)
         
 
-    def TOY_BONNIE(self, App):
+    def toy_bonnie_in_hall(self, App):
         ToyBunny = App.objects.Animatronics.animatronics_in_game["TOY_BONNIE"]
 
         if ToyBunny.locationId == 104 and not ToyBunny.changing_position and not ToyBunny._prepare_to_jumpscare:

@@ -271,13 +271,14 @@ class Menu:
         played_once = self.played_once
         cutscenes_data = self.cutscenes_data
         custom_completed_nights = self.custom_night_menu.completed_nights
+        custom_night = self.custom_night_menu
 
         self.__init__(App)
 
         self.inNight = night
         self.played_once = played_once
         self.cutscenes_data = cutscenes_data
-        self.custom_night_menu.completed_nights = custom_completed_nights
+        self.custom_night_menu = custom_night
 
 
     def show_night(self, App):

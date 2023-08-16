@@ -21,12 +21,11 @@ class Battery:
             App.objects.office.hallway_on,
             App.objects.office.right_vent_on,
             App.objects.office.left_vent_on,
-            App.objects.camera.camera_flashlighting,
-            App.objects.open_monitor_button.inCamera
+            App.objects.camera.camera_flashlighting
         ]
         for state in usage_detections:
             if state:
-                self.charge -= 0.0068
+                self.charge -= 0.0152
         
         if self.charge < 0:
             self.charge = 0

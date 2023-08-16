@@ -14,7 +14,7 @@ class GoldenFreddy(Animatronic):
         #print("entering: ", App.objects.open_monitor_button.entering_camera)
         #print("quitting: ", App.objects.open_monitor_button.quitting_camera)
         # Conditions
-        if App.objects.open_monitor_button.quitting_camera and not self.in_office and not self.attempted_once:
+        if App.objects.open_monitor_button.quitting_camera and not self.in_office and not self.attempted_once and not App.objects.office.animatronic_in_office:
             show_ran_num = random.randint(1, 1000)
 
             if show_ran_num < 10*((self.aggresivity + 1)*1.2) and not self.leave:

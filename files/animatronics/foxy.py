@@ -12,7 +12,7 @@ class Foxy(Animatronic):
     def movement(self, App): 
         match self.locationId:
             case 8:
-                if pygame.time.get_ticks() - self.timer > self.movement_time / ((self.aggresivity + 1)*2):
+                if pygame.time.get_ticks() - self.timer > self.movement_time / ((self.aggresivity + 1)*1.2):
                     self.change_location_id(App, 101)
 
             case 101:

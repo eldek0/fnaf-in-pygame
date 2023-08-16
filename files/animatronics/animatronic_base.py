@@ -44,7 +44,8 @@ class Animatronic(ABC):
         # Aveliable animatrionics with the same room position
         self.aveliable_rooms_positions = {
             101: [["FOXY", "WITHERED_BONNIE"], ["FOXY", "MANGLE"], ["TOY_FREDDY"]],
-            10 : [["BALOON_BOY", "TOY_FREDDY"]]
+            10 : [["BALOON_BOY", "TOY_FREDDY"]],
+            9 : [["FOXY", "WITHERED_FREDDY", "WITHERED_BONNIE", "WITHERED_CHICA"]]
             }
 
     def jumpscare_update(self, App):
