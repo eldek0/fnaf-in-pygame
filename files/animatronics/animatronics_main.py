@@ -79,7 +79,7 @@ class AnimatronicsMain:
             if jumpscared_:
                 self.jumpscared()
 
-        self.console_animatrionic_position_log()
+        #self.console_animatrionic_position_log()
 
     def game_over(self):
         self.gameOver = True

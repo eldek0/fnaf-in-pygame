@@ -15,7 +15,7 @@ class Office:
 
         self.animatronic_in_office = False
 
-        self.bunny_x_initial_position, self.bunny_speed = App.dimentions[0] + 300, 7
+        self.bunny_x_initial_position, self.bunny_speed = App.dimentions[0] + 300, 5.5
         self.bunny_x_position = self.bunny_x_initial_position
         self.bunny_moving_left = True
         self.hallway_animatrionic_fade = False
@@ -25,6 +25,7 @@ class Office:
     def update(self, App, canInteract=True, draw=True, animate=True):
         if self.animatronic_in_office:
             canInteract = False
+            #App.objects.open_monitor_button.inCamera = False
             App.objects.open_monitor_button.quitting_camera = True
         
         if canInteract or self.animatronic_in_office:
@@ -326,7 +327,7 @@ class Office:
                 ToyBunny.prepare_to_jumpscare(App)
 
             if App.objects.mask_button.inMask:  
-                if pygame.time.get_ticks() - self.hallway_animatrionic_coyote_time > 6000:
+                if pygame.time.get_ticks() - self.hallway_animatrionic_coyote_time > 4000:
                     App.animations.darkness.fade_screen()
 
                 if self.bunny_moving_left:

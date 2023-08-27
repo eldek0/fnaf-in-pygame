@@ -11,14 +11,17 @@ class MaskButton:
 
     def update(self, App, canInteract=True):
         self.mask_button.update(App.surface, App.mouse_hitbox)
-        if canInteract:
+        if canInteract or not App.objects.open_monitor_button.entering_camera:
             if self.inMask and not self.quitting_mask:
                 App.animations.mask.update(App.surface)
                 App.animations.mask_animation.update()
                 pos_sum = App.animations.mask_animation.position
                 App.surface.blit(App.assets.mask_sprites[9], (-100 + pos_sum[0], -100 + pos_sum[1]))
-                # Foce quit camera
+                
+                # Force quit camera
                 App.objects.open_monitor_button.inCamera = False
+                App.objects.open_monitor_button.entering_camera = False
+                App.animations.monitor.sprite_num = 0
             
         if not self.inMask:
             App.animations.mask_animation.reset()
