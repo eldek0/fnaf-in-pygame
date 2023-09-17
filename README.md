@@ -4,7 +4,7 @@ This is a recreation of the Five Nights at Freddy's 2 game created by Scott Cawt
 
 
 # Requirements:
-- Python 1.11 or above
+- Python 3.11 or above
 - Pygame 2.4.0
 - Get the game assets downloading the game here: https://eldek.itch.io/fnaf-2-in-python
 

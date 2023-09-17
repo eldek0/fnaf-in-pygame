@@ -23,11 +23,13 @@ class CameraButton:
                 else:
                     self.camera_being_pressed = False
 
-        if self.inCamera:
+        if self.inCamera and not self.quitting_camera:
             # Force quit mask
             App.objects.mask_button.inMask = False
             App.objects.mask_button.entering_mask = False
+            App.objects.mask_button.quitting_mask = True
             App.animations.mask.sprite_num = 0
+            
 
         if App.animations.monitor.sprite_num == 0 and self.quitting_camera:
             self.quitting_camera = False
