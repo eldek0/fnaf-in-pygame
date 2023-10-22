@@ -40,7 +40,7 @@ class AnimatronicsMain:
             animatrionics_in_position = self.every_animatrionic_position[keys[i]]
             anim_in_position_name = ""
             for anim in animatrionics_in_position:
-                anim_in_position_name += f"{anim.name_id} / {anim.rest_room}"
+                anim_in_position_name += f"{anim.name_id} / rest:{anim.rest_room} - ai:{anim.aggresivity}"
                 if anim.changing_position:
                     anim_in_position_name += " (changing)"
 

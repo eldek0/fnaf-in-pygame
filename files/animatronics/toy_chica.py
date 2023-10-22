@@ -23,6 +23,10 @@ class ToyChica(Animatronic):
 
             case 4:
                 if pygame.time.get_ticks() - self.timer > self.movement_time / self.aggresivity:
+                    self.change_location_id(App, 101)
+
+            case 101:
+                if pygame.time.get_ticks() - self.timer > self.movement_time / self.aggresivity:
                     self.change_location_id(App, 1)
 
             case 1:
@@ -30,10 +34,6 @@ class ToyChica(Animatronic):
                     self.change_location_id(App, 5)
 
             case 5:
-                if pygame.time.get_ticks() - self.timer > self.movement_time / self.aggresivity:
-                    self.change_location_id(App, 101)
-
-            case 101:
                 if pygame.time.get_ticks() - self.timer > self.movement_time / self.aggresivity:
                     self.change_location_id(App, 103)
 

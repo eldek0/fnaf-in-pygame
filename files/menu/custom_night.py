@@ -94,6 +94,7 @@ class CustomNight:
                 if self.completed_nights[i]:
                     App.surface.blit(App.assets.star, ((App.dimentions[0] - 50)/2 - 310, App.dimentions[1] - 80) )
                 break
+
                     
     def get_aggresiveness(self):
         # Get only animatrionics aggresiveness

@@ -110,5 +110,16 @@ def modes_data(index, animatronics_ai):
             animatronics_ai["TOY_CHICA"] = 20
             animatronics_ai["MANGLE"] = 20
             animatronics_ai["GOLDEN_FREDDY"] = 20
+        case 11: # TEST MODE
+            animatronics_ai["WITHERED_FREDDY"] = 0
+            animatronics_ai["WITHERED_BONNIE"] = 20
+            animatronics_ai["WITHERED_CHICA"] = 20
+            animatronics_ai["FOXY"] = 0
+            animatronics_ai["BALOON_BOY"] = 0
+            animatronics_ai["TOY_FREDDY"] = 0
+            animatronics_ai["TOY_BONNIE"] = 0
+            animatronics_ai["TOY_CHICA"] = 20
+            animatronics_ai["MANGLE"] = 10
+            animatronics_ai["GOLDEN_FREDDY"] = 0
 
     return animatronics_ai

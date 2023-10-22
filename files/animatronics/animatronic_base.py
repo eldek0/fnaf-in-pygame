@@ -60,7 +60,7 @@ class Animatronic(ABC):
     def update_movement_time(self):
         self.movement_time = self._base_movement_time
         self.movement_time -= (self.aggresivity*157)
-        self.vent_time_to_scare = (self.movement_time*1.2) / (self.aggresivity + 1)
+        self.vent_time_to_scare = (self.movement_time*1.3) / (self.aggresivity + 1)
 
     def update(self, App):
         self.update_movement_time()

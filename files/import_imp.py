@@ -498,6 +498,11 @@ class import_images:
 				pygame.image.load(f"sprites/custom_night/modes/{i+1}.png").convert()
 			)
 
+		# PURE TEST
+		self.modes_labels.append(
+				pygame.image.load(f"sprites/custom_night/labels/4.png").convert()
+			)
+
 		# Rewards
 		self.custom_night_rewards = []
 		for i in range(9):
