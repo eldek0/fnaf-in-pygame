@@ -57,23 +57,22 @@ class Camera:
         self.record_spr_timer = pygame.time.get_ticks()
 
     def update(self, App):
-        print(self.occupied_camera)
         self.camera_room_managment(App)
 
-        App.animations.static_stripes_animation.update(App)
-        App.animations.static_stripes_animation2.update(App)
-        App.animations.static_stripes_animation3.update(App)
-        App.animations.static_stripes_animation4.update(App)
+        App.animations.static_stripes_animation.update(App, App.surface)
+        App.animations.static_stripes_animation2.update(App, App.surface)
+        App.animations.static_stripes_animation3.update(App, App.surface)
+        App.animations.static_stripes_animation4.update(App, App.surface)
 
         App.animations.static_anim_1.update(App.surface)
 
-        App.animations.static_stripes_animation5.update(App)
+        App.animations.static_stripes_animation5.update(App, App.surface)
 
         self.camera_ui(App)
 
         # UI static
         if self.static_animation:
-            App.animations.static_anim_2.update(App.surface)
+            App.animations.static_anim_2.update(App.uiSurface)
             if App.animations.static_anim_2.sprite_num == len(App.animations.static_anim_2.sprites) - 1:
                 App.animations.static_anim_2.sprite_num = 0
                 self.static_animation = False
@@ -81,18 +80,18 @@ class Camera:
 
         if self.occupied_camera[self.inCameraRoom-1]:
             signal_intr = App.assets.camera_signal_interrupted
-            App.surface.blit(signal_intr, (App.dimentions[0]/2 - signal_intr.get_rect().width / 2, 80))
+            App.uiSurface.blit(signal_intr, (App.dimentions[0]/2 - signal_intr.get_rect().width / 2, 80))
 
         #pygame.draw.rect(App.surface, (255,0,0), self.flash_light_hitbox)
 
     def cam_map(self, App):
-        App.surface.blit(App.assets.camera_map, (550, 310))
+        App.uiSurface.blit(App.assets.camera_map, (550, 310))
         self.draw_cam_map_buttons(App)
 
     def draw_cam_map_buttons(self, App):
         button_dims = [App.assets.room_button_unselected.get_width(), App.assets.room_button_unselected.get_height()]
         for i in range(len(self.camera_buttons)):
-            self.camera_buttons[i].update(App.surface, App.mouse_hitbox)
+            self.camera_buttons[i].update(App.uiSurface, App.mouse_hitbox)
 
             if i+1 == self.inCameraRoom:
                 self.camera_buttons[i].sprite = App.assets.room_button_selected
@@ -105,7 +104,7 @@ class Camera:
 
                 self.inCameraRoom = i+1
 
-            App.surface.blit(App.assets.room_buttons_labels[i], (
+            App.uiSurface.blit(App.assets.room_buttons_labels[i], (
                 self.camera_buttons_positions[i][0] + button_dims[0]/2 + 5 , self.camera_buttons_positions[i][1] + button_dims[1]/2 + 7
             ))
 
@@ -137,10 +136,10 @@ class Camera:
                     else: self.wide_cameras_mov_direction[index] = 0
 
     def camera_ui(self, App):
-        App.surface.blit(App.assets.camera_borderline, (0, 0))
+        App.uiSurface.blit(App.assets.camera_borderline, (0, 0))
         self.cam_map(App)
         labels_position = (550, 280)
-        App.surface.blit(self.label_to_draw, labels_position)
+        App.uiSurface.blit(self.label_to_draw, labels_position)
         if self.inCameraRoom == 11:
             App.objects.music_box.update(App)
 
@@ -149,7 +148,7 @@ class Camera:
     def record_sprite(self, App):
         time = 1000
         if pygame.time.get_ticks() - self.record_spr_timer > 0 and pygame.time.get_ticks() - self.record_spr_timer < time:
-            App.surface.blit(App.assets.camera_record_sprite, (62, 96))
+            App.uiSurface.blit(App.assets.camera_record_sprite, (62, 96))
         elif pygame.time.get_ticks() - self.record_spr_timer > time*2:
             self.record_spr_timer = pygame.time.get_ticks()
         

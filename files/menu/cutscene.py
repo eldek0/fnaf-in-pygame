@@ -72,7 +72,7 @@ class Cutscene:
 
                 if pygame.time.get_ticks() - self.timer > 35000:
                     # The screen glitches even more
-                    App.animations.static_anim_2_looped.update(App.surface)
+                    App.animations.static_anim_2_looped.update(App.uiSurface)
                     if not pygame.mixer.Channel(5).get_busy():
                         pygame.mixer.Channel(5).play(App.assets.static_end)
                     
@@ -92,7 +92,7 @@ class Cutscene:
                         img = App.assets.err_img
                     else:
                         img = App.assets.its_me
-                    App.surface.blit(img, (20, 20))
+                    App.uiSurface.blit(img, (20, 20))
 
                 if pygame.time.get_ticks() - self.timer > 3000:
                     self.finished = True

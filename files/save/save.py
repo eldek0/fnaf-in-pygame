@@ -10,7 +10,7 @@ for line in private_raw:
 PRIVATE_KEY = rsa.PrivateKey.load_pkcs1(raw_prvt)
 
 def save(App):
-    data = default()
+    """data = default()
 
     # Write
     data["Night"] = App.menu.inNight
@@ -29,7 +29,8 @@ def save(App):
     with open("files/utils.txt", "wb") as f:
         f.write(
             rsa.encrypt(json_transform.encode(), PUBLIC_KEY)
-            )
+            )"""
+    pass
 
 def default():
     data = {
@@ -40,8 +41,24 @@ def default():
             False, False, False, False, False
         ],
         "Cutscenes":[False, False, False, False]
+        #,"Minigames":[False, False]
     }
     return data
+
+def check_if_minigames_data_is_in_file(App, data):
+    # TODO
+    """ Minigames are not aveliable in version 1.0.05 and below,"""
+    """ so the files must be updated correctly if that's the case."""
+    if "minigames" in data.keys():
+        print("is")
+    else:
+        print("not, updating")
+        defa = default()
+        data["Minigames"] = defa["Minigames"]
+
+    print(data)
+    return data
+
 
 def read(App):
     # Create the file if it does not exist
@@ -69,6 +86,8 @@ def read(App):
         print(data)
     except json.decoder.JSONDecodeError as e:
         data = default()
+
+    #data = check_if_minigames_data_is_in_file(App, data)
 
     return data
 

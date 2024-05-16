@@ -10,7 +10,11 @@ from files.game.game_controller import Game
 from files.menu.menu import Menu
 from files.save.save import save, read
 from files.menu.warning_init import WarningInit
+import include.pygame_shaders as pygame_shaders
 
+default = (pygame_shaders.DEFAULT_VERTEX_SHADER, pygame_shaders.DEFAULT_FRAGMENT_SHADER)
+gameplay = ("files/shaders/gameplay/vertex.glsl", "files/shaders/gameplay/fragment.glsl")
+sepia = (pygame_shaders.DEFAULT_VERTEX_SHADER, "files/shaders/sepia/fragment.glsl")
 
 class App:
 	def __init__(self, initial_dimentions=(1024, 768), caption="Five Nights at Freddy's - made with pygame"):
@@ -21,8 +25,11 @@ class App:
 		pygame.init() # Starts the pygame timer
 		pygame.mixer.init() # Init the mixer
 		self.dimentions = initial_dimentions
-		self.surface = pygame.display.set_mode( self.dimentions ,vsync=True, flags=pygame.FULLSCREEN)
+		self.surface = pygame.display.set_mode( self.dimentions, vsync=True, flags= pygame.OPENGL | pygame.DOUBLEBUF)
 		pygame.display.set_caption(caption) # Win's name
+
+		# Shaders
+		self.set_shaders()
 
 		# Icon
 		icon = pygame.image.load("icon.ico")
@@ -53,6 +60,15 @@ class App:
 		self.menu:Menu = None
 
 		self.loaded = True
+
+		self.debug = True # debugging the game
+
+	def set_shaders(self):
+		self.uiSurface = pygame.Surface(self.dimentions, pygame.SRCALPHA, 32)
+		self.uiSurface.convert_alpha()
+
+		self.shaderMain = pygame_shaders.Shader(gameplay[0], gameplay[1], self.surface)
+		self.uiShader = pygame_shaders.Shader(sepia[0], sepia[1], self.uiSurface)
 
 	def get_deltatime(self):
 		self.now_time = time.time()
@@ -88,10 +104,17 @@ class App:
 				
 	def update(self, events):
 		self.surface.fill((0,0,0))
+		self.uiSurface.fill((0, 0, 0, 0))
 
-		# Draw on screen
+		#Draw on screen
 		dr.Draw(self)
 
+		self.shaderMain.render_direct(pygame.Rect(0, 0, self.dimentions[0], self.dimentions[1]))
+
+		# This surface will be responsable about the ui
+		self.uiShader.render_direct(pygame.Rect(0, 0, self.dimentions[0], self.dimentions[1]))
+		
+
 		# Update each frame
-		pygame.display.update()
+		pygame.display.flip()
 

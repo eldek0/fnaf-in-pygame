@@ -31,7 +31,9 @@ class Menu:
 
         self.background_alpha = 255
 
-        self.start_state = 0
+        self.start_state = 0 # if 100 will try entering a cutscene
+
+        if App.debug: self.start_state = 7
 
         self.timer = pygame.time.get_ticks()
         self.pressed_timer = pygame.time.get_ticks()
@@ -53,20 +55,20 @@ class Menu:
 
         self.cutscene = Cutscene(App)
 
-        self.cutscenes_data = [False, False, False, False]
+        self.cutscenes_data = [True, True, True, False]
 
-        self.inNight = 1
-        self.nightToPlay = 1
+        self.inNight = 5
+        self.nightToPlay = 5
 
-        self.played_once = False
+        self.played_once = True
 
     def static_animation(self, App):
-        App.animations.static_anim_1.update(App.surface)
+        App.animations.static_anim_1.update(App.uiSurface)
         App.animations.static_anim_1.alpha = 160
 
         # More static animation
-        App.animations.static_stripes_animation5.update(App)
-        App.animations.random_static_animation.update(App)
+        App.animations.static_stripes_animation5.update(App, App.uiSurface)
+        App.animations.random_static_animation.update(App.uiSurface)
 
     def music(self, App):
         if not pygame.mixer.Channel(2).get_busy():
@@ -75,11 +77,11 @@ class Menu:
     def draw_menu_stars(self, App):
         title_dims = App.assets.fnaf_title.get_rect()
         if self.inNight >= 6:
-            App.surface.blit(App.assets.star, (80, title_dims.h + 35))
+            App.uiSurface.blit(App.assets.star, (80, title_dims.h + 35))
         if self.inNight >= 7:
-            App.surface.blit(App.assets.star, (80 + 65, title_dims.h + 35))
+            App.uiSurface.blit(App.assets.star, (80 + 65, title_dims.h + 35))
         if self.custom_night_menu.completed_nights[0] == True: # 4/20 mode is completed
-            App.surface.blit(App.assets.star, (80 + 65*2, title_dims.h + 35))
+            App.uiSurface.blit(App.assets.star, (80 + 65*2, title_dims.h + 35))
 
     def reset_data_option(self, App):
         key = pygame.key.get_pressed()
@@ -117,25 +119,25 @@ class Menu:
         if self.start_state < 2:
             
             App.assets.background_menu[self.background_id].set_alpha(self.background_alpha)
-            App.surface.blit(App.assets.background_menu[self.background_id], (0,0))
+            App.uiSurface.blit(App.assets.background_menu[self.background_id], (0,0))
             
             self.static_animation(App)
 
             # Labels
-            App.surface.blit(App.assets.fnaf_title, (80, 30))
+            App.uiSurface.blit(App.assets.fnaf_title, (80, 30))
             dims = App.assets.scott_credits.get_rect()
-            App.surface.blit(App.assets.scott_credits, (App.dimentions[0] - dims.w - 10, App.dimentions[1] - dims.h - 20))
+            App.uiSurface.blit(App.assets.scott_credits, (App.dimentions[0] - dims.w - 10, App.dimentions[1] - dims.h - 20))
             dims = App.assets.delete_data_label.get_rect()
-            App.surface.blit(App.assets.delete_data_label, (App.dimentions[0]/2 - dims.w/2, App.dimentions[1] - dims.h - 20))
+            App.uiSurface.blit(App.assets.delete_data_label, (App.dimentions[0]/2 - dims.w/2, App.dimentions[1] - dims.h - 20))
             dims = App.assets.version.get_rect()
-            App.surface.blit(App.assets.version, (10, App.dimentions[1] - dims.h - 20))
+            App.uiSurface.blit(App.assets.version, (10, App.dimentions[1] - dims.h - 20))
 
-            self.new_game_button.update(App.surface, App.mouse_hitbox)
-            self.continue_button.update(App.surface, App.mouse_hitbox)
+            self.new_game_button.update(App.uiSurface, App.mouse_hitbox)
+            self.continue_button.update(App.uiSurface, App.mouse_hitbox)
             if self.inNight >= 6:
-                self.night_six_button.update(App.surface, App.mouse_hitbox)
+                self.night_six_button.update(App.uiSurface, App.mouse_hitbox)
             if self.inNight >= 7:
-                self.custom_night_button.update(App.surface, App.mouse_hitbox)
+                self.custom_night_button.update(App.uiSurface, App.mouse_hitbox)
 
             self.draw_menu_stars(App)
 
@@ -158,19 +160,19 @@ class Menu:
                         self.option_to_select(App, lambda:self.option_4(), 4)
 
             if self.option == 1:
-                App.surface.blit(App.assets.option_selected, (28, self.new_game_button.position[1] + 3))
+                App.uiSurface.blit(App.assets.option_selected, (28, self.new_game_button.position[1] + 3))
             elif self.option == 2:
-                App.surface.blit(App.assets.option_selected, (28, self.continue_button.position[1] + 3))
-                App.surface.blit(App.assets.night_label_2, (80, 535))
+                App.uiSurface.blit(App.assets.option_selected, (28, self.continue_button.position[1] + 3))
+                App.uiSurface.blit(App.assets.night_label_2, (80, 535))
                 night = self.inNight
                 if night > 5:
                     night = 5
-                App.surface.blit(App.assets.numbers2_small[night], (150, 537))
+                App.uiSurface.blit(App.assets.numbers2_small[night], (150, 537))
 
             elif self.option == 3:
-                App.surface.blit(App.assets.option_selected, (28, self.night_six_button.position[1] + 3))
+                App.uiSurface.blit(App.assets.option_selected, (28, self.night_six_button.position[1] + 3))
             elif self.option == 4:
-                App.surface.blit(App.assets.option_selected, (28, self.custom_night_button.position[1] + 3))
+                App.uiSurface.blit(App.assets.option_selected, (28, self.custom_night_button.position[1] + 3))
 
         if self.start_state > 0:
             if self.start_state != 100:
@@ -218,7 +220,7 @@ class Menu:
 
     def static(self, App):
         if self.static_with_change:
-            App.animations.static_anim_2.update(App.surface)
+            App.animations.static_anim_2.update(App.uiSurface)
 
             if App.animations.static_anim_2.sprite_num == len(App.animations.static_anim_2.sprites) - 1:
                 App.animations.static_anim_2.sprite_num = 0
@@ -249,8 +251,9 @@ class Menu:
 
     def show_newspaper(self, App):
         App.assets.newspaper.set_alpha(self.objects_alpha)
-        App.surface.blit(App.assets.newspaper, (0, 0))
-
+        App.uiSurface.blit(App.assets.newspaper, (0, 0))
+        
+        
         if self.objects_alpha < 255:
             if pygame.time.get_ticks() - self.timer > 5:
                 self.objects_alpha += 1
@@ -259,7 +262,7 @@ class Menu:
         else:
             if pygame.time.get_ticks() - self.timer > 4000:
                 App.animations.fade_effect.continue_effect(out_effect=False)
-                App.animations.fade_effect.update(App)
+                App.animations.fade_effect.update(App.uiSurface)
 
                 if App.animations.fade_effect.fade_alpha > 240:
                     pygame.mixer.music.unload()
@@ -284,13 +287,13 @@ class Menu:
     def show_night(self, App):
         App.assets.nights_12am[self.nightToPlay - 1].set_alpha(self.objects_alpha)
         night_dims = App.assets.nights_12am[self.nightToPlay - 1].get_rect()
-        App.surface.blit(App.assets.nights_12am[self.nightToPlay - 1], (App.dimentions[0] / 2 - night_dims.w / 2, App.dimentions[1] / 2 - night_dims.h / 2))
+        App.uiSurface.blit(App.assets.nights_12am[self.nightToPlay - 1], (App.dimentions[0] / 2 - night_dims.w / 2, App.dimentions[1] / 2 - night_dims.h / 2))
 
         match self.start_state:
             case 2:
                 pygame.mixer.music.unload()
-                App.animations.fade_effect.update(App)
-                App.animations.static_anim_2.update(App.surface)
+                App.animations.fade_effect.update(App.uiSurface)
+                App.animations.static_anim_2.update(App.uiSurface)
 
                 if App.animations.static_anim_2.sprite_num == len(App.animations.static_anim_2.sprites) - 1:
                     self.timer = pygame.time.get_ticks()
@@ -314,7 +317,7 @@ class Menu:
             case 5:
                 self.objects_alpha = 0
                 if pygame.time.get_ticks() - self.timer < 2000:
-                    App.surface.blit(App.assets.loading_icon, (App.dimentions[0] - (App.assets.loading_icon.get_width() + 20 ), App.dimentions[1] - (App.assets.loading_icon.get_height() + 20 ) ))
+                    App.uiSurface.blit(App.assets.loading_icon, (App.dimentions[0] - (App.assets.loading_icon.get_width() + 20 ), App.dimentions[1] - (App.assets.loading_icon.get_height() + 20 ) ))
                 else:
                     self.timer = pygame.time.get_ticks()
                     self.start_state = 6

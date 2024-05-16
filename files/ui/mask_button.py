@@ -10,7 +10,7 @@ class MaskButton:
         self.entering_mask = False
 
     def update(self, App, canInteract=True):
-        self.mask_button.update(App.surface, App.mouse_hitbox)
+        self.mask_button.update(App.uiSurface, App.mouse_hitbox)
         if canInteract or not App.objects.open_monitor_button.entering_camera:
             if self.inMask and not self.quitting_mask:
                 App.animations.mask.update(App.surface)

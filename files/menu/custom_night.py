@@ -58,17 +58,17 @@ class CustomNight:
             self.set_modes(App)
             self.icons_gotten = True
 
-        App.surface.fill((0, 0, 0))
+        App.uiSurface.fill((0, 0, 0))
 
-        App.surface.blit(App.assets.custom_night_title, (100, 30))
+        App.uiSurface.blit(App.assets.custom_night_title, (100, 30))
 
         dims = App.assets.custom_night_level_info.get_rect()
-        App.surface.blit(App.assets.custom_night_level_info, (App.dimentions[0]/2 - dims.w/2, 630))
+        App.uiSurface.blit(App.assets.custom_night_level_info, (App.dimentions[0]/2 - dims.w/2, 630))
 
         self.draw_animatrionics_icons(App, 100)
         self.draw_animatrionics_icons(App, 350, _range=(5, 10), row=1)
 
-        self.ready_button.update(App.surface, App.mouse_hitbox)
+        self.ready_button.update(App.uiSurface, App.mouse_hitbox)
 
         mouse = pygame.mouse.get_pressed()
 
@@ -89,10 +89,10 @@ class CustomNight:
         for i in range(len(self.modes)):
             if aggresive_animatrionics == self.modes[i]["data"]:
                 dims = self.modes[i]["name"].get_rect()
-                App.surface.blit(self.modes[i]["name"], (App.dimentions[0]/2 - dims.w/2, App.dimentions[1] - 80))
+                App.uiSurface.blit(self.modes[i]["name"], (App.dimentions[0]/2 - dims.w/2, App.dimentions[1] - 80))
 
                 if self.completed_nights[i]:
-                    App.surface.blit(App.assets.star, ((App.dimentions[0] - 50)/2 - 310, App.dimentions[1] - 80) )
+                    App.uiSurface.blit(App.assets.star, ((App.dimentions[0] - 50)/2 - 310, App.dimentions[1] - 80) )
                 break
 
                     
@@ -106,8 +106,8 @@ class CustomNight:
 
     def draw_mode_buttons(self, App):
         mouse = pygame.mouse.get_pressed()
-        self.right_button.update(App.surface, App.mouse_hitbox)
-        self.left_button.update(App.surface, App.mouse_hitbox)
+        self.right_button.update(App.uiSurface, App.mouse_hitbox)
+        self.left_button.update(App.uiSurface, App.mouse_hitbox)
         
         if self.right_button.mouse_hovered and mouse[0] and not self.one_click_change:
             self.mode_index += 1
@@ -149,8 +149,8 @@ class CustomNight:
             icon.set_alpha(alpha)
             label.set_alpha(alpha)
 
-            App.surface.blit(icon, (x_pos, y_position))
-            App.surface.blit(label, (x_pos + icon_dims.w/2 - label_dims.w/2, y_position + 130))
+            App.uiSurface.blit(icon, (x_pos, y_position))
+            App.uiSurface.blit(label, (x_pos + icon_dims.w/2 - label_dims.w/2, y_position + 130))
 
             # Right button
             right_button_dims = App.assets.arrow_right.get_rect()
@@ -159,7 +159,7 @@ class CustomNight:
                 dimentions=(right_button_dims.w, right_button_dims.h),
                 sprite=App.assets.arrow_right
             )
-            right_button.update(App.surface, App.mouse_hitbox)
+            right_button.update(App.uiSurface, App.mouse_hitbox)
                 
 
             # Left button
@@ -169,7 +169,7 @@ class CustomNight:
                 dimentions=(left_button_dims.w, left_button_dims.h),
                 sprite=App.assets.arrow_left
             )
-            left_button.update(App.surface, App.mouse_hitbox)
+            left_button.update(App.uiSurface, App.mouse_hitbox)
                 
 
             # Buttons click
@@ -197,7 +197,7 @@ class CustomNight:
             x_extra = 0
             # Draw numbers 
             for num in str(abs(aggresive)):
-                App.surface.blit(App.assets.numbers2[int(num)], (x_pos + 50 + x_extra, y_position + 175 + 40*row))
+                App.uiSurface.blit(App.assets.numbers2[int(num)], (x_pos + 50 + x_extra, y_position + 175 + 40*row))
                 x_extra += 20
 
         if not mouse[0]:

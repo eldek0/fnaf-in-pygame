@@ -14,7 +14,7 @@ class animations_init:
 
         self.desk = SpritesAnimation(sprites=App.assets.desk_animation, position=(0, 0), frame_wait=4, isLoop=True)
 
-        self.static_anim_1 = SpritesAnimation(sprites=App.assets.static_1, position=(0, 0), alpha=255, isLoop=True)
+        self.static_anim_1 = SpritesAnimation(sprites=App.assets.static_1, position=(0, 0), alpha=255, isLoop=True, frame_wait=3)
 
         self.static_anim_2 = SpritesAnimation(sprites=App.assets.static_2, position=(0, 0), frame_wait=3)
 

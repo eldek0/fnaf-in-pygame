@@ -18,7 +18,7 @@ class Telephone:
 
         if self.call_started and not self.muted:
             if pygame.time.get_ticks() - self.timer < 15000:
-                self.mute_button.update(App.surface, App.mouse_hitbox)
+                self.mute_button.update(App.uiSurface, App.mouse_hitbox)
 
             mouse = pygame.mouse.get_pressed()
 

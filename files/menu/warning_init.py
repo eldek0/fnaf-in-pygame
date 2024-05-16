@@ -11,7 +11,7 @@ class WarningInit:
     def update(self, App):
         dims = App.inital_warning.get_rect()
         App.inital_warning.set_alpha(self.alpha)
-        App.surface.blit(App.inital_warning, (App.dimentions[0]/2 - dims.w/2, App.dimentions[1]/2 - dims.h/2))
+        App.uiSurface.blit(App.inital_warning, (App.dimentions[0]/2 - dims.w/2, App.dimentions[1]/2 - dims.h/2))
 
         if App.loaded:
             if pygame.time.get_ticks() - self.timer > 4000:
@@ -27,7 +27,7 @@ class WarningInit:
     def finish(self, App):
         """ Change to menu and load everything from the save file """
         if not self._finished:
-            data = read(App)
+            data = None
 
             App.menu = Menu(App)
 

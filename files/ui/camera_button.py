@@ -12,7 +12,7 @@ class CameraButton:
 
     def update(self, App, canInteract=True):
 
-        self.monitor_button.update(App.surface, App.mouse_hitbox)
+        self.monitor_button.update(App.uiSurface, App.mouse_hitbox)
         if canInteract or not App.objects.mask_button.entering_mask:
             if App.objects.battery.charge == 0 or App.objects.office.animatronic_in_office:
                 self.quitting_camera = True
@@ -35,7 +35,6 @@ class CameraButton:
             self.quitting_camera = False
         
         self.animation(App, canInteract=canInteract)
-        print(self.entering_camera)
         
 
     def animation(self, App, canInteract=True):
@@ -44,7 +43,7 @@ class CameraButton:
             if (self.monitor_button.mouse_hovered and canInteract) or self.entering_camera:
                 if not self.camera_being_pressed:
                     self.entering_camera = True
-                    App.animations.monitor.update(App.surface)
+                    App.animations.monitor.update(App.uiSurface)
 
                     # Get in camera
                     if App.animations.monitor.sprite_num == len(App.animations.monitor.sprites) - 1:
@@ -73,7 +72,7 @@ class CameraButton:
                 if not App.objects.music_box.times_out:
                     pygame.mixer.Channel(2).set_volume(0)
 
-                App.animations.monitor.update(App.surface, reversed=True)
+                App.animations.monitor.update(App.uiSurface, reversed=True)
                 # Get off camera
                 if App.animations.monitor.sprite_num == 0:
                     self.inCamera = False

@@ -1,0 +1,3 @@
+- Changed night 1. Now toy chica and toy freddy can move.
+- Changed music box time.
+- A barrel shader was added to the gameplay, similar to the original game.

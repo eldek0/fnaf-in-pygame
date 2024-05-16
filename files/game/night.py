@@ -7,14 +7,14 @@ class NightAIChanger:
         self.animatronics_ai = {}
         self.animatronics = App.objects.Animatronics.animatronics_in_game
         self.animatronics_keys = self.animatronics.keys()
-        self.get_ais(App)
+        self.get_ais()
         self.time = 0
 
-    def get_ais(self, App):
+    def get_ais(self):
         for key in self.animatronics_keys:
             self.animatronics_ai[key] = self.animatronics[key].aggresivity
 
-    def update_ai(self, App):
+    def update_ai(self):
         for key in self.animatronics_keys:
             self.animatronics[key].aggresivity = self.animatronics_ai[key]
 
@@ -22,46 +22,46 @@ class NightAIChanger:
         self.time = App.objects.gameTimer.time
         match nightToPlay:
             case 1:
-                self.night_1(App)
+                self.night_1()
             case 2:
-                self.night_2(App)
+                self.night_2()
             case 3:
-                self.night_3(App)
+                self.night_3()
             case 4:
-                self.night_4(App)
+                self.night_4()
             case 5:
-                self.night_5(App)
+                self.night_5()
             case 6:
-                self.night_6(App)
+                self.night_6()
             case 7:
                 self.night_7(App)
             case _:
                 print("No AI configured!")
 
-        self.update_ai(App)
+        self.update_ai()
 
-    def night_1(self, App):
+    def night_1(self):
 
         match self.time:
             case 12:
                 pass
 
             case 1: 
-                pass
+                self.animatronics_ai["TOY_BONNIE"] = 2
 
             case 2:
-                self.animatronics_ai["TOY_FREDDY"] = 2
-                self.animatronics_ai["TOY_BONNIE"] = 2
+                self.animatronics_ai["TOY_FREDDY"] = 1
+                self.animatronics_ai["TOY_CHICA"] = 2
+                self.animatronics_ai["PUPPET"] = 1
 
             case 3:
                 self.animatronics_ai["TOY_BONNIE"] = 3
-                self.animatronics_ai["PUPPET"] = 1
 
             case 4: pass
 
             case 5: pass
 
-    def night_2(self, App):
+    def night_2(self):
         self.animatronics_ai["PUPPET"] = 5
         self.animatronics_ai["MANGLE"] = 3
         self.animatronics_ai["TOY_CHICA"] = 3
@@ -70,7 +70,7 @@ class NightAIChanger:
         self.animatronics_ai["BALOON_BOY"] = 3
         self.animatronics_ai["FOXY"] = 1
 
-    def night_3(self, App):
+    def night_3(self):
 
         match self.time:
             case 12:
@@ -99,7 +99,7 @@ class NightAIChanger:
 
             case 5: pass
 
-    def night_4(self, App):
+    def night_4(self):
 
         match self.time:
             case 12:
@@ -125,7 +125,7 @@ class NightAIChanger:
 
             case 5: pass
 
-    def night_5(self, App):
+    def night_5(self):
 
         match self.time:
             case 12:
@@ -158,7 +158,7 @@ class NightAIChanger:
 
             case 5: pass
 
-    def night_6(self, App):
+    def night_6(self):
 
         match self.time:
             case 12:

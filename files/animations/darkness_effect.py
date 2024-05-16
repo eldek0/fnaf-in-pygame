@@ -65,14 +65,14 @@ class DarknessAnimation:
         else:
             self.reset()
 
-    def update(self, App, reversed=False):
+    def update(self, surface:pygame.Surface, reversed=False):
         if not self.is_animating:
             self.timer = pygame.time.get_ticks()
             self.is_animating = True
 
         if self.black_rect_anim[self.sprite_num] or self._isFading:
             self.black_screen.set_alpha(self.fade_alpha)
-            App.surface.blit(self.black_screen, self.position)
+            surface.blit(self.black_screen, self.position)
 
         if not self._isFading:
             if pygame.time.get_ticks() - self.timer <= self.time_until_fade:

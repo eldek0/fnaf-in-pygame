@@ -27,7 +27,7 @@ class PaycheckAnimations:
     def night_paycheck(self, App):
 
         if self.canShow:
-            App.surface.blit(self.paycheck_asset, (0, 0))
+            App.uiSurface.blit(self.paycheck_asset, (0, 0))
             
             if not self.last_fade:
                 if pygame.time.get_ticks() - self.timer > 18000:

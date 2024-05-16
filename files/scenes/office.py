@@ -21,6 +21,10 @@ class Office:
         self.hallway_animatrionic_fade = False
         self.timer = pygame.time.get_ticks()
         self.hallway_animatrionic_coyote_time = 0
+        
+        self.camera_movement_act = [False, False] # Left and Right movement
+        # Left and right movement hitbox
+        self.move_left, self.move_right = pygame.Rect(0, 0, 300, App.dimentions[1]), pygame.Rect(App.dimentions[0] - 300, 0, 300, App.dimentions[1])
 
     def update(self, App, canInteract=True, draw=True, animate=True):
         if self.animatronic_in_office:
@@ -57,7 +61,7 @@ class Office:
 
         self.animatronic_detect(App)
         if self.hallway_animatrionic_fade:
-            App.animations.darkness.update(App)
+            App.animations.darkness.update(App.uiSurface)
             if not App.animations.darkness.is_animating:
                 self.hallway_animatrionic_fade = False
 
@@ -108,16 +112,19 @@ class Office:
             App.surface.blit(App.assets.office_golden_freddy, (320 + self.position[0], 280))
 
     def camera_movement(self, App):
-        move_left, move_right = pygame.Rect(0, 0, 300, App.dimentions[1]), pygame.Rect(App.dimentions[0] - 300, 0, 300, App.dimentions[1])
         
-        if App.mouse_hitbox.colliderect(move_left) and self.position[0] < 0:
-            self.position[0] += self.move_speed
-            if self.position[0] > 0:
-                self.position[0] = 0
-        if App.mouse_hitbox.colliderect(move_right) and self.position[0] > -abs(App.assets.office1.get_width() - App.dimentions[0]) :
-            self.position[0] -= self.move_speed
-            if self.position[0] < -abs(App.assets.office1.get_width() - App.dimentions[0]) :
-                self.position[0] = -abs(App.assets.office1.get_width() - App.dimentions[0])
+        if App.mouse_hitbox.colliderect(self.move_left) and self.position[0] < 0:
+            self.camera_movement_act[1] = True
+            if self.camera_movement_act[0]:
+                self.position[0] += self.move_speed
+                if self.position[0] > 0:
+                    self.position[0] = 0
+        elif App.mouse_hitbox.colliderect(self.move_right) and self.position[0] > -abs(App.assets.office1.get_width() - App.dimentions[0]):
+            self.camera_movement_act[0] = True
+            if self.camera_movement_act[1]:
+                self.position[0] -= self.move_speed
+                if self.position[0] < -abs(App.assets.office1.get_width() - App.dimentions[0]) :
+                    self.position[0] = -abs(App.assets.office1.get_width() - App.dimentions[0])
 
     def hallway_interact(self, App):
         baloon_boy = App.objects.Animatronics.animatronics_in_game["BALOON_BOY"]

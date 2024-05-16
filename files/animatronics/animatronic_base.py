@@ -51,7 +51,7 @@ class Animatronic(ABC):
     def jumpscare_update(self, App):
         if self.aggresivity != 0:
             if self._jumpscare:
-                self.jumpscare_animation.update(App.surface)
+                self.jumpscare_animation.update(App.uiSurface)
                 App.objects.open_monitor_button.quitting_camera = True
                 App.objects.mask_button.quitting_mask = True
                 if self.jumpscare_animation.sprite_num == len(self.jumpscare_animation.sprites) - 1:
@@ -146,7 +146,6 @@ class Animatronic(ABC):
                 for aveliable_pos in self.aveliable_rooms_positions[room_location]:
                     found_match = False
                     for name in aveliable_pos:
-                        print(name)
                         if animatrionic.name_id == name:
                             found_match = True
                         else:

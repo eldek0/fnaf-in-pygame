@@ -45,18 +45,18 @@ class NightBeatenAnimation:
                 self.start_animation = True
                 App.animations.fade_effect.stop_effect()
                 App.animations.fade_effect.continue_effect(out_effect=True)
-                App.surface.fill((0,0,0))
+                App.uiSurface.fill((0,0,0))
             else:
                 App.animations.fade_effect.update(App)
 
             position = (self.position_x, App.dimentions[1]/2 - self.dims_y/2)
             if not self.index == -1:
                 if self.reversed:
-                    App.surface.blit(App.assets.five_animation[self.index], position)
+                    App.uiSurface.blit(App.assets.five_animation[self.index], position)
                 else:
-                    App.surface.blit(App.assets.six_animation[self.index], position)
+                    App.uiSurface.blit(App.assets.six_animation[self.index], position)
                 
-            App.surface.blit(App.assets.big_am, (self.position_x + self.numbers_width + self.space, App.dimentions[1]/2 - self.dims_y/2))
+            App.uiSurface.blit(App.assets.big_am, (self.position_x + self.numbers_width + self.space, App.dimentions[1]/2 - self.dims_y/2))
 
             if self.start_animation and not self.ended_animation:
                 self.change_numbers(App)
@@ -80,7 +80,7 @@ class NightBeatenAnimation:
                             print("to menu")
 
         elif self.pay_animation.inAnimation:
-            App.surface.fill((0,0,0))
+            App.uiSurface.fill((0,0,0))
 
             if App.menu.nightToPlay == 6:
                 self.pay_animation.paycheck_asset = App.assets.night_six_paycheck
@@ -100,7 +100,7 @@ class NightBeatenAnimation:
                 if pygame.time.get_ticks() - self.confetti_timer > time_to_spawn + data["time_spawn"] + data["ran_time"] + anim.ran_value*8:
                     anim.position[0] += data["add"][0]/2.5
                     anim.position[1] += data["add"][1]*1.5
-                    anim.update(App.surface)
+                    anim.update(App.uiSurface)
                 index += 1
 
     def end_reset_variables(self, App, toMenu=False):

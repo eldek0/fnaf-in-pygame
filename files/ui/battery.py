@@ -9,8 +9,8 @@ class Battery:
         self.surface_index = 0
 
     def update(self, App, update_charge=True):
-        App.surface.blit(App.assets.flashlight_label, [self.position[0] + 5, self.position[1] - 15])
-        App.surface.blit(App.assets.battery_stages[self.surface_index], self.position)
+        App.uiSurface.blit(App.assets.flashlight_label, [self.position[0] + 5, self.position[1] - 15])
+        App.uiSurface.blit(App.assets.battery_stages[self.surface_index], self.position)
 
         if update_charge:
             self.detect_usage(App)

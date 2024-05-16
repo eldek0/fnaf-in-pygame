@@ -17,8 +17,8 @@ class StaticStripesAnimation:
         self.big_stripe_dims = self.chosen_stripe.get_rect()
         self.big_stripe_y_location = -self.big_stripe_dims.height
 
-    def update(self, App):
-        App.surface.blit(self.chosen_stripe, (0, self.big_stripe_y_location))
+    def update(self, App, surface:pygame.Surface):
+        surface.blit(self.chosen_stripe, (0, self.big_stripe_y_location))
         self.big_stripe_y_location += self.speed_frame
         if self.big_stripe_y_location > App.dimentions[1]:
             self.big_stripe_y_location = -self.big_stripe_dims.height
