@@ -2,7 +2,7 @@ import pygame
 
 class FadeEffect:
     def __init__(self, App,position:tuple, effect_out=True, alpha_speed=1):
-        self.black_screen = pygame.Surface((App.dimentions[0], App.dimentions[1]))
+        self.black_screen = pygame.Surface((App.dimentions[0], App.dimentions[1])).convert_alpha()
         self.alpha = 0
         self.effect_out = effect_out
         self._stop = True

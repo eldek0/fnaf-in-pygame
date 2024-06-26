@@ -55,7 +55,10 @@ class Animatronic(ABC):
                 App.objects.open_monitor_button.quitting_camera = True
                 App.objects.mask_button.quitting_mask = True
                 if self.jumpscare_animation.sprite_num == len(self.jumpscare_animation.sprites) - 1:
-                    self._gameOver = True
+                    if (pygame.time.get_ticks() - self.timer > 200):
+                        self._gameOver = True
+                else:
+                    self.timer = pygame.time.get_ticks()
 
     def update_movement_time(self):
         self.movement_time = self._base_movement_time

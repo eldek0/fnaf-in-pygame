@@ -358,7 +358,7 @@ class import_images:
 		self.delete_data_label = pygame.image.load("sprites/menu/logos/7.png").convert_alpha()
 		self.version = pygame.image.load("sprites/menu/logos/9.png").convert_alpha()
 
-		self.newspaper = pygame.image.load("sprites/menu/paychecks/1.png").convert()
+		self.newspaper = pygame.image.load("sprites/menu/paychecks/1.png").convert_alpha()
 		self.loading_icon = pygame.image.load("sprites/menu/logos/0.png").convert_alpha()
 
 		self.night_five_paycheck = pygame.image.load("sprites/menu/paychecks/2.png").convert()

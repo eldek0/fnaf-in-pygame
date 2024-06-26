@@ -1,3 +1,13 @@
 - Changed night 1. Now toy chica and toy freddy can move.
 - Changed music box time.
 - A barrel shader was added to the gameplay, similar to the original game.
+- Now jumpscares don't stop until the sound ends.
+
+TO FIX:
+GENERAL
+- Toy freddy takes way long to move
+- Sometimes, sounds don't reproduce correctly
+
+SHADER 
+- Fade in gameplay does not work right (and when the night ends makes the game crash) FIXED
+

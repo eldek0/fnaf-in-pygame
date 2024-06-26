@@ -8,9 +8,9 @@ void main() {
     vec2 center = vec2(0.5, 0.5);
     vec2 off_center = fragmentTexCoord - center;
 
-    off_center /= 1.0 + 1.8 * pow(abs(off_center.yx), vec2(4.1, 4.6));
+    off_center /= 1.0 + 0.8 * pow(abs(off_center.yx), vec2(2.1, 1.9));
 
-    vec2 v_text2 = center+off_center;
+    vec2 v_text2 = center + off_center;
 
     if (v_text2.x > 1.0 || v_text2.x < 0.0 || v_text2.y > 1.0 || v_text2.y < 0.0)
         color = vec4(0.0, 0.0, 0.0, 1.0);

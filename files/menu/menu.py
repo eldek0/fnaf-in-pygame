@@ -33,7 +33,7 @@ class Menu:
 
         self.start_state = 0 # if 100 will try entering a cutscene
 
-        if App.debug: self.start_state = 7
+        if App.debug: self.start_state = 0
 
         self.timer = pygame.time.get_ticks()
         self.pressed_timer = pygame.time.get_ticks()
@@ -57,18 +57,19 @@ class Menu:
 
         self.cutscenes_data = [True, True, True, False]
 
-        self.inNight = 5
-        self.nightToPlay = 5
+        self.inNight = 7
+        self.nightToPlay = 2
 
         self.played_once = True
 
     def static_animation(self, App):
-        App.animations.static_anim_1.update(App.uiSurface)
+        App.animations.static_anim_1.update(App.surface)
         App.animations.static_anim_1.alpha = 160
 
         # More static animation
-        App.animations.static_stripes_animation5.update(App, App.uiSurface)
-        App.animations.random_static_animation.update(App.uiSurface)
+        App.animations.static_stripes_animation5.update(App, App.surface)
+        
+        App.animations.random_static_animation.update(App.surface)
 
     def music(self, App):
         if not pygame.mixer.Channel(2).get_busy():
@@ -119,7 +120,7 @@ class Menu:
         if self.start_state < 2:
             
             App.assets.background_menu[self.background_id].set_alpha(self.background_alpha)
-            App.uiSurface.blit(App.assets.background_menu[self.background_id], (0,0))
+            App.surface.blit(App.assets.background_menu[self.background_id], (0,0))
             
             self.static_animation(App)
 
@@ -258,7 +259,7 @@ class Menu:
             if pygame.time.get_ticks() - self.timer > 5:
                 self.objects_alpha += 1
                 self.timer = pygame.time.get_ticks()
-                App.animations.fade_effect.stop_effect()
+                #App.animations.fade_effect.stop_effect()
         else:
             if pygame.time.get_ticks() - self.timer > 4000:
                 App.animations.fade_effect.continue_effect(out_effect=False)

@@ -68,7 +68,7 @@ class App:
 		self.uiSurface.convert_alpha()
 
 		self.shaderMain = pygame_shaders.Shader(gameplay[0], gameplay[1], self.surface)
-		self.uiShader = pygame_shaders.Shader(sepia[0], sepia[1], self.uiSurface)
+		self.uiShader = pygame_shaders.Shader(default[0], default[1], self.uiSurface)
 
 	def get_deltatime(self):
 		self.now_time = time.time()

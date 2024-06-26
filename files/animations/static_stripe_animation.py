@@ -13,11 +13,11 @@ class StaticStripesAnimation:
     def update_dims(self, App):
         self.index = random.randint(self.random_sprites_range[0], self.random_sprites_range[1])
         self.chosen_stripe = App.assets.static_stripes[self.index]
-        self.chosen_stripe.set_alpha(self.alpha)
         self.big_stripe_dims = self.chosen_stripe.get_rect()
         self.big_stripe_y_location = -self.big_stripe_dims.height
 
     def update(self, App, surface:pygame.Surface):
+        self.chosen_stripe.set_alpha(self.alpha)
         surface.blit(self.chosen_stripe, (0, self.big_stripe_y_location))
         self.big_stripe_y_location += self.speed_frame
         if self.big_stripe_y_location > App.dimentions[1]:

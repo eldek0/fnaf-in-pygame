@@ -94,9 +94,10 @@ class Game:
                 self.set_audio(App)
                 self.audio_set = True
 
-            if App.objects.Animatronics.gameOver and not pygame.mixer.Channel(8).get_busy():
+            if App.objects.Animatronics.gameOver:
                 # YOU LOST
                 self.you_lost = True
+                pygame.mixer.Channel(8).stop()
             else:
                 # Background
                 App.objects.camera.timers_update(App)

@@ -12,7 +12,7 @@ class DarknessAnimation:
             0, 1, 0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 0, 1, 0, 1,1,1, 0, 0, 1, 0, 1,
             0, 1, 0, 1, 0, 1, 0, 1, 1, 0, 1, 0, 1, 1, 0, 0, 1,1 ,0, 1, 0, 1,1 , 0, 1, 0, 1
         ]
-        self.black_screen = pygame.Surface((App.dimentions[0], App.dimentions[1]))
+        self.black_screen = pygame.Surface((App.dimentions[0], App.dimentions[1])).convert_alpha()
         self.is_animating = False
         self.timer = pygame.time.get_ticks()
         self._isFading = False
