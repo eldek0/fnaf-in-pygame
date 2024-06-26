@@ -25,7 +25,7 @@ class App:
 		pygame.init() # Starts the pygame timer
 		pygame.mixer.init() # Init the mixer
 		self.dimentions = initial_dimentions
-		self.surface = pygame.display.set_mode( self.dimentions, vsync=True, flags= pygame.OPENGL | pygame.DOUBLEBUF)
+		self.surface = pygame.display.set_mode( self.dimentions, vsync=True, flags= pygame.OPENGL | pygame.DOUBLEBUF )
 		pygame.display.set_caption(caption) # Win's name
 
 		# Shaders
@@ -71,9 +71,7 @@ class App:
 		self.uiShader = pygame_shaders.Shader(default[0], default[1], self.uiSurface)
 
 	def get_deltatime(self):
-		self.now_time = time.time()
-		self.deltaTime = self.now_time - self.prev_time
-		self.prev_time = self.now_time
+		self.deltaTime = self.clock.tick(self.frames_per_second)/1000.0
 
 	def loop(self):
 		while self.playing == True:
@@ -86,7 +84,7 @@ class App:
 			# Frames per second
 			self.game_fps = self.clock.tick(self.frames_per_second)
 
-			#pygame.display.set_caption(str(round(self.clock.get_fps(), 2)) ) # Win's name
+			pygame.display.set_caption(str(round(self.clock.get_fps(), 2)) ) # Win's name
 
 			#DeltaTime
 			self.get_deltatime()
