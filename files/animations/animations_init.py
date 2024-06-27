@@ -8,7 +8,7 @@ from files.animations.mask_animation import MaskAnimation
 
 class animations_init:
     def __init__(self, App):
-        self.monitor = SpritesAnimation(sprites=App.assets.camera_sprites, position=(0, 0))
+        self.monitor = SpritesAnimation(sprites=App.assets.camera_sprites, position=(0, 0), frame_wait=1)
 
         self.mask = SpritesAnimation(sprites=App.assets.mask_sprites[0:9], position=(0, 0), frame_wait=1)
 

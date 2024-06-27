@@ -12,7 +12,7 @@ class ToyChica(Animatronic):
         match self.locationId:
             case 9:
                 if pygame.time.get_ticks() - self.timer > self.movement_time / self.aggresivity:
-                    if toy_bonnie.locationId != 9 or App.menu.inNight == 7:
+                    if toy_bonnie.locationId != 9 or App.menu.nightToPlay == 7:
                         self.change_location_id(App, 7)
                     else:
                         self.timer = pygame.time.get_ticks()
@@ -41,6 +41,6 @@ class ToyChica(Animatronic):
                 if pygame.time.get_ticks() - self.timer > self.vent_time_to_scare and App.objects.open_monitor_button.inCamera:
                     self.jumpscare(App)
                 if App.objects.mask_button.inMask:
-                    self.time_with_mask += 1
+                    self.time_with_mask += 1 * App.deltaTime
                 if self.time_with_mask >= self.time_with_mask_goal:
                     self.return_to_rest_room(App)

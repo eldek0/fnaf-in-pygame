@@ -358,8 +358,8 @@ class import_images:
 		self.delete_data_label = pygame.image.load("sprites/menu/logos/7.png").convert_alpha()
 		self.version = pygame.image.load("sprites/menu/logos/9.png").convert_alpha()
 
-		self.newspaper = pygame.image.load("sprites/menu/paychecks/1.png").convert_alpha()
-		self.loading_icon = pygame.image.load("sprites/menu/logos/0.png").convert_alpha()
+		self.newspaper = pygame.image.load("sprites/menu/paychecks/1.png").convert()
+		self.loading_icon = pygame.image.load("sprites/menu/logos/0.png").convert()
 
 		self.night_five_paycheck = pygame.image.load("sprites/menu/paychecks/2.png").convert()
 		self.night_six_paycheck = pygame.image.load("sprites/menu/paychecks/3.png").convert()
@@ -395,8 +395,6 @@ class import_images:
 			self.pink_conf.append(
 				pygame.image.load(f"sprites/menu/sprinkles/{i}.png").convert_alpha()
 			)
-
-		print(len(self.pink_conf), len(self.yellow_conf), len(self.green_conf), len(self.blue_conf))
 
 		# Numbers 
 		self.numbers = []
@@ -478,10 +476,10 @@ class import_images:
 		self.animatrionic_labels = []
 		for i in range(10):
 			self.animatrionic_labels.append(
-				pygame.image.load(f"sprites/custom_night/names/{i+1}.png").convert_alpha()
+				pygame.image.load(f"sprites/custom_night/names/{i+1}.png").convert()
 			)
 
-		self.custom_night_title = pygame.image.load(f"sprites/custom_night/labels/1.png").convert_alpha()
+		self.custom_night_title = pygame.image.load(f"sprites/custom_night/labels/1.png").convert()
 		self.arrow_right = pygame.image.load(f"sprites/custom_night/labels/2.png").convert()
 		self.arrow_left = pygame.image.load(f"sprites/custom_night/labels/3.png").convert()
 		self.ready_button = pygame.image.load(f"sprites/custom_night/labels/4.png").convert()
@@ -489,18 +487,13 @@ class import_images:
 		self.arrow_right2 = pygame.image.load(f"sprites/custom_night/labels/5.png").convert()
 		self.arrow_left2 = pygame.image.load(f"sprites/custom_night/labels/6.png").convert()
 
-		self.custom_night_level_info = pygame.image.load(f"sprites/custom_night/labels/7.png").convert_alpha()
+		self.custom_night_level_info = pygame.image.load(f"sprites/custom_night/labels/7.png").convert()
 
 		# Modes
 		self.modes_labels = []
 		for i in range(10):
 			self.modes_labels.append(
 				pygame.image.load(f"sprites/custom_night/modes/{i+1}.png").convert()
-			)
-
-		# PURE TEST
-		self.modes_labels.append(
-				pygame.image.load(f"sprites/custom_night/labels/4.png").convert()
 			)
 
 		# Rewards
@@ -530,8 +523,8 @@ class import_images:
 		self.cutscene_background = pygame.image.load(f"sprites/cutscenes/1.png").convert()
 		self.cutscene_black = pygame.image.load(f"sprites/cutscenes/0.png").convert()
 		self.cutscene_mask = pygame.image.load(f"sprites/cutscenes/2.png").convert_alpha()
-		self.err_img = pygame.image.load(f"sprites/cutscenes/3.png").convert_alpha()
-		self.its_me = pygame.image.load(f"sprites/cutscenes/4.png").convert_alpha()
+		self.err_img = pygame.image.load(f"sprites/cutscenes/3.png").convert()
+		self.its_me = pygame.image.load(f"sprites/cutscenes/4.png").convert()
 
 		# Get crops from cropped images
 		import_images.cropped_images(self)

@@ -2,7 +2,7 @@ import pygame, random
 from abc import ABC
 
 class Animatronic(ABC):
-    def __init__(self, aggresivity:int, locationId:int, jumpscare_animation:list, rest_room:int, custom_index:int):
+    def __init__(self, aggresivity:int, locationId:int, jumpscare_animation, rest_room:int, custom_index:int):
         """
         locationId:
             - From 1 to 12 are room locations
@@ -51,10 +51,10 @@ class Animatronic(ABC):
     def jumpscare_update(self, App):
         if self.aggresivity != 0:
             if self._jumpscare:
-                self.jumpscare_animation.update(App.uiSurface)
+                self.jumpscare_animation.update(App.uiSurface, App.deltaTime)
                 App.objects.open_monitor_button.quitting_camera = True
                 App.objects.mask_button.quitting_mask = True
-                if self.jumpscare_animation.sprite_num == len(self.jumpscare_animation.sprites) - 1:
+                if self.jumpscare_animation.sprite_num >= len(self.jumpscare_animation.sprites) - 1:
                     if (pygame.time.get_ticks() - self.timer > 200):
                         self._gameOver = True
                 else:

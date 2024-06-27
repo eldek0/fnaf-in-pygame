@@ -15,7 +15,7 @@ class WarningInit:
 
         if App.loaded:
             if pygame.time.get_ticks() - self.timer > 4000:
-                self.alpha -= 2
+                self.alpha -= 2 * App.deltaTime 
 
             if self.alpha <= 0:
                 self.finish(App)

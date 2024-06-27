@@ -18,11 +18,11 @@ class Foxy(Animatronic):
             case 101:
                 if not App.objects.office.hallway_on:
                     if not App.objects.office.occupied_office[0]:
-                        self._light -= 0.15 * ((self.aggresivity + 1)/11.4)
+                        self._light -= 0.15 * ((self.aggresivity + 1)/11.4) * App.deltaTime
                         if self._light < 0:
                             self._light = 0
                 else:
-                    self._light += 0.20 * ((self.aggresivity + 1)/2.12)
+                    self._light += 0.20 * ((self.aggresivity + 1)/2.12) * App.deltaTime
                     if self._light > 100:
                         self._light = 100
 

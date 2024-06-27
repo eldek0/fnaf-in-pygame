@@ -13,14 +13,14 @@ class YouLostAnimation:
             case 0:
                 pygame.mixer.stop()
                 self.nightToPlay = App.menu.nightToPlay
-                App.animations.static_anim_1.update(App.uiSurface)
+                App.animations.static_anim_1.update(App.uiSurface, App.deltaTime)
                 App.animations.static_anim_1.alpha = 255
                 App.assets.game_lost_static.play()
                 
                 self.state = 1
                 self.timer = pygame.time.get_ticks()
             case 1:
-                App.animations.static_anim_1.update(App.uiSurface)
+                App.animations.static_anim_1.update(App.uiSurface, App.deltaTime)
                 if pygame.time.get_ticks() - self.timer > 5000:
                     self.state = 2
                     self.timer = pygame.time.get_ticks()
@@ -30,7 +30,7 @@ class YouLostAnimation:
                 App.uiSurface.blit(App.assets.lost_screen, (0, 0))
 
                 App.animations.static_anim_1.alpha = 100
-                App.animations.static_anim_1.update(App.uiSurface)
+                App.animations.static_anim_1.update(App.uiSurface, App.deltaTime)
 
                 App.uiSurface.blit(App.assets.game_over, (App.dimentions[0]/2 - App.assets.game_over.get_width()/2, App.dimentions[1] - 120))
 

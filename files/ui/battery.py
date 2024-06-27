@@ -25,7 +25,7 @@ class Battery:
         ]
         for state in usage_detections:
             if state:
-                self.charge -= 0.0152
+                self.charge -= 0.0152 * App.deltaTime
         
         if self.charge < 0:
             self.charge = 0

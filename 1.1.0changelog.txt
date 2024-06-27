@@ -1,13 +1,23 @@
+- A barrel shader was added to the gameplay, similar to the original game.
+- The game is now frame independent
 - Changed night 1. Now toy chica and toy freddy can move.
 - Changed music box time.
-- A barrel shader was added to the gameplay, similar to the original game.
 - Now jumpscares don't stop until the sound ends.
 
 TO FIX:
 GENERAL
 - Toy freddy takes way long to move
 - Sometimes, sounds don't reproduce correctly
+- Weird bug with the game time (it seems that a . is provoking it)
+- Hallway animatronics often appear from nowhere
+- Foxy leave hallway without waiting
+- The game sometimes crashes at camera 11?
 
 SHADER 
 - Fade in gameplay does not work right (and when the night ends makes the game crash) FIXED
+
+TO ADD
+Minigames ! (SAVETHEM, Give Gifts, Give Life, Take Cake to the Children, Foxy Go! Go! Go!)
+Easter eggs (shadow bonnie, shadow freddy, balloon girl, Paper Buddy, Endo skeletons, Eyeless Screens)
+
 

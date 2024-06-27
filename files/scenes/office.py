@@ -61,7 +61,7 @@ class Office:
 
         self.animatronic_detect(App)
         if self.hallway_animatrionic_fade:
-            App.animations.darkness.update(App.uiSurface)
+            App.animations.darkness.update(App.uiSurface, App.deltaTime)
             if not App.animations.darkness.is_animating:
                 self.hallway_animatrionic_fade = False
 
@@ -116,13 +116,13 @@ class Office:
         if App.mouse_hitbox.colliderect(self.move_left) and self.position[0] < 0:
             self.camera_movement_act[1] = True
             if self.camera_movement_act[0]:
-                self.position[0] += self.move_speed
+                self.position[0] += self.move_speed * App.deltaTime
                 if self.position[0] > 0:
                     self.position[0] = 0
         elif App.mouse_hitbox.colliderect(self.move_right) and self.position[0] > -abs(App.assets.office1.get_width() - App.dimentions[0]):
             self.camera_movement_act[0] = True
             if self.camera_movement_act[1]:
-                self.position[0] -= self.move_speed
+                self.position[0] -= self.move_speed * App.deltaTime
                 if self.position[0] < -abs(App.assets.office1.get_width() - App.dimentions[0]) :
                     self.position[0] = -abs(App.assets.office1.get_width() - App.dimentions[0])
 
@@ -226,10 +226,10 @@ class Office:
 
     def easter_egg_interact(self, App):
         """ Freddy's nose """
-        ester_egg_rect = pygame.Rect(145 + self.position[0], 190, 10, 10)
+        easter_egg_rect = pygame.Rect(129 + self.position[0], 167, 10, 10)
 
         mouse_click = pygame.mouse.get_pressed()
-        colliding_rect = App.mouse_hitbox.colliderect(ester_egg_rect)
+        colliding_rect = App.mouse_hitbox.colliderect(easter_egg_rect)
 
         if colliding_rect:
             if mouse_click[0]:
@@ -242,7 +242,7 @@ class Office:
 
     def desk_update(self, App):
         App.animations.desk.position = [ self.position[0] + 560,App.dimentions[1] - 435]
-        App.animations.desk.update(App.surface)
+        App.animations.desk.update(App.surface, App.deltaTime)
 
     def get_flashed_office(self, App):
         ToyFreddy = App.objects.Animatronics.animatronics_in_game["TOY_FREDDY"]
@@ -338,9 +338,9 @@ class Office:
                     App.animations.darkness.fade_screen()
 
                 if self.bunny_moving_left:
-                    self.bunny_x_position -= self.bunny_speed
+                    self.bunny_x_position -= self.bunny_speed * App.deltaTime
                 else:
-                    self.bunny_x_position += self.bunny_speed
+                    self.bunny_x_position += self.bunny_speed * App.deltaTime
 
             if App.animations.darkness._isFading:
                 if not ToyBunny._prepare_to_jumpscare:

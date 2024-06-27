@@ -121,8 +121,8 @@ class Cutscene:
                 App.surface.blit(App.assets.cutscene_freddy, (self.freddy_pos[0] + self.x_pos, self.freddy_pos[1]))
 
         if self.inNight == 4:
-            if self.delta_pos > 0: self.delta_pos -= self.speed/3
-            elif self.delta_pos < 0: self.delta_pos += self.speed/3
+            if self.delta_pos > 0: self.delta_pos -= self.speed/3 * App.deltaTime
+            elif self.delta_pos < 0: self.delta_pos += self.speed/3 * App.deltaTime
 
             dims = App.assets.cutscene_puppet.get_rect()
             self.puppet_pos = [App.dimentions[0]/2 - dims.w/2, 0]
@@ -133,7 +133,7 @@ class Cutscene:
         collide_right = App.mouse_hitbox.colliderect(self.move_rect_right)
 
         if collide_right:
-            self.x_pos -= self.speed
+            self.x_pos -= self.speed * App.deltaTime
             
 
             if self.x_pos < self.move_extremes[0] :
@@ -141,7 +141,7 @@ class Cutscene:
                 
 
         elif collide_left:
-            self.x_pos += self.speed
+            self.x_pos += self.speed * App.deltaTime
             
 
             if self.x_pos > self.move_extremes[1]:
@@ -153,8 +153,8 @@ class Cutscene:
             collide_left = False
 
         # For puppet
-        if collide_right: self.delta_pos -= self.speed/1.7
-        elif collide_left: self.delta_pos += self.speed/1.7
+        if collide_right: self.delta_pos -= self.speed/1.7 * App.deltaTime
+        elif collide_left: self.delta_pos += self.speed/1.7 * App.deltaTime
 
         # Move sound
         if collide_left or collide_right:

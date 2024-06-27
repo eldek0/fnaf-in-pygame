@@ -13,8 +13,8 @@ class MaskButton:
         self.mask_button.update(App.uiSurface, App.mouse_hitbox)
         if canInteract or not App.objects.open_monitor_button.entering_camera:
             if self.inMask and not self.quitting_mask:
-                App.animations.mask.update(App.surface)
-                App.animations.mask_animation.update()
+                App.animations.mask.update(App.surface, App.deltaTime)
+                App.animations.mask_animation.update(App.deltaTime)
                 pos_sum = App.animations.mask_animation.position
                 App.surface.blit(App.assets.mask_sprites[9], (-100 + pos_sum[0], -100 + pos_sum[1]))
                 
@@ -36,7 +36,7 @@ class MaskButton:
             if (self.mask_button.mouse_hovered and canInteract) or self.entering_mask:
                 if not self.mask_being_pressed:
                     self.entering_mask = True
-                    App.animations.mask.update(App.surface)
+                    App.animations.mask.update(App.surface, App.deltaTime)
 
                     # Get in mask
                     if App.animations.mask.sprite_num == len(App.animations.mask.sprites) - 1:
@@ -58,7 +58,7 @@ class MaskButton:
 
             if self.quitting_mask:
                 App.animations.mask.desactivate = False
-                App.animations.mask.update(App.surface, reversed=True)
+                App.animations.mask.update(App.surface, App.deltaTime, reversed=True)
 
                 # Get off mask
                 if App.animations.mask.sprite_num == 0:

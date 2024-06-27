@@ -9,9 +9,9 @@ class MaskAnimation:
         self.direction = [-1, -1] # Left and up
         self.move:tuple = move
 
-    def update(self):
-        self.position[0] += self.move[0]*self.direction[0]
-        self.position[1] += self.move[1]*self.direction[1]
+    def update(self, deltaTime:float):
+        self.position[0] += self.move[0]*self.direction[0] * deltaTime
+        self.position[1] += self.move[1]*self.direction[1] * deltaTime
 
         if pygame.time.get_ticks() - self.timer > 2000:
 

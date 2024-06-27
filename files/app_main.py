@@ -40,7 +40,7 @@ class App:
 		self.frames_per_second = 60
 
 		self.warning_init = WarningInit(self)
-		self.inital_warning = pygame.image.load("sprites/menu/logos/4.png").convert_alpha()
+		self.inital_warning = pygame.image.load("sprites/menu/logos/4.png").convert()
 		self.update(self)
 		
 		self.assets = import_images()
@@ -71,7 +71,7 @@ class App:
 		self.uiShader = pygame_shaders.Shader(default[0], default[1], self.uiSurface)
 
 	def get_deltatime(self):
-		self.deltaTime = self.clock.tick(self.frames_per_second)/1000.0
+		self.deltaTime = self.clock.tick(self.frames_per_second) / 10.3
 
 	def loop(self):
 		while self.playing == True:
@@ -84,7 +84,7 @@ class App:
 			# Frames per second
 			self.game_fps = self.clock.tick(self.frames_per_second)
 
-			pygame.display.set_caption(str(round(self.clock.get_fps(), 2)) ) # Win's name
+			#pygame.display.set_caption(str(round(self.clock.get_fps(), 2)) ) # Win's name
 
 			#DeltaTime
 			self.get_deltatime()

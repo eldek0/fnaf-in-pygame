@@ -23,11 +23,11 @@ class RandomSpritesAnimation:
     def update_random_time_for_interval(self):
         self.random_time_for_interval = random.randint(self.randoms_intervals[0], self.randoms_intervals[1])
 
-    def update(self, surface):
+    def update(self, surface:pygame.Surface, deltaTime:float):
         if pygame.time.get_ticks() - self.timer < self.random_time_for_interval:
             self.sprites[self.index].set_alpha(self.alpha)
             surface.blit(self.sprites[self.index], self.position)
-            self.frame += 1
+            self.frame += 1 * deltaTime
             if self.frame >= self.speed_frame:
                 self.prev_index = self.index
                 while self.index == self.prev_index:

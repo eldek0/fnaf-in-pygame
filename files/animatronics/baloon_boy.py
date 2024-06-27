@@ -21,7 +21,7 @@ class BaloonBoy(Animatronic):
                     self.change_location_id(App, -1, forced=True)
 
                 if App.objects.mask_button.inMask:
-                    self.time_with_mask += 1
+                    self.time_with_mask += 1 * App.deltaTime
                 if self.time_with_mask >= self.time_with_mask_goal:
                     self.return_to_rest_room(App)
 

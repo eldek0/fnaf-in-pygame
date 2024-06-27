@@ -34,7 +34,7 @@ class DarknessAnimation:
         self._isFading = False
         self.sprite_num = 0
 
-    def fade(self, force=False):
+    def fade(self, deltaTime:float, force=False):
         if self._fade:
             # Hold black screen some time
             if pygame.time.get_ticks() - self.timer <= self.hold_black_screen_time:
@@ -51,9 +51,9 @@ class DarknessAnimation:
                     steps = max_time // (self.fade_alpha)
                 if pygame.time.get_ticks() - self.timer >= min_time + steps:
                     if self.reversed:
-                        self.fade_alpha += 1
+                        self.fade_alpha += 1 * deltaTime
                     else:
-                        self.fade_alpha -= 1
+                        self.fade_alpha -= 1 * deltaTime
 
                 if self.reversed:
                     if self.fade_alpha >= 255:
@@ -65,7 +65,7 @@ class DarknessAnimation:
         else:
             self.reset()
 
-    def update(self, surface:pygame.Surface, reversed=False):
+    def update(self, surface:pygame.Surface, deltaTime:float, reversed=False):
         if not self.is_animating:
             self.timer = pygame.time.get_ticks()
             self.is_animating = True
@@ -76,8 +76,8 @@ class DarknessAnimation:
 
         if not self._isFading:
             if pygame.time.get_ticks() - self.timer <= self.time_until_fade:
-                self.frame += 1
-                if self.frame == self.frame_wait:
+                self.frame += 1 * deltaTime
+                if self.frame >= self.frame_wait:
                     # Change the sprite
                     if self.sprite_num < len(self.black_rect_anim) - 1:
                         self.sprite_num += 1
@@ -88,7 +88,7 @@ class DarknessAnimation:
             else:
                 self.fade_screen()
         else:
-            self.fade()
+            self.fade(deltaTime)
 
     def fade_screen(self):
         if not self._isFading:

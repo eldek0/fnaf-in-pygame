@@ -63,13 +63,13 @@ class Menu:
         self.played_once = True
 
     def static_animation(self, App):
-        App.animations.static_anim_1.update(App.surface)
+        App.animations.static_anim_1.update(App.uiSurface, App.deltaTime)
         App.animations.static_anim_1.alpha = 160
 
         # More static animation
-        App.animations.static_stripes_animation5.update(App, App.surface)
+        App.animations.static_stripes_animation5.update(App, App.uiSurface)
         
-        App.animations.random_static_animation.update(App.surface)
+        App.animations.random_static_animation.update(App.uiSurface, App.deltaTime)
 
     def music(self, App):
         if not pygame.mixer.Channel(2).get_busy():
@@ -120,7 +120,7 @@ class Menu:
         if self.start_state < 2:
             
             App.assets.background_menu[self.background_id].set_alpha(self.background_alpha)
-            App.surface.blit(App.assets.background_menu[self.background_id], (0,0))
+            App.uiSurface.blit(App.assets.background_menu[self.background_id], (0,0))
             
             self.static_animation(App)
 
@@ -221,7 +221,7 @@ class Menu:
 
     def static(self, App):
         if self.static_with_change:
-            App.animations.static_anim_2.update(App.uiSurface)
+            App.animations.static_anim_2.update(App.uiSurface, App.deltaTime)
 
             if App.animations.static_anim_2.sprite_num == len(App.animations.static_anim_2.sprites) - 1:
                 App.animations.static_anim_2.sprite_num = 0
@@ -257,13 +257,13 @@ class Menu:
         
         if self.objects_alpha < 255:
             if pygame.time.get_ticks() - self.timer > 5:
-                self.objects_alpha += 1
+                self.objects_alpha += 1 * App.deltaTime
                 self.timer = pygame.time.get_ticks()
                 #App.animations.fade_effect.stop_effect()
         else:
             if pygame.time.get_ticks() - self.timer > 4000:
                 App.animations.fade_effect.continue_effect(out_effect=False)
-                App.animations.fade_effect.update(App.uiSurface)
+                App.animations.fade_effect.update(App.uiSurface, App.deltaTime)
 
                 if App.animations.fade_effect.fade_alpha > 240:
                     pygame.mixer.music.unload()
@@ -293,8 +293,8 @@ class Menu:
         match self.start_state:
             case 2:
                 pygame.mixer.music.unload()
-                App.animations.fade_effect.update(App.uiSurface)
-                App.animations.static_anim_2.update(App.uiSurface)
+                App.animations.fade_effect.update(App.uiSurface, App.deltaTime)
+                App.animations.static_anim_2.update(App.uiSurface, App.deltaTime)
 
                 if App.animations.static_anim_2.sprite_num == len(App.animations.static_anim_2.sprites) - 1:
                     self.timer = pygame.time.get_ticks()
@@ -310,7 +310,7 @@ class Menu:
             case 4:
                 if self.objects_alpha > 20:
                     if pygame.time.get_ticks() - self.timer > 5:
-                        self.objects_alpha -= 5
+                        self.objects_alpha -= 5 * App.deltaTime
                         self.timer = pygame.time.get_ticks()
                 else:
                     self.start_state = 5

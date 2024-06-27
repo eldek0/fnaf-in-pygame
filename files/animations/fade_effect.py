@@ -30,7 +30,7 @@ class FadeEffect:
 
     def stop_effect(self): self._stop = True
 
-    def update(self, surface:pygame.Surface):
+    def update(self, surface:pygame.Surface, deltaTime:float):
         self.black_screen.set_alpha(self.fade_alpha)
 
         if type(surface) is list:
@@ -41,12 +41,12 @@ class FadeEffect:
             surface.blit(self.black_screen, self.position)
 
         if self.effect_out:
-            self.fade_alpha -= self.alpha_speed
+            self.fade_alpha -= self.alpha_speed * deltaTime
             if self.fade_alpha < 0:
                 self.fade_alpha = 0
                 self._stop = True
         else:
-            self.fade_alpha += self.alpha_speed
+            self.fade_alpha += self.alpha_speed * deltaTime
             if self.fade_alpha > 255:
                 self.fade_alpha = 255
                 self._stop = True

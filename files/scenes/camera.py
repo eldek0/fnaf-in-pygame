@@ -64,7 +64,7 @@ class Camera:
         App.animations.static_stripes_animation3.update(App, App.surface)
         App.animations.static_stripes_animation4.update(App, App.surface)
 
-        App.animations.static_anim_1.update(App.surface)
+        App.animations.static_anim_1.update(App.surface, App.deltaTime)
 
         App.animations.static_stripes_animation5.update(App, App.surface)
 
@@ -72,7 +72,7 @@ class Camera:
 
         # UI static
         if self.static_animation:
-            App.animations.static_anim_2.update(App.uiSurface)
+            App.animations.static_anim_2.update(App.uiSurface, App.deltaTime)
             if App.animations.static_anim_2.sprite_num == len(App.animations.static_anim_2.sprites) - 1:
                 App.animations.static_anim_2.sprite_num = 0
                 self.static_animation = False
@@ -116,7 +116,7 @@ class Camera:
 
         elif not self.timers_checkpoints[index]:
             if self.wide_cameras_mov_direction[index] == 0:
-                self.cameras_x_position[index] -= self.camera_speed
+                self.cameras_x_position[index] -= self.camera_speed * App.deltaTime
 
                 # END CONDITION
                 if self.cameras_x_position[index] < -abs(App.assets.main_hall_cameras[0].get_width() - App.dimentions[0]):
@@ -126,7 +126,7 @@ class Camera:
                     else: self.wide_cameras_mov_direction[index] = 0
 
             else:
-                self.cameras_x_position[index] += self.camera_speed
+                self.cameras_x_position[index] += self.camera_speed * App.deltaTime
 
                 # END CONDITION
                 if self.cameras_x_position[index] > 0:

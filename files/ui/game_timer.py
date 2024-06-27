@@ -12,7 +12,7 @@ class GameTimer:
         self.draw_night_label(App)
         self.draw_time(App)
         if update_time:
-            self.update_time()
+            self.update_time(App.deltaTime)
         if App.debug: self.debugTime()
 
     def debugTime(self):
@@ -20,12 +20,12 @@ class GameTimer:
         keys = pygame.key.get_pressed()
         if (keys[pygame.K_0]): self.ticks -= self.hour
 
-    def update_time(self):
+    def update_time(self, deltaTime:float):
         if pygame.time.get_ticks() - self.ticks > self.hour:
             if self.time == 12:
                 self.time = 1
             else:
-                self.time += 1
+                self.time += 1 * deltaTime
 
             self.ticks = pygame.time.get_ticks()
 
@@ -37,7 +37,10 @@ class GameTimer:
         x_extra = 0
         reversed_time = str(self.time)[::-1]
         for number in reversed_time:
-            App.uiSurface.blit(App.assets.numbers[int(number)], (self.position[0] - x_extra, self.position[1] + 40))
-            x_extra += App.assets.numbers[int(number)].get_width()
+            try:
+                App.uiSurface.blit(App.assets.numbers[int(number)], (self.position[0] - x_extra, self.position[1] + 40))
+                x_extra += App.assets.numbers[int(number)].get_width()
+            except ValueError as e:
+                print(f"Error en draw_time: {e}")
 
         App.uiSurface.blit(App.assets.am_label, (self.position[0] + 33, self.position[1] + 44))

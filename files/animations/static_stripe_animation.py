@@ -19,7 +19,7 @@ class StaticStripesAnimation:
     def update(self, App, surface:pygame.Surface):
         self.chosen_stripe.set_alpha(self.alpha)
         surface.blit(self.chosen_stripe, (0, self.big_stripe_y_location))
-        self.big_stripe_y_location += self.speed_frame
+        self.big_stripe_y_location += self.speed_frame * App.deltaTime
         if self.big_stripe_y_location > App.dimentions[1]:
             self.big_stripe_y_location = -self.big_stripe_dims.height
             if pygame.time.get_ticks() - self.timer > self.time_to_appear:

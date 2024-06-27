@@ -43,7 +43,7 @@ class CameraButton:
             if (self.monitor_button.mouse_hovered and canInteract) or self.entering_camera:
                 if not self.camera_being_pressed:
                     self.entering_camera = True
-                    App.animations.monitor.update(App.uiSurface)
+                    App.animations.monitor.update(App.uiSurface, App.deltaTime)
 
                     # Get in camera
                     if App.animations.monitor.sprite_num == len(App.animations.monitor.sprites) - 1:
@@ -72,7 +72,7 @@ class CameraButton:
                 if not App.objects.music_box.times_out:
                     pygame.mixer.Channel(2).set_volume(0)
 
-                App.animations.monitor.update(App.uiSurface, reversed=True)
+                App.animations.monitor.update(App.uiSurface, App.deltaTime, reversed=True)
                 # Get off camera
                 if App.animations.monitor.sprite_num == 0:
                     self.inCamera = False
