@@ -31,6 +31,7 @@ class WarningInit:
             if not App.debug:
                 data = read(App)
 
+            """
             App.menu = Menu(App)
 
             if data:
@@ -38,5 +39,7 @@ class WarningInit:
                 App.menu.played_once = data["Played"]
                 App.menu.custom_night_menu.completed_nights = data["Custom"]
                 App.menu.cutscenes_data = data["Cutscenes"]
+                
+            """
 
             self._finished = True

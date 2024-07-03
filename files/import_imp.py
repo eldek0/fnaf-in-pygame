@@ -19,7 +19,7 @@ class import_images:
 		# -- Monitor --
 		# Animation
 		self.camera_sprites = []
-		
+		"""
 		for i in range(11):
 			self.camera_sprites.append(
 				pygame.image.load(f"sprites/monitor/{i+1}.png").convert_alpha()
@@ -62,7 +62,7 @@ class import_images:
 			self.left_vent_offices.append(
 				pygame.image.load(f"sprites/office/left_vents/{i}.png").convert()
 			)
-
+		"""
 		# Desk animation
 		self.desk_animation = []
 		for i in range(4):
@@ -77,7 +77,7 @@ class import_images:
 			self.mask_sprites.append(
 				pygame.image.load(f"sprites/mask/{i+1}.png").convert_alpha()
 			)
-
+		"""
 		# Button
 		self.mask_button = pygame.image.load("sprites/mask/button.png").convert_alpha()
 
@@ -210,7 +210,7 @@ class import_images:
 
 		self.main_hall_label = pygame.image.load(f"sprites/cameras/locations/MainHall/label.png").convert_alpha()
 
-
+		"""
 		# -- Static
 		self.static_1 = []
 		for i in range(6):
@@ -223,7 +223,7 @@ class import_images:
 			self.static_2.append(
 				pygame.image.load(f"sprites/cameras/static/{i+10}.png").convert_alpha()
 			)
-
+		"""
 		self.music_box_button_off = pygame.image.load(f"sprites/cameras/Labels/16.png").convert()
 		self.music_box_button_on = pygame.image.load(f"sprites/cameras/Labels/17.png").convert()
 		self.music_box_label = pygame.image.load(f"sprites/cameras/Labels/15.png").convert_alpha()
@@ -262,7 +262,7 @@ class import_images:
 
 		# Baloon boy in office
 		self.office_baloon_boy = pygame.image.load(f"sprites/office/inside/5.png").convert_alpha()
-
+		"""
 		# -- Jumpscares Animation -- 
 		# Puppet jumpscare animation
 		self.puppet_screamer_animation = []
@@ -338,7 +338,7 @@ class import_images:
 			self.golden_freddy_animation.append(
 				pygame.image.load(f"sprites/jumpscares/withered_golden_freddy/{i+1}.png").convert_alpha()
 			)
-
+		"""
 		# -- MENU UTILITIES -- 
 		self.background_menu = []
 		for i in range(4):
@@ -370,7 +370,7 @@ class import_images:
 			self.nights_12am.append(
 				pygame.image.load(f"sprites/menu/nights/{i+1}.png").convert_alpha()
 			)
-		
+		"""
 		# Confetti
 		self.blue_conf = []
 		for i in range(0, 5):
@@ -395,7 +395,7 @@ class import_images:
 			self.pink_conf.append(
 				pygame.image.load(f"sprites/menu/sprinkles/{i}.png").convert_alpha()
 			)
-
+		
 		# Numbers 
 		self.numbers = []
 		for i in range(10):
@@ -409,6 +409,13 @@ class import_images:
 				pygame.image.load(f"sprites/numbers/1rst/small/{i}.png").convert_alpha()
 			)
 
+		self.numbers_big = []
+		for i in range(10):
+			self.numbers_big.append(
+				pygame.image.load(f"sprites/numbers/1rst/big/{i}.png").convert_alpha()
+			)
+
+		"""
 		self.numbers2 = []
 		for i in range(10):
 			self.numbers2.append(
@@ -444,13 +451,13 @@ class import_images:
 
 		self.lost_screen = pygame.image.load(f"sprites/menu/nights/10.png").convert()
 		self.game_over = pygame.image.load(f"sprites/menu/nights/11.png").convert_alpha()
-
+		"""
 		self.static_stripes = []
 		for i in range(5):
 			self.static_stripes.append(
 				pygame.image.load(f"sprites/cameras/static/s2/{i+1}.png").convert_alpha()
 			)
-
+		"""
 		self.warn_big = []
 		for i in range(24,26):
 			self.warn_big.append(
@@ -525,6 +532,27 @@ class import_images:
 		self.cutscene_mask = pygame.image.load(f"sprites/cutscenes/2.png").convert_alpha()
 		self.err_img = pygame.image.load(f"sprites/cutscenes/3.png").convert()
 		self.its_me = pygame.image.load(f"sprites/cutscenes/4.png").convert()
+		"""
+		# Minigames
+
+		# Give gifts, Give life
+		self.puppet_minigame = pygame.image.load("sprites/minigames/GG_GL/4.png").convert_alpha()
+
+		self.soul = pygame.image.load("sprites/minigames/GG_GL/7.png").convert()
+
+		self.gift = pygame.image.load("sprites/minigames/GG_GL/6.png").convert_alpha()
+
+		self.give_gifts = pygame.image.load("sprites/minigames/GG_GL/10.png").convert_alpha()
+
+		self.give_life = pygame.image.load("sprites/minigames/GG_GL/11.png").convert_alpha()
+
+		self.chica_mask = pygame.image.load("sprites/minigames/GG_GL/0.png").convert_alpha()
+
+		self.fred_mask = pygame.image.load("sprites/minigames/GG_GL/1.png").convert_alpha()
+
+		self.bonnie_mask = pygame.image.load("sprites/minigames/GG_GL/2.png").convert_alpha()
+
+		self.foxy_mask = pygame.image.load("sprites/minigames/GG_GL/3.png").convert_alpha()
 
 		# Get crops from cropped images
 		import_images.cropped_images(self)
@@ -582,6 +610,8 @@ class import_images:
 
 		self.coin_sound = pygame.mixer.Sound("sounds/coin.wav")
 
+		self.cake_sound = pygame.mixer.Sound("sounds/cake2.wav")
+
 
 		self.vents_sounds = pygame.mixer.Sound("sounds/ventwalk1.wav")
 
@@ -611,12 +641,14 @@ class import_images:
 				f"sounds/call{i+1}b.wav"
 			)
 
+		self.static_end_path = "sounds/staticend2.wav"
+
 		# -- Cutscene --
 		self.move_sound = pygame.mixer.Sound(f"sounds/machineturn2.wav")
 		self.cutscene_ambient = pygame.mixer.Sound(f"sounds/Scary_Space_B.wav")
 		self.ambiance_2 = pygame.mixer.Sound(f"sounds/ambience2.wav")
 		self.robot_err = pygame.mixer.Sound("sounds/Robot.wav")
-		self.static_end = pygame.mixer.Sound("sounds/staticend2.wav")
+		self.static_end = pygame.mixer.Sound(self.static_end_path)
 		
 
 	def fonts(self):

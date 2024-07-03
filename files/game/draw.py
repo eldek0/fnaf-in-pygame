@@ -7,7 +7,10 @@ def Draw(App):
 		App.warning_init.update(App)
 	
 	else:
-		if not App.menu.start_game:
-			App.menu.update(App)
+		if not App.inMinigame:
+			if not App.menu.start_game:
+				App.menu.update(App)
+			else:
+				App.game.updater(App)
 		else:
-			App.game.updater(App)
+			App.minigame.update(App) # TODO CHANGE LATER
