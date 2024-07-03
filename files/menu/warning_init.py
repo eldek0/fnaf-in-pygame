@@ -1,5 +1,5 @@
 import pygame
-from files.save.save import save, read
+from files.save.save import read
 from files.menu.menu import Menu
 
 class WarningInit:
@@ -27,7 +27,9 @@ class WarningInit:
     def finish(self, App):
         """ Change to menu and load everything from the save file """
         if not self._finished:
-            data = None
+            data = read(App) # TODO CHANGE LATER
+            if not App.debug:
+                data = read(App)
 
             App.menu = Menu(App)
 

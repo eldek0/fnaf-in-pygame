@@ -32,21 +32,22 @@ class Game:
 
         self.num_of_channels = 32
 
-    def set_audio(self, App):
+    def set_audio(self, volume:int):
         self.sounds_shutted = False
         pygame.mixer.set_num_channels(self.num_of_channels)
 
         pygame.mixer.music.set_volume(1)
-        pygame.mixer.Channel(1).set_volume(0.8)
+        pygame.mixer.Channel(1).set_volume(volume)
         pygame.mixer.Channel(2).set_volume(0) # Music box
-        pygame.mixer.Channel(3).set_volume(1) # Sounds effects
-        pygame.mixer.Channel(4).set_volume(1) # Mask breathing
-        pygame.mixer.Channel(5).set_volume(1) # Stare at an animatrionic
-        pygame.mixer.Channel(6).set_volume(1) # Mangle noise
-        pygame.mixer.Channel(7).set_volume(1) # Baloon boy laugh
-        pygame.mixer.Channel(8).set_volume(1) # Jumpscare scream
-        pygame.mixer.Channel(9).set_volume(1) # Flashlight
-        pygame.mixer.Channel(10).set_volume(1) # Camera's static
+        pygame.mixer.Channel(3).set_volume(volume) # Sounds effects
+        pygame.mixer.Channel(4).set_volume(volume) # Mask breathing
+        pygame.mixer.Channel(5).set_volume(volume) # Stare at an animatrionic
+        pygame.mixer.Channel(6).set_volume(volume) # Mangle noise
+        pygame.mixer.Channel(7).set_volume(volume) # Baloon boy laugh
+        pygame.mixer.Channel(8).set_volume(volume) # Jumpscare scream
+        pygame.mixer.Channel(9).set_volume(volume) # Flashlight
+        pygame.mixer.Channel(10).set_volume(volume) # Camera's static
+        pygame.mixer.Channel(11).set_volume(volume) # Animatronics noises
 
     def stop_sounds(self):
         self.sounds_shutted = True
@@ -91,7 +92,7 @@ class Game:
     def game_update(self, App):
         if not self.night_beaten and not self.you_lost:
             if not self.audio_set:
-                self.set_audio(App)
+                self.set_audio(1)
                 self.audio_set = True
 
             if App.objects.Animatronics.gameOver:

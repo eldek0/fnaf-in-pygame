@@ -16,9 +16,7 @@ class MusicBoxButton:
         self.warning_index = 0
         self.warning_ticks = 500
 
-
     def update(self, App):
-        
         self.button.update(App.uiSurface, App.mouse_hitbox)
         App.uiSurface.blit(App.assets.music_box_label, [self.position[0] + 10, self.position[1] + 10])
         App.uiSurface.blit(App.assets.clicknhold, [self.position[0], self.position[1] + 72])

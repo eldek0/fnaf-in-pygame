@@ -59,14 +59,15 @@ class Camera:
     def update(self, App):
         self.camera_room_managment(App)
 
-        App.animations.static_stripes_animation.update(App, App.surface)
-        App.animations.static_stripes_animation2.update(App, App.surface)
-        App.animations.static_stripes_animation3.update(App, App.surface)
-        App.animations.static_stripes_animation4.update(App, App.surface)
-
         App.animations.static_anim_1.update(App.surface, App.deltaTime)
 
-        App.animations.static_stripes_animation5.update(App, App.surface)
+        if not (self.occupied_camera[self.inCameraRoom - 1]):
+            App.animations.static_stripes_animation.update(App, App.surface)
+            App.animations.static_stripes_animation2.update(App, App.surface)
+            App.animations.static_stripes_animation3.update(App, App.surface)
+            App.animations.static_stripes_animation4.update(App, App.surface)
+
+            App.animations.static_stripes_animation5.update(App, App.surface)
 
         self.camera_ui(App)
 
@@ -256,7 +257,7 @@ class Camera:
         
 
         if not self.occupied_camera[index]:
-            App.animations.static_anim_1.alpha = 100
+            App.animations.static_anim_1.alpha = 130
 
             surface_id = surface_id_off
 
@@ -269,6 +270,7 @@ class Camera:
             App.surface.blit(cameras_list[surface_id], (self.cameras_x_position[index], 0))
         else:
             App.animations.static_anim_1.alpha = 255
+            self.camera_flashlighting = False
 
         # Flashlighting detection
         if not ( (flashlight_collide and mouse_click[0]) or ctrl_clicked ) and not self.occupied_camera[index]:

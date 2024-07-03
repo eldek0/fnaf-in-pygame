@@ -1,17 +1,19 @@
 - A barrel shader was added to the gameplay, similar to the original game.
-- The game is now frame independent
 - Changed night 1. Now toy chica and toy freddy can move.
 - Changed music box time.
 - Now jumpscares don't stop until the sound ends.
+- Game would sometimes crash while winding the music box
+- Battery would still be consumed even if the camera is occupied
+- Sounds would not reproduce correctly
 
-TO FIX:
+TO FIX (preferently before adding the new stuff like minigames):
 GENERAL
 - Toy freddy takes way long to move
-- Sometimes, sounds don't reproduce correctly
-- Weird bug with the game time (it seems that a . is provoking it)
 - Hallway animatronics often appear from nowhere
 - Foxy leave hallway without waiting
 - The game sometimes crashes at camera 11?
+- The marionet (in the cutscene) is kinda glitched FIXED
+- Encrypt private and public RSA is not the same as fnaf 1.0.05 FIXED
 
 SHADER 
 - Fade in gameplay does not work right (and when the night ends makes the game crash) FIXED
@@ -19,5 +21,7 @@ SHADER
 TO ADD
 Minigames ! (SAVETHEM, Give Gifts, Give Life, Take Cake to the Children, Foxy Go! Go! Go!)
 Easter eggs (shadow bonnie, shadow freddy, balloon girl, Paper Buddy, Endo skeletons, Eyeless Screens)
+Be able to use the keyboard to play the game
+Add helpful tips (like the ctrl tip to flashlight when you start the game)
 
 

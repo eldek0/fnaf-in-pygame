@@ -46,10 +46,12 @@ class Menu:
 
         self.music_started = False
 
+        self.pressed_key = False
+
+        self.pressed_click = False
+
         self.essentials_variables(App)
 
-        
-        
     def essentials_variables(self, App):
         self.custom_night_menu = CustomNight(App)
 
@@ -57,14 +59,14 @@ class Menu:
 
         self.cutscenes_data = [True, True, True, False]
 
-        self.inNight = 7
-        self.nightToPlay = 2
+        self.inNight = 3
+        self.nightToPlay = 3
 
         self.played_once = True
 
     def static_animation(self, App):
         App.animations.static_anim_1.update(App.uiSurface, App.deltaTime)
-        App.animations.static_anim_1.alpha = 160
+        App.animations.static_anim_1.alpha = 190
 
         # More static animation
         App.animations.static_stripes_animation5.update(App, App.uiSurface)
@@ -81,8 +83,8 @@ class Menu:
             App.uiSurface.blit(App.assets.star, (80, title_dims.h + 35))
         if self.inNight >= 7:
             App.uiSurface.blit(App.assets.star, (80 + 65, title_dims.h + 35))
-        if self.custom_night_menu.completed_nights[0] == True: # 4/20 mode is completed
-            App.uiSurface.blit(App.assets.star, (80 + 65*2, title_dims.h + 35))
+            if self.custom_night_menu.completed_nights[0] == True: # 4/20 mode is completed
+                App.uiSurface.blit(App.assets.star, (80 + 65*2, title_dims.h + 35))
 
     def reset_data_option(self, App):
         key = pygame.key.get_pressed()
@@ -109,14 +111,6 @@ class Menu:
     def update(self, App):
         self.check_cutscene()
 
-        if self.start_state == 0:
-            self.change_background(App)
-            self.music(App)
-            self.reset_data_option(App)
-            if not self.music_started:
-                self.start_music(App)
-                self.music_started = True
-
         if self.start_state < 2:
             
             App.assets.background_menu[self.background_id].set_alpha(self.background_alpha)
@@ -140,26 +134,38 @@ class Menu:
             if self.inNight >= 7:
                 self.custom_night_button.update(App.uiSurface, App.mouse_hitbox)
 
+        if self.start_state == 0:
+            self.change_background(App)
+            self.music(App)
+            self.reset_data_option(App)
+            if not self.music_started:
+                self.start_music(App)
+                self.music_started = True
+
             self.draw_menu_stars(App)
 
-            #print(mouse)
-            # Mouse option
-            if self.start_state == 0:
-                if self.new_game_button.mouse_hovered:
-                    self.option_to_select(App, lambda:self.option_1(App), 1)
+            keys = self.update_keys(App)
+            mouse = pygame.mouse.get_pressed()
 
-                elif self.continue_button.mouse_hovered:
-                    if self.played_once:
-                        self.option_to_select(App, lambda:self.option_2(), 2)
+            if (self.new_game_button.mouse_hovered and mouse[0]) or (keys[pygame.K_RETURN] and self.option == 1):
+                self.option_to_select(App, lambda:self.option_1(App), 1)
 
-                elif self.night_six_button.mouse_hovered and self.inNight >= 6:
-                    if self.played_once:
-                        self.option_to_select(App, lambda:self.option_3(), 3)
+            elif (self.continue_button.mouse_hovered and mouse[0]) or (keys[pygame.K_RETURN] and self.option == 2):
+                if self.played_once:
+                    self.option_to_select(App, lambda:self.option_2(), 2)
 
-                elif self.custom_night_button.mouse_hovered and self.inNight >= 7:
-                    if self.played_once:
-                        self.option_to_select(App, lambda:self.option_4(), 4)
+            elif ((self.night_six_button.mouse_hovered and mouse[0]) or (keys[pygame.K_RETURN] and self.option == 3)) and self.inNight >= 6:
+                if self.played_once:
+                    self.option_to_select(App, lambda:self.option_3(), 3)
 
+            elif ((self.custom_night_button.mouse_hovered and mouse[0]) or (keys[pygame.K_RETURN] and self.option == 4)) and self.inNight >= 7:
+                if self.played_once:
+                    self.option_to_select(App, lambda:self.option_4(), 4)
+
+            if not mouse[0]: 
+                self.pressed_click = False
+
+            # Option sprite selector
             if self.option == 1:
                 App.uiSurface.blit(App.assets.option_selected, (28, self.new_game_button.position[1] + 3))
             elif self.option == 2:
@@ -207,17 +213,49 @@ class Menu:
         self.nightToPlay = 7
 
     def option_to_select(self,App, func, option:int):
-        mouse = pygame.mouse.get_pressed()
-        if mouse[0]:
-            self.option = option
-            if self.option_ready_to_select == option:
-                func()
+        self.option = option
+        if self.option_ready_to_select == option and not self.pressed_click:
+            self.pressed_key = True
+            func()
 
-
-        if self.option == option and not self.option_ready_to_select == option and not mouse[0]:
+        if self.option == option and not self.option_ready_to_select == option and not self.pressed_click:
             self.option_ready_to_select = option
+            self.pressed_click = True
             App.assets.blip1.play()
 
+    def update_keys(self, App):
+        keys = pygame.key.get_pressed()
+        if (keys[pygame.K_DOWN]) and not self.pressed_key:
+            App.assets.blip1.play()
+            self.option += 1
+            if not (self.played_once):
+                self.option = 1
+            elif (self.option > 2 and self.inNight <= 5):
+                self.option = 1
+            elif (self.option > 3 and self.inNight == 6):
+                self.option = 1
+            elif (self.option > 4 and self.inNight >= 7):
+                self.option = 1
+            self.pressed_key = True
+
+        elif (keys[pygame.K_UP]) and not self.pressed_key:
+            App.assets.blip1.play()
+            self.option -= 1
+            if not (self.played_once):
+                self.option = 1
+            elif (self.option < 1 and self.inNight <= 5):
+                self.option = 2
+            elif (self.option < 1 and self.inNight == 6):
+                self.option = 3
+            elif (self.option < 1 and self.inNight >= 7):
+                self.option = 4
+            self.pressed_key = True
+        
+        if not keys[pygame.K_DOWN] and not keys[pygame.K_UP]:
+            self.pressed_key = False
+
+        return keys
+                
 
     def static(self, App):
         if self.static_with_change:
@@ -286,9 +324,10 @@ class Menu:
 
 
     def show_night(self, App):
-        App.assets.nights_12am[self.nightToPlay - 1].set_alpha(self.objects_alpha)
-        night_dims = App.assets.nights_12am[self.nightToPlay - 1].get_rect()
-        App.uiSurface.blit(App.assets.nights_12am[self.nightToPlay - 1], (App.dimentions[0] / 2 - night_dims.w / 2, App.dimentions[1] / 2 - night_dims.h / 2))
+        if self.start_state != 10:
+            App.assets.nights_12am[self.nightToPlay - 1].set_alpha(self.objects_alpha)
+            night_dims = App.assets.nights_12am[self.nightToPlay - 1].get_rect()
+            App.uiSurface.blit(App.assets.nights_12am[self.nightToPlay - 1], (App.dimentions[0] / 2 - night_dims.w / 2, App.dimentions[1] / 2 - night_dims.h / 2))
 
         match self.start_state:
             case 2:

@@ -12,7 +12,7 @@ class GameTimer:
         self.draw_night_label(App)
         self.draw_time(App)
         if update_time:
-            self.update_time(App.deltaTime)
+            self.update_time()
         if App.debug: self.debugTime()
 
     def debugTime(self):
@@ -20,12 +20,12 @@ class GameTimer:
         keys = pygame.key.get_pressed()
         if (keys[pygame.K_0]): self.ticks -= self.hour
 
-    def update_time(self, deltaTime:float):
+    def update_time(self):
         if pygame.time.get_ticks() - self.ticks > self.hour:
             if self.time == 12:
                 self.time = 1
             else:
-                self.time += 1 * deltaTime
+                self.time += 1
 
             self.ticks = pygame.time.get_ticks()
 

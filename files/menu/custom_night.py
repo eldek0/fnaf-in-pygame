@@ -27,9 +27,10 @@ class CustomNight:
         self.one_click_change = False
         self.mode_index = 0
         self.completed_nights = [
-            True, True, True, True, True,
-            True, True, True, True, True
+            False, False, False, False, False,
+            False, False, False, False, False
         ]
+        self.pressed_key = False
         
 
     def set_modes(self, App):
@@ -70,18 +71,8 @@ class CustomNight:
 
         self.ready_button.update(App.uiSurface, App.mouse_hitbox)
 
-        mouse = pygame.mouse.get_pressed()
-
-        if self.ready_button.mouse_hovered and mouse[0]:
-            App.menu.start_state = 2
-
         self.check_in_mode(App)
         self.draw_mode_buttons(App)
-
-        keys = pygame.key.get_pressed()
-        if keys[pygame.K_ESCAPE]:
-            App.menu.start_state = 0
-            App.menu.static_with_change = True
             
 
     def check_in_mode(self, App):
@@ -106,22 +97,43 @@ class CustomNight:
 
     def draw_mode_buttons(self, App):
         mouse = pygame.mouse.get_pressed()
+        keys = pygame.key.get_pressed()
         self.right_button.update(App.uiSurface, App.mouse_hitbox)
         self.left_button.update(App.uiSurface, App.mouse_hitbox)
-        
-        if self.right_button.mouse_hovered and mouse[0] and not self.one_click_change:
+
+        # Change between presets
+        if (self.right_button.mouse_hovered and mouse[0] and not self.one_click_change) or (not App.menu.pressed_key and keys[pygame.K_LEFT]):
+            App.menu.pressed_key = True
             self.mode_index += 1
             if self.mode_index > len(self.modes) -1:
                 self.mode_index = 0
 
-        if self.left_button.mouse_hovered and mouse[0] and not self.one_click_change:
+            self.update_index(App)
+
+        if (self.left_button.mouse_hovered and mouse[0] and not self.one_click_change) or (not App.menu.pressed_key and keys[pygame.K_RIGHT]):
+            App.menu.pressed_key = True
             self.mode_index -= 1
             if self.mode_index < 0:
                 self.mode_index = len(self.modes) - 1
 
-        if (self.right_button.mouse_hovered or self.left_button.mouse_hovered) and mouse[0] and not self.one_click_change:
-            for key in self.animatronics_keys:
-                self.animatrionics_data[key]["aggresive"] = self.modes[self.mode_index]["data"][key]
+            self.update_index(App)
+
+        # Starts the night
+        if (self.ready_button.mouse_hovered and mouse[0]) or (keys[pygame.K_RETURN] and not App.menu.pressed_key):
+            App.menu.start_state = 2
+            App.menu.pressed_key = True
+
+        if keys[pygame.K_ESCAPE] and not App.menu.pressed_key:
+            App.menu.start_state = 0
+            App.menu.static_with_change = True
+            App.menu.pressed_key = True
+
+        if not keys[pygame.K_LEFT] and not keys[pygame.K_RIGHT] and not keys[pygame.K_RETURN] and not keys[pygame.K_ESCAPE]:
+             App.menu.pressed_key = False
+
+    def update_index(self, App):
+        for key in self.animatronics_keys:
+            self.animatrionics_data[key]["aggresive"] = self.modes[self.mode_index]["data"][key]
             App.assets.coin_sound.play()
             self.one_click_change = True
 

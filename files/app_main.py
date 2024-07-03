@@ -61,7 +61,9 @@ class App:
 
 		self.loaded = True
 
-		self.debug = True # debugging the game
+		self.debug = False # debugging the game
+
+		if self.debug: print("Game on debug mode")
 
 	def set_shaders(self):
 		self.uiSurface = pygame.Surface(self.dimentions, pygame.SRCALPHA, 32)

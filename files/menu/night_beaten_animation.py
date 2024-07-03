@@ -47,7 +47,7 @@ class NightBeatenAnimation:
                 App.animations.fade_effect.continue_effect(out_effect=True)
                 App.uiSurface.fill((0,0,0))
             else:
-                App.animations.fade_effect.update(App.uiSurface)
+                App.animations.fade_effect.update(App.uiSurface, App.deltaTime)
 
             position = (self.position_x, App.dimentions[1]/2 - self.dims_y/2)
             if not self.index == -1:

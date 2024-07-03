@@ -5,15 +5,25 @@ out vec4 color;
 in vec2 fragmentTexCoord;
 
 void main() {
-    vec2 center = vec2(0.5, 0.5);
-    vec2 off_center = fragmentTexCoord - center;
+    float dir;
+    vec2 coords;
+    float offset;
+    float pixelDistanceX;
+    float pixelDistanceY;
+    
+    pixelDistanceX = distance(fragmentTexCoord.x, 0.5);
+    pixelDistanceY = distance(fragmentTexCoord.y, 0.5);
 
-    off_center /= 1.0 + 0.8 * pow(abs(off_center.yx), vec2(2.1, 1.9));
+    offset = (pixelDistanceX * 0.1) * pixelDistanceY;
 
-    vec2 v_text2 = center + off_center;
+    if (fragmentTexCoord.y <= 0.5){
+        dir = 1.0;
+    }
+    else{
+        dir = -1.0;
+    }
 
-    if (v_text2.x > 1.0 || v_text2.x < 0.0 || v_text2.y > 1.0 || v_text2.y < 0.0)
-        color = vec4(0.0, 0.0, 0.0, 1.0);
-    else
-        color = vec4(texture(image, v_text2).rgb, 1.0);
+    coords = vec2(fragmentTexCoord.x, fragmentTexCoord.y + pixelDistanceX*(offset*8.0*dir));
+
+    color = vec4(texture(image, coords).rgb, 1.0);
 }

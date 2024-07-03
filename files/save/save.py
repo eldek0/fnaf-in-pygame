@@ -10,7 +10,7 @@ for line in private_raw:
 PRIVATE_KEY = rsa.PrivateKey.load_pkcs1(raw_prvt)
 
 def save(App):
-    """data = default()
+    data = default()
 
     # Write
     data["Night"] = App.menu.inNight
@@ -27,10 +27,14 @@ def save(App):
     json_transform = json.dumps(data, indent=2)
 
     with open("files/utils.txt", "wb") as f:
-        f.write(
-            rsa.encrypt(json_transform.encode(), PUBLIC_KEY)
-            )"""
-    pass
+        if not App.debug:
+            f.write(
+                rsa.encrypt(json_transform.encode(), PUBLIC_KEY)
+                )
+        else:
+            f.write( # Without encryption
+                json_transform.encode()
+                )
 
 def default():
     data = {
@@ -61,21 +65,21 @@ def check_if_minigames_data_is_in_file(App, data):
 
 
 def read(App):
-    # Create the file if it does not exist
-    """with open("files/utils.txt", "wb") as f:
-        f.close()"""
-
     with open("files/utils.txt", "rb") as f:
         en = f.read()
+        f.close()
 
-    try:
-        json_raw = rsa.decrypt(en, PRIVATE_KEY).decode("utf-8")
-    except rsa.pkcs1.DecryptionError:
-        print("A DECRIPTION ERROR HAPPENED, RESETTING GAME VALUES")
-        return None
-    
+    if App.debug:
+        json_raw = en.decode("utf-8") # Without encryption
+
+    else:
+        try:
+            json_raw = rsa.decrypt(en, PRIVATE_KEY).decode("utf-8")
+        except rsa.pkcs1.DecryptionError:
+            print("A DECRIPTION ERROR HAPPENED, RESETTING GAME VALUES")
+            return None
+
     # Read the file from json
-
     try:
         jsonstr = ""
         for i in range(len(json_raw)):
@@ -84,7 +88,10 @@ def read(App):
         data = json.loads(jsonstr)
 
         print(data)
-    except json.decoder.JSONDecodeError as e:
+    except json.decoder.JSONDecodeError:
+        data = default()
+    except Exception as e:
+        print(f"An unexpected error happened: {e}")
         data = default()
 
     #data = check_if_minigames_data_is_in_file(App, data)

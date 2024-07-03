@@ -91,11 +91,11 @@ class Animatronic(ABC):
         if pygame.time.get_ticks() - self.noise_timer > self.time_to_make_noise:
             if not(self.name_id == "BALOON_BOY" and self.name_id == "MANGLE"):
                 if self.locationId == 5 or self.locationId == 6:
-                    App.assets.vents_sounds.play()
+                    pygame.mixer.Channel(11).play(App.assets.vents_sounds)
 
                 elif self.changing_position:
                     ran = random.randint(0, len(App.assets.walk_sounds) - 1)
-                    App.assets.walk_sounds[ran].play()
+                    pygame.mixer.Channel(11).play(App.assets.walk_sounds[ran])
             elif self.name_id == "BALOON_BOY":
                 if not self.locationId == -1:
                     if self.changing_position:

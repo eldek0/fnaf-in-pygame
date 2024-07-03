@@ -54,7 +54,7 @@ class Cutscene:
                 self.draw_characters(App)
 
                 mask_anim = App.animations.cutscene_mask_animation
-                mask_anim.update()
+                mask_anim.update(App.deltaTime)
 
                 App.surface.blit(App.assets.cutscene_mask, (mask_anim.position[0], mask_anim.position[0]))
 
@@ -72,7 +72,7 @@ class Cutscene:
 
                 if pygame.time.get_ticks() - self.timer > 35000:
                     # The screen glitches even more
-                    App.animations.static_anim_2_looped.update(App.uiSurface)
+                    App.animations.static_anim_2_looped.update(App.uiSurface, App.deltaTime)
                     if not pygame.mixer.Channel(5).get_busy():
                         pygame.mixer.Channel(5).play(App.assets.static_end)
                     
@@ -121,40 +121,40 @@ class Cutscene:
                 App.surface.blit(App.assets.cutscene_freddy, (self.freddy_pos[0] + self.x_pos, self.freddy_pos[1]))
 
         if self.inNight == 4:
-            if self.delta_pos > 0: self.delta_pos -= self.speed/3 * App.deltaTime
+            if self.delta_pos > 1*App.deltaTime: self.delta_pos -= self.speed/3 * App.deltaTime
             elif self.delta_pos < 0: self.delta_pos += self.speed/3 * App.deltaTime
+            else: self.delta_pos = 0
 
             dims = App.assets.cutscene_puppet.get_rect()
             self.puppet_pos = [App.dimentions[0]/2 - dims.w/2, 0]
             App.surface.blit(App.assets.cutscene_puppet, (self.puppet_pos[0] + self.delta_pos, 0))
 
     def movement(self, App):
+        BUFFER = 10
         collide_left = App.mouse_hitbox.colliderect(self.move_rect_left)
         collide_right = App.mouse_hitbox.colliderect(self.move_rect_right)
 
         if collide_right:
             self.x_pos -= self.speed * App.deltaTime
-            
-
-            if self.x_pos < self.move_extremes[0] :
+            if self.x_pos <= self.move_extremes[0] :
                 self.x_pos = self.move_extremes[0]
                 
 
         elif collide_left:
             self.x_pos += self.speed * App.deltaTime
-            
-
-            if self.x_pos > self.move_extremes[1]:
+            if self.x_pos >= self.move_extremes[1]:
                 self.x_pos = self.move_extremes[1]
 
 
-        if self.x_pos > self.move_extremes[1]- 10 or self.x_pos < self.move_extremes[0] + 10:
+        if self.x_pos >= self.move_extremes[1] - BUFFER or self.x_pos < self.move_extremes[0] + BUFFER:
             collide_right = False
             collide_left = False
 
         # For puppet
-        if collide_right: self.delta_pos -= self.speed/1.7 * App.deltaTime
-        elif collide_left: self.delta_pos += self.speed/1.7 * App.deltaTime
+        if collide_right: 
+            self.delta_pos -= self.speed/1.7 * App.deltaTime
+        elif collide_left: 
+            self.delta_pos += self.speed/1.7 * App.deltaTime
 
         # Move sound
         if collide_left or collide_right:
@@ -175,4 +175,4 @@ class Cutscene:
                         App.animations.static_anim_1.alpha = 0
                         self.deco_timer = pygame.time.get_ticks()
 
-        App.animations.static_anim_1.update(App.surface)
+        App.animations.static_anim_1.update(App.surface, App.deltaTime)

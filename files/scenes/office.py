@@ -3,7 +3,7 @@ import pygame
 class Office:
     def __init__(self, App):
         self.position = [-240, 0]
-        self.move_speed = 15
+        self.move_speed = 20
         self.office_sprite = App.assets.office1
         self.right_vent_button, self.left_vent_button = App.assets.right_vent_button_off, App.assets.left_vent_button_off
         self.right_vent_on, self.left_vent_on, self.hallway_on = False, False, False
@@ -226,7 +226,7 @@ class Office:
 
     def easter_egg_interact(self, App):
         """ Freddy's nose """
-        easter_egg_rect = pygame.Rect(129 + self.position[0], 167, 10, 10)
+        easter_egg_rect = pygame.Rect(145 + self.position[0], 172, 10, 10)
 
         mouse_click = pygame.mouse.get_pressed()
         colliding_rect = App.mouse_hitbox.colliderect(easter_egg_rect)
@@ -239,6 +239,8 @@ class Office:
 
         if not colliding_rect or not mouse_click[0]:
             self.attempting_esteregg_interact = False
+
+        #pygame.draw.rect(App.uiSurface, (200, 255, 100), easter_egg_rect)
 
     def desk_update(self, App):
         App.animations.desk.position = [ self.position[0] + 560,App.dimentions[1] - 435]
