@@ -4,17 +4,15 @@ uniform sampler2D image;
 out vec4 color;
 in vec2 fragmentTexCoord;
 
-void main() {
+void main()
+{
+    vec2 fragCoord = fragmentTexCoord.xy;
+    highp float y_pos = fragCoord.y * 100;
 
-    float stripWidth = 1.0;
-
-    float strip = mod(fragmentTexCoord.y, stripWidth);
-
-    if (strip <= stripWidth){
-        color = texture(image, fragmentTexCoord);
+    if (mod(y_pos, 1.3) < 1)
+    {
+        discard;
     }
-    else{
-        color = vec4(1.0, 0.0, 0.0, 1.0);
-    }
-
+    
+    color = texture(image, fragmentTexCoord);
 }

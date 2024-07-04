@@ -119,10 +119,11 @@ class App:
 		#Draw on screen
 		dr.Draw(self)
 
-		self.shaderMain.render_direct(pygame.Rect(0, 0, self.dimentions[0], self.dimentions[1]))
+		if self.loaded:
+			self.shaderMain.render_direct(pygame.Rect(0, 0, self.dimentions[0], self.dimentions[1]))
 
-		if (self.inMinigame):
-			self.minigamesShader.render_direct(pygame.Rect(0, 0, self.dimentions[0], self.dimentions[1]))
+			if (self.inMinigame):
+				self.minigamesShader.render_direct(pygame.Rect(0, 0, self.dimentions[0], self.dimentions[1]))
 
 		# This surface will be responsable about the ui
 		self.uiShader.render_direct(pygame.Rect(0, 0, self.dimentions[0], self.dimentions[1]))

@@ -14,10 +14,14 @@ class SpritesAnimation:
         self.ran_value:int = random.randint(1, 100)
 
         
-    def update(self, surface:pygame.Surface, deltaTime:float, reversed=False):
+    def update(self, surface:pygame.Surface, deltaTime:float, reversed=False, flipx=False, flipy=False):
         if not self.desactivate:
-            self.sprites[self.sprite_num].set_alpha(self.alpha)
-            surface.blit(self.sprites[self.sprite_num], self.position)
+            spriteToDraw = self.sprites[self.sprite_num]
+            spriteToDraw.set_alpha(self.alpha)
+
+            spriteToDraw = pygame.transform.flip(spriteToDraw, flipx, flipy)
+
+            surface.blit(spriteToDraw, self.position)
             
             if self.animate:
                 self.frame += 1 * deltaTime

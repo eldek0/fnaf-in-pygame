@@ -54,13 +54,19 @@ class animations_init:
 
 
         # -- Jumpscares --
-        self.puppet_jump = SpritesAnimation(sprites=App.assets.puppet_screamer_animation, position=(0, 0), frame_wait=2)
-        self.toy_bunny_jump = SpritesAnimation(sprites=App.assets.toy_bunny_screamer_animation, position=(0, 0), frame_wait=2)
-        self.toy_chica_jump = SpritesAnimation(sprites=App.assets.toy_chica_screamer_animation, position=(0, 0), frame_wait=2)
-        self.toy_freddy_jump = SpritesAnimation(sprites=App.assets.toy_freddy_screamer_animation, position=(0, 0), frame_wait=2)
-        self.withered_freddy_jump = SpritesAnimation(sprites=App.assets.withered_freddy_screamer_animation, position=(0, 0), frame_wait=2)
-        self.withered_bonnie_jump = SpritesAnimation(sprites=App.assets.withered_bonnie_screamer_animation, position=(0, 0), frame_wait=2)
-        self.withered_chica_jump = SpritesAnimation(sprites=App.assets.withered_chica_screamer_animation, position=(0, 0), frame_wait=2)
-        self.foxy_jump = SpritesAnimation(sprites=App.assets.foxy_screamer_animation, position=(0,0), frame_wait=2)
-        self.mangle_jump = SpritesAnimation(sprites=App.assets.mangle_screamer_animation, position=(0,0), frame_wait=2)
-        self.golden_freddy_jump = SpritesAnimation(sprites=App.assets.golden_freddy_animation, position=(0,0), frame_wait=2)
+        self.puppet_jump = SpritesAnimation(sprites=App.assets.puppet_screamer_animation, position=(0, 0), frame_wait=3)
+        self.toy_bunny_jump = SpritesAnimation(sprites=App.assets.toy_bunny_screamer_animation, position=(0, 0), frame_wait=3)
+        self.toy_chica_jump = SpritesAnimation(sprites=App.assets.toy_chica_screamer_animation, position=(0, 0), frame_wait=3)
+        self.toy_freddy_jump = SpritesAnimation(sprites=App.assets.toy_freddy_screamer_animation, position=(0, 0), frame_wait=3)
+        self.withered_freddy_jump = SpritesAnimation(sprites=App.assets.withered_freddy_screamer_animation, position=(0, 0), frame_wait=3)
+        self.withered_bonnie_jump = SpritesAnimation(sprites=App.assets.withered_bonnie_screamer_animation, position=(0, 0), frame_wait=3)
+        self.withered_chica_jump = SpritesAnimation(sprites=App.assets.withered_chica_screamer_animation, position=(0, 0), frame_wait=3)
+        self.foxy_jump = SpritesAnimation(sprites=App.assets.foxy_screamer_animation, position=(0,0), frame_wait=3)
+        self.mangle_jump = SpritesAnimation(sprites=App.assets.mangle_screamer_animation, position=(0,0), frame_wait=3)
+        self.golden_freddy_jump = SpritesAnimation(sprites=App.assets.golden_freddy_animation, position=(0,0), frame_wait=3)
+
+
+        # -- Minigames --
+        self.fredbear_walking1 = SpritesAnimation(sprites=App.assets.freddy_walking[0:2], position=(0, 0), frame_wait=10, isLoop=True)
+        self.fredbear_walking2 = SpritesAnimation(sprites=App.assets.freddy_walking[2:4], position=(0, 0), frame_wait=10, isLoop=True)
+        self.fredbear_walking3 = SpritesAnimation(sprites=App.assets.freddy_walking[4:6], position=(0, 0), frame_wait=10, isLoop=True)

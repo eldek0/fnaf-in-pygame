@@ -1,9 +1,12 @@
 import pygame
 from pygame.locals import *
+from files.minigames.dummy import MinigameDummy
 from files.minigames.entity import Entity
 
-class GiveGifts:
+class GiveGifts(MinigameDummy):
     def __init__(self, App):
+        super().__init__(App)
+
         self.surf_width, self.surf_height = App.surface.get_width(), App.surface.get_height()
         self.puppet = Entity(App.assets.puppet_minigame, (self.surf_width/2 - App.assets.puppet_minigame.get_width()/2, self.surf_height/2 - App.assets.puppet_minigame.get_height()/2))
         self.score = 0 # One score is a hundred points 
@@ -20,11 +23,11 @@ class GiveGifts:
         margin = 90
         size_horizontal = 20
         size_vertical = 50
-        self.box:list = [
-            pygame.Rect(margin, margin, size_vertical, self.surf_height - (margin)*2 + 30), # Vertical left
-            pygame.Rect(self.surf_width - margin - size_vertical, margin, size_vertical, self.surf_height - (margin)*2 + 30), # Vertical right
-            pygame.Rect(margin, margin, self.surf_width - margin*2, size_horizontal), # Horizontal up
-            pygame.Rect(margin, self.surf_height - (margin - 30), self.surf_width - margin*2, size_horizontal) # Horizontal down
+        self.boundaries:list = [
+            (pygame.Rect(margin, margin, size_vertical, self.surf_height - (margin)*2 + 30), (200, 200, 200)), # Vertical left
+            (pygame.Rect(self.surf_width - margin - size_vertical, margin, size_vertical, self.surf_height - (margin)*2 + 30), (200, 200, 200)), # Vertical right
+            (pygame.Rect(margin, margin, self.surf_width - margin*2, size_horizontal), (200, 200, 200)), # Horizontal up
+            (pygame.Rect(margin, self.surf_height - (margin - 30), self.surf_width - margin*2, size_horizontal), (200, 200, 200)) # Horizontal down
         ]
 
         self.masks = [
@@ -34,24 +37,23 @@ class GiveGifts:
             App.assets.foxy_mask
         ]
 
+        self.last = Entity(App.assets.soul, (self.surf_width/2 - App.assets.puppet_minigame.get_width()/2, self.surf_height/2 - App.assets.puppet_minigame.get_height()/2))
+
         self.state = 0 # 0. Give gifts, 1. Give life
 
         self.gifts_and_masks_given = [False, False, False, False]
 
         self.timer = pygame.time.get_ticks()
 
-        self.ended = False
-
-        pygame.mixer.music.load(App.assets.static_end_path)
-
     def update(self, App):
-        self.key_movement(App)
+
+        if not pygame.Channel(2).get_busy():
+            pygame.Channel(2).play(App.assets.static_end)
 
         for soul in self.souls:
             soul.update(App)
 
-        for line in self.box:
-            pygame.draw.rect(App.minigamesSurface, (255, 255, 255), line)
+        self.draw_boundaries(App, self.boundaries, self.puppet)
 
         self.puppet.update(App)
 
@@ -64,6 +66,11 @@ class GiveGifts:
         else:
             App.minigamesSurface.blit(App.assets.give_life, pos)
             self.show_lives(App)
+
+        if (self.state == 1 and self.gifts_and_masks_given == [True, True, True, True]):
+            self.last.update(App)
+        else:
+            self.key_movement(App)
 
         self.detect_collition(App)
 
@@ -116,19 +123,26 @@ class GiveGifts:
                     self.score += 1
                     if self.state == 0:
                         pygame.mixer.Channel(1).play(App.assets.cake_sound)
+                    else:
+                        pygame.mixer.Channel(1).play(App.assets.pop)
+                        self.puppet.speed -= 4
 
-                self.gifts_and_masks_given[i] = True
-                self.timer = pygame.time.get_ticks()
+                    self.gifts_and_masks_given[i] = True
+                    self.timer = pygame.time.get_ticks()
 
     def comprobe_state(self, App):
         if (self.state == 0 and self.gifts_and_masks_given == [True, True, True, True]):
-            if pygame.time.get_ticks() - self.timer >= 8_000:
+            if pygame.time.get_ticks() - self.timer >= 5_000:
                 self.state = 1
                 self.gifts_and_masks_given = [False, False, False, False]
 
         elif (self.state == 1 and self.gifts_and_masks_given == [True, True, True, True]):
-            App.animations.golden_freddy_jump.update(App.uiSurface, App.deltaTime)
+            
             if not pygame.mixer.Channel(0).get_busy():
                 pygame.mixer.Channel(0).set_volume(1)
                 pygame.mixer.Channel(0).play(App.assets.xScream1)
+            if App.animations.golden_freddy_jump.sprite_num >= len(App.animations.golden_freddy_jump.sprites) - 1:
                 self.ended = True
+                pygame.mixer.Channel(0).stop()
+
+            App.animations.golden_freddy_jump.update(App.uiSurface, App.deltaTime)

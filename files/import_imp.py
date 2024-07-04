@@ -411,9 +411,9 @@ class import_images:
 
 		self.numbers_big = []
 		for i in range(10):
-			self.numbers_big.append(
-				pygame.image.load(f"sprites/numbers/1rst/big/{i}.png").convert_alpha()
-			)
+			img = pygame.image.load(f"sprites/numbers/1rst/big/{i}.png").convert()
+			img.set_colorkey((0, 0, 0))
+			self.numbers_big.append(img)
 
 		"""
 		self.numbers2 = []
@@ -539,6 +539,7 @@ class import_images:
 		self.puppet_minigame = pygame.image.load("sprites/minigames/GG_GL/4.png").convert_alpha()
 
 		self.soul = pygame.image.load("sprites/minigames/GG_GL/7.png").convert()
+		self.soul.set_colorkey((0, 0, 0))
 
 		self.gift = pygame.image.load("sprites/minigames/GG_GL/6.png").convert_alpha()
 
@@ -553,6 +554,20 @@ class import_images:
 		self.bonnie_mask = pygame.image.load("sprites/minigames/GG_GL/2.png").convert_alpha()
 
 		self.foxy_mask = pygame.image.load("sprites/minigames/GG_GL/3.png").convert_alpha()
+
+		# SAVE THEM
+
+		self.freddy_walking = []
+		for i in range(6):
+			self.freddy_walking.append(
+				pygame.image.load(f"sprites/minigames/SAVE THEM/{i}.png").convert_alpha()
+			)
+
+		self.table = pygame.image.load(f"sprites/minigames/SAVE THEM/10.png").convert()
+		self.table.set_colorkey((0, 0, 0))
+
+		self.floor1 = pygame.image.load(f"sprites/minigames/SAVE THEM/14.png").convert()
+		self.floor2 = pygame.image.load(f"sprites/minigames/SAVE THEM/15.png").convert()
 
 		# Get crops from cropped images
 		import_images.cropped_images(self)
@@ -641,14 +656,13 @@ class import_images:
 				f"sounds/call{i+1}b.wav"
 			)
 
-		self.static_end_path = "sounds/staticend2.wav"
-
 		# -- Cutscene --
 		self.move_sound = pygame.mixer.Sound(f"sounds/machineturn2.wav")
 		self.cutscene_ambient = pygame.mixer.Sound(f"sounds/Scary_Space_B.wav")
 		self.ambiance_2 = pygame.mixer.Sound(f"sounds/ambience2.wav")
 		self.robot_err = pygame.mixer.Sound("sounds/Robot.wav")
-		self.static_end = pygame.mixer.Sound(self.static_end_path)
+		self.static_end = pygame.mixer.Sound("sounds/staticend2.wav")
+		self.pop = pygame.mixer.Sound("sounds/pop.wav")
 		
 
 	def fonts(self):
