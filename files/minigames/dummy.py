@@ -14,6 +14,7 @@ class MinigameDummy(ABC):
         pass
 
     def draw_boundaries(self, App, boundaries:list, mainCharacter:Entity):
+        """ Will draw all the elements that the player can hit """
         surf = App.minigamesSurface
         for element in boundaries:
             element_rect = None
@@ -33,7 +34,7 @@ class MinigameDummy(ABC):
 
             if (mainCharacter.rect().colliderect(element_rect)):
                 if rect_changes_scene:
-                    self.scene = element[1]
+                    self.change_scene(App, element[1])
                     match element[2]:
                         case 'l':
                             mainCharacter.position = [100, surf.get_height()/2]
@@ -47,3 +48,7 @@ class MinigameDummy(ABC):
                     mainCharacter.lastFramePos = mainCharacter.position.copy()
                     return
                 mainCharacter.position = mainCharacter.lastFramePos
+
+    def change_scene(self, App, scene):
+        print(scene)
+        self.scene = scene

@@ -1,6 +1,7 @@
 import pygame
 from files.minigames.entity import Entity
 from files.minigames.dummy import MinigameDummy
+from files.minigames.scenes.save_them_scene import SaveThemScene
 
 class SAVETHEM(MinigameDummy):
     def __init__(self, App):
@@ -14,7 +15,15 @@ class SAVETHEM(MinigameDummy):
             walkingUpAnimation = App.animations.fredbear_walking2,
             hitboxDims=pygame.Rect(50, 20, 110, 170)
             )
+        
+        # TODO CHANGE
+        self.fredbear.speed = 70
+
         self.puppet = Entity(App.assets.puppet_minigame, (self.surf_width/2, self.surf_height/2))
+        self.puppet_state = 0
+
+        self.sceneElements = SaveThemScene(App)
+        self.scene = 1
 
     def update(self, App):
         self.draw_scene(App)
@@ -46,16 +55,36 @@ class SAVETHEM(MinigameDummy):
             case 0:
                 # Floor
                 surf.blit(App.assets.floor1, (0, 0))
-                self.draw_boundaries(App, self.room1_boundaries, self.fredbear)
+                self.draw_boundaries(App, self.sceneElements.room0_boundaries, self.fredbear)
 
             case 1:
                 # Floor
                 surf.blit(App.assets.floor2, (0, 0))
-                self.draw_boundaries(App, self.room2_boundaries, self.fredbear)
+                self.draw_boundaries(App, self.sceneElements.room1_boundaries, self.fredbear)
+                self.draw_puppet(App)
+
+            case 2:
+                surf.blit(App.assets.floor1, (0, 0))
+                self.draw_boundaries(App, self.sceneElements.room2_boundaries, self.fredbear)
+                self.draw_puppet(App)
+
+            case 3:
+                surf.blit(App.assets.floor1, (0, 0))
+                self.draw_boundaries(App, self.sceneElements.room3_boundaries, self.fredbear)
                 self.draw_puppet(App)
 
     def draw_puppet(self, App):
         self.puppet.update(App)
-        self.puppet.movement('u')
+        if (self.puppet_state == 0 and self.scene == 1):
+            self.puppet.movement('u')
+
+    def change_scene(self, App, scene):
+        super().change_scene(App, scene)
+
+        puppet_init_pos = (self.surf_width/2, self.surf_height/2)
+        match scene:
+            case 1:
+                if (self.puppet_state == 0):
+                    self.puppet.position = (puppet_init_pos)
 
     

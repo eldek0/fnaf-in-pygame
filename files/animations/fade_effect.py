@@ -34,7 +34,6 @@ class FadeEffect:
         self.black_screen.set_alpha(self.fade_alpha)
 
         if type(surface) is list:
-            print("Is a list")
             for surf in surface:
                 surf.blit(self.black_screen, self.position)
         else:
