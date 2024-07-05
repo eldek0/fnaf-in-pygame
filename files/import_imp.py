@@ -570,8 +570,8 @@ class import_images:
 		self.floor1 = pygame.image.load(f"sprites/minigames/SAVE THEM/14.png").convert()
 		self.floor2 = pygame.image.load(f"sprites/minigames/SAVE THEM/15.png").convert()
 
-		"""
-		self.sad_soul = pygame.image.load(f"sprites/minigames/SAVE THEM/26.png").convert()
+		
+		self.sad_soul = pygame.image.load(f"sprites/minigames/SAVE THEM/27.png").convert()
 		self.sad_soul.set_colorkey((0, 0, 0))
 
 		self.suit1 = pygame.image.load(f"sprites/minigames/SAVE THEM/23.png").convert()
@@ -581,24 +581,30 @@ class import_images:
 		self.suit2.set_colorkey((0, 0, 0))
 
 		self.suit3 = pygame.image.load(f"sprites/minigames/SAVE THEM/20.png").convert()
-		self.dust.set_colorkey((0, 0, 0))
+		self.suit3.set_colorkey((0, 0, 0))
 
 		self.suit4 = pygame.image.load(f"sprites/minigames/SAVE THEM/21.png").convert()
-		self.dust.set_colorkey((0, 0, 0))
+		self.suit4.set_colorkey((0, 0, 0))
 
 		self.suit5 = pygame.image.load(f"sprites/minigames/SAVE THEM/22.png").convert()
-		self.dust.set_colorkey((0, 0, 0))
+		self.suit5.set_colorkey((0, 0, 0))
 
 		self.dust = pygame.image.load(f"sprites/minigames/SAVE THEM/13.png").convert()
 		self.dust.set_colorkey((0, 0, 0))
 
+		self.blood = pygame.image.load(f"sprites/minigames/SAVE THEM/31.png").convert()
+		self.blood.set_colorkey((0, 0, 0))
+
+		self.bigGift = pygame.image.load(f"sprites/minigames/SAVE THEM/30.png").convert()
+		self.bigGift.set_colorkey((0, 0, 0))
+
 		self.endo_anim = []
 		for i in range(2):
-			img = pygame.image.load(f"sprites/minigames/SAVE THEM/.png").convert()
+			img = pygame.image.load(f"sprites/minigames/SAVE THEM/{25 + i}.png").convert()
 			img.set_colorkey((0, 0, 0))
 			self.endo_anim.append(img)
 
-		self.dust.set_colorkey((0, 0, 0))"""
+		self.dust.set_colorkey((0, 0, 0))
 
 		# Get crops from cropped images
 		import_images.cropped_images(self)

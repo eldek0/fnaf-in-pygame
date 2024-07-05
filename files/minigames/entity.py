@@ -30,7 +30,7 @@ class Entity:
         
 
     def movement(self, movement:chr):
-        self.lastFramePos = self.position.copy()
+        self.lastFramePos = list(self.position).copy()
         if (pygame.time.get_ticks() - self.timer > 100):
             match movement:
                 case 'r':

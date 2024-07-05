@@ -17,13 +17,24 @@ class SAVETHEM(MinigameDummy):
             )
         
         # TODO CHANGE
-        self.fredbear.speed = 70
+        #self.fredbear.speed = 70
 
         self.puppet = Entity(App.assets.puppet_minigame, (self.surf_width/2, self.surf_height/2))
         self.puppet_state = 0
 
         self.sceneElements = SaveThemScene(App)
-        self.scene = 1
+        self.scene = 5
+
+        self.rooms = [
+            self.sceneElements.room0_boundaries,
+            self.sceneElements.room1_boundaries,
+            self.sceneElements.room2_boundaries,
+            self.sceneElements.room3_boundaries,
+            self.sceneElements.room4_boundaries,
+            self.sceneElements.room5_boundaries,
+            self.sceneElements.room6_boundaries,
+            self.sceneElements.room7_boundaries
+        ]
 
     def update(self, App):
         self.draw_scene(App)
@@ -50,33 +61,19 @@ class SAVETHEM(MinigameDummy):
             self.fredbear.movement('d')
 
     def draw_scene(self, App):
-        surf = App.minigamesSurface
-        match self.scene:
-            case 0:
-                # Floor
-                surf.blit(App.assets.floor1, (0, 0))
-                self.draw_boundaries(App, self.sceneElements.room0_boundaries, self.fredbear)
+        if (self.scene < len(self.rooms)):
+            self.draw_boundaries(App, self.rooms[self.scene], self.fredbear)
 
-            case 1:
-                # Floor
-                surf.blit(App.assets.floor2, (0, 0))
-                self.draw_boundaries(App, self.sceneElements.room1_boundaries, self.fredbear)
-                self.draw_puppet(App)
-
-            case 2:
-                surf.blit(App.assets.floor1, (0, 0))
-                self.draw_boundaries(App, self.sceneElements.room2_boundaries, self.fredbear)
-                self.draw_puppet(App)
-
-            case 3:
-                surf.blit(App.assets.floor1, (0, 0))
-                self.draw_boundaries(App, self.sceneElements.room3_boundaries, self.fredbear)
+            if self.isPuppetRoom(self.scene):
                 self.draw_puppet(App)
 
     def draw_puppet(self, App):
         self.puppet.update(App)
         if (self.puppet_state == 0 and self.scene == 1):
             self.puppet.movement('u')
+
+    def isPuppetRoom(self, scene):
+        return (scene == 1 or scene == 2 or scene == 3)
 
     def change_scene(self, App, scene):
         super().change_scene(App, scene)
@@ -85,6 +82,6 @@ class SAVETHEM(MinigameDummy):
         match scene:
             case 1:
                 if (self.puppet_state == 0):
-                    self.puppet.position = (puppet_init_pos)
+                    self.puppet.position = list(puppet_init_pos)
 
     

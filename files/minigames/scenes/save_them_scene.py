@@ -10,6 +10,8 @@ class SaveThemScene(CreateScene):
         # spawn
         self.room0_boundaries = self._clean_boundary( 
             [
+            (App.assets.floor1, (0, 0), False),
+
             # Box
             self.up_wall(False),
             self.left_wall(False),
@@ -18,16 +20,15 @@ class SaveThemScene(CreateScene):
 
             # Elements
             (App.assets.table, pygame.Rect(200, 150, 350, 100)),
-            (App.assets.table, pygame.Rect(200, 300, 350, 100)),
-
-            # Exit
-            (pygame.Rect(self.surf_width - 100, self.surf_height/2, 100, 50), 1, 'l')
+            (App.assets.table, pygame.Rect(200, 300, 350, 100))
             ]
         )
 
         
         self.room1_boundaries =  self._clean_boundary(
             [
+            (App.assets.floor2, (0, 0), False),
+
             # Box
             self.up_wall(True, scene=2),
             self.left_wall(True, scene=0),
@@ -38,32 +39,99 @@ class SaveThemScene(CreateScene):
 
         self.room2_boundaries =  self._clean_boundary(
             [
+
+            (App.assets.floor2, (0, 0), False),
+
             # Box
             self.up_wall(False),
-            self.left_wall(True, scene=1),
-            self.right_wall(True),
-            self.bottom_wall(True)
+            self.left_wall(True),
+            self.right_wall(True, scene=3),
+            self.bottom_wall(True, scene=1)
             ] 
         )
 
         self.room3_boundaries =  self._clean_boundary(
             [
+
+            (App.assets.floor2, (0, 0), False),
+            
             # Box
             self.up_wall(False),
-            self.left_wall(True, scene=1),
+            self.left_wall(True, scene=2),
             self.right_wall(True, scene=4),
             self.bottom_wall(True),
+
+            (App.assets.dust, (100, 200), False),
+            (App.assets.dust, (300, 500), False),
+            (App.assets.sad_soul, (400, 400))
 
             ] 
         )
 
         self.room4_boundaries =  self._clean_boundary(
             [
+            (App.assets.floor1, (0, 0), False),
+
             # Box
             self.up_wall(False),
             self.left_wall(True, scene=3),
             self.right_wall(False),
-            self.bottom_wall(True)
+            self.bottom_wall(True, scene=5),
+
+            # Elements
+            (App.assets.table, pygame.Rect(400, 250, 350, 100)),
+            (App.assets.table, pygame.Rect(400, 300, 350, 100)),
+
+            ] 
+        )
+
+        self.room5_boundaries =  self._clean_boundary(
+            [
+            (App.assets.floor2, (0, 0), False),
+
+            # Box
+            self.up_wall(True, scene=4),
+            self.left_wall(False),
+            self.right_wall(True, scene=6),
+            self.bottom_wall(True, scene=7),
+
+            # Elements
+            (App.assets.blood, (150, 200), False),
+            (App.assets.blood, (410, 400), False),
+
+            ] 
+        )
+
+        self.room6_boundaries =  self._clean_boundary(
+            [
+            (App.assets.floor1, (0, 0), False),
+
+            # Box
+            self.up_wall(False),
+            self.left_wall(True, scene=5),
+            self.right_wall(False),
+            self.bottom_wall(False),
+
+            # Elements
+            (App.assets.blood, (440, 410), False),
+            (App.assets.bigGift, pygame.Rect(440, 260, 350, 200)),
+
+            (pygame.transform.flip(App.assets.sad_soul, True, False), (390, 500)),
+
+            ] 
+        )
+
+        self.room7_boundaries =  self._clean_boundary(
+            [
+            (App.assets.floor2, (0, 0), False),
+
+            # Box
+            self.up_wall(True, 5),
+            self.left_wall(False),
+            self.right_wall(False),
+            self.bottom_wall(False),
+
+            (App.animations.endoAnim, (300, 460))
             ] 
         )
 
@@ -77,5 +145,4 @@ class SaveThemScene(CreateScene):
             else:
                 boundary_to_return.append(element)
 
-        print(len(boundary_to_return))
         return boundary_to_return

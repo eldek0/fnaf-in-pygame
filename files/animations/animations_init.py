@@ -70,3 +70,5 @@ class animations_init:
         self.fredbear_walking1 = SpritesAnimation(sprites=App.assets.freddy_walking[0:2], position=(0, 0), frame_wait=10, isLoop=True)
         self.fredbear_walking2 = SpritesAnimation(sprites=App.assets.freddy_walking[2:4], position=(0, 0), frame_wait=10, isLoop=True)
         self.fredbear_walking3 = SpritesAnimation(sprites=App.assets.freddy_walking[4:6], position=(0, 0), frame_wait=10, isLoop=True)
+
+        self.endoAnim = SpritesAnimation(sprites=App.assets.endo_anim, position=(0, 0), frame_wait=10, isLoop=True)
