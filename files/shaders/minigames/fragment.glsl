@@ -8,8 +8,8 @@ void main()
 {
     vec2 fragCoord = fragmentTexCoord.xy;
     highp float y_pos = fragCoord.y * 100;
-
-    if (mod(y_pos, 1.3) < 1)
+    
+    if (mod(y_pos, 1.45) < 1)
     {
         discard;
     }

@@ -44,7 +44,7 @@ class App:
 		self.warning_init = WarningInit(self)
 		self.inital_warning = pygame.image.load("sprites/menu/logos/4.png").convert()
 		
-		self.inMinigame = True
+		self.inMinigame = False
 		
 		self.update(self)
 		

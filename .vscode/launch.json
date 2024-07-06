@@ -5,10 +5,11 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Python Debugger: Module",
+            "name": "Python: Current File (Integrated Terminal)",
             "type": "debugpy",
             "request": "launch",
-            "module": "main"
+            "module": "main",
+            "console":"integratedTerminal"
         }
     ]
 }

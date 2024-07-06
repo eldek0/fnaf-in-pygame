@@ -7,7 +7,9 @@ class Entity:
                  walkingRightAnimation:SpritesAnimation = None, 
                  walkingDownAnimation:SpritesAnimation = None, 
                  walkingUpAnimation:SpritesAnimation = None,
-                 hitboxDims:pygame.Rect = None
+                 hitboxDims:pygame.Rect = None,
+                 framesToMove:int = 100,
+                 speed:int = 15
                  ):
         self.texture:pygame.Surface = texture
         self.position:list = list(initial_position)
@@ -16,8 +18,9 @@ class Entity:
         self.walkingDownAnimation:SpritesAnimation = walkingDownAnimation
         self.walkingUpAnimation:SpritesAnimation = walkingUpAnimation
         self.__hitboxDims:pygame.Rect = hitboxDims
-
-        self.speed:int = 15
+        self.framesToMove:int = framesToMove
+        self.speed:int = speed
+        
         self.timer:int = pygame.time.get_ticks()
         self.moving:bool = False
         self.notMovingTimer = pygame.time.get_ticks()
@@ -25,13 +28,16 @@ class Entity:
         self.moving_direction:chr = 'd'
 
     def update(self, App):
+        surf = App.minigamesSurface
         self.detect_if_its_not_moving()
-        self.drawCharacter(App)
+        
+        if (self.is_in_screen_bounds(surf)):
+            self.drawCharacter(App)
         
 
     def movement(self, movement:chr):
         self.lastFramePos = list(self.position).copy()
-        if (pygame.time.get_ticks() - self.timer > 100):
+        if (pygame.time.get_ticks() - self.timer > self.framesToMove):
             match movement:
                 case 'r':
                     self.position[0] += self.speed
@@ -78,6 +84,10 @@ class Entity:
         
         surf.blit(self.texture, self.position)
         
+    def is_in_screen_bounds(self, surface:pygame.Surface):
+        entity_w, entity_h = self.texture.get_width(), self.texture.get_height()
+        surf_w, surf_h = surface.get_width(), surface.get_height()
+        return self.position[0] > -entity_w and self.position[1] > -entity_h and self.position[0] < surf_w + entity_w and self.position[1] < surf_h + entity_h
 
     def rect(self)->pygame.Rect:
         if not self.__hitboxDims:

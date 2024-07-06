@@ -19,7 +19,7 @@ class import_images:
 		# -- Monitor --
 		# Animation
 		self.camera_sprites = []
-		"""
+		
 		for i in range(11):
 			self.camera_sprites.append(
 				pygame.image.load(f"sprites/monitor/{i+1}.png").convert_alpha()
@@ -62,7 +62,7 @@ class import_images:
 			self.left_vent_offices.append(
 				pygame.image.load(f"sprites/office/left_vents/{i}.png").convert()
 			)
-		"""
+		
 		# Desk animation
 		self.desk_animation = []
 		for i in range(4):
@@ -77,7 +77,7 @@ class import_images:
 			self.mask_sprites.append(
 				pygame.image.load(f"sprites/mask/{i+1}.png").convert_alpha()
 			)
-		"""
+		
 		# Button
 		self.mask_button = pygame.image.load("sprites/mask/button.png").convert_alpha()
 
@@ -210,7 +210,7 @@ class import_images:
 
 		self.main_hall_label = pygame.image.load(f"sprites/cameras/locations/MainHall/label.png").convert_alpha()
 
-		"""
+		
 		# -- Static
 		self.static_1 = []
 		for i in range(6):
@@ -223,7 +223,7 @@ class import_images:
 			self.static_2.append(
 				pygame.image.load(f"sprites/cameras/static/{i+10}.png").convert_alpha()
 			)
-		"""
+		
 		self.music_box_button_off = pygame.image.load(f"sprites/cameras/Labels/16.png").convert()
 		self.music_box_button_on = pygame.image.load(f"sprites/cameras/Labels/17.png").convert()
 		self.music_box_label = pygame.image.load(f"sprites/cameras/Labels/15.png").convert_alpha()
@@ -262,7 +262,7 @@ class import_images:
 
 		# Baloon boy in office
 		self.office_baloon_boy = pygame.image.load(f"sprites/office/inside/5.png").convert_alpha()
-		"""
+		
 		# -- Jumpscares Animation -- 
 		# Puppet jumpscare animation
 		self.puppet_screamer_animation = []
@@ -338,7 +338,7 @@ class import_images:
 			self.golden_freddy_animation.append(
 				pygame.image.load(f"sprites/jumpscares/withered_golden_freddy/{i+1}.png").convert_alpha()
 			)
-		"""
+		
 		# -- MENU UTILITIES -- 
 		self.background_menu = []
 		for i in range(4):
@@ -370,7 +370,7 @@ class import_images:
 			self.nights_12am.append(
 				pygame.image.load(f"sprites/menu/nights/{i+1}.png").convert_alpha()
 			)
-		"""
+		
 		# Confetti
 		self.blue_conf = []
 		for i in range(0, 5):
@@ -415,7 +415,7 @@ class import_images:
 			img.set_colorkey((0, 0, 0))
 			self.numbers_big.append(img)
 
-		"""
+		
 		self.numbers2 = []
 		for i in range(10):
 			self.numbers2.append(
@@ -451,13 +451,13 @@ class import_images:
 
 		self.lost_screen = pygame.image.load(f"sprites/menu/nights/10.png").convert()
 		self.game_over = pygame.image.load(f"sprites/menu/nights/11.png").convert_alpha()
-		"""
+		
 		self.static_stripes = []
 		for i in range(5):
 			self.static_stripes.append(
 				pygame.image.load(f"sprites/cameras/static/s2/{i+1}.png").convert_alpha()
 			)
-		"""
+		
 		self.warn_big = []
 		for i in range(24,26):
 			self.warn_big.append(
@@ -532,7 +532,7 @@ class import_images:
 		self.cutscene_mask = pygame.image.load(f"sprites/cutscenes/2.png").convert_alpha()
 		self.err_img = pygame.image.load(f"sprites/cutscenes/3.png").convert()
 		self.its_me = pygame.image.load(f"sprites/cutscenes/4.png").convert()
-		"""
+		
 		# Minigames
 
 		# Give gifts, Give life
@@ -605,6 +605,12 @@ class import_images:
 			self.endo_anim.append(img)
 
 		self.dust.set_colorkey((0, 0, 0))
+
+		self.sceneary = pygame.image.load(f"sprites/minigames/SAVE THEM/12.png").convert()
+		self.sceneary.set_colorkey((0, 0, 0))
+
+		self.desk_min = pygame.image.load(f"sprites/minigames/SAVE THEM/11.png").convert()
+		self.desk_min.set_colorkey((0, 0, 0))
 
 		# Get crops from cropped images
 		import_images.cropped_images(self)
@@ -700,7 +706,19 @@ class import_images:
 		self.robot_err = pygame.mixer.Sound("sounds/Robot.wav")
 		self.static_end = pygame.mixer.Sound("sounds/staticend2.wav")
 		self.pop = pygame.mixer.Sound("sounds/pop.wav")
-		
+
+		# -- Minigames --
+		self.sv_tm_audio = [
+			pygame.mixer.Sound(f"sounds/S2.wav"),
+			pygame.mixer.Sound(f"sounds/A2.wav"),
+			pygame.mixer.Sound(f"sounds/V2.wav"),
+			pygame.mixer.Sound(f"sounds/E2.wav"),
+			pygame.mixer.Sound(f"sounds/T2.wav"),
+			pygame.mixer.Sound(f"sounds/H2.wav"),
+			pygame.mixer.Sound(f"sounds/E2.wav"),
+			pygame.mixer.Sound(f"sounds/M2.wav")
+		]
+
 
 	def fonts(self):
 		pass

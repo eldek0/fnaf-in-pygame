@@ -12,14 +12,19 @@ class Minigame:
             SAVETHEM(App)
         ]
         self.inMinigameId:int = 1
+        self.timer = pygame.time.get_ticks()
+        self.time_to_voice:int = 3000
+        self.letter_index = 0
 
     def update(self, App):
         App.minigamesSurface.fill((0, 0, 0))
-        self.static(App)
 
         minigame = self.minigames[self.inMinigameId]
         if not minigame.ended:
             minigame.update(App)
+
+        self.back_voice(App)
+        self.static(App)
 
     def static(self, App):
         if ( not self.showing_static and pygame.time.get_ticks() - self.static_timer > 3000):
@@ -34,3 +39,11 @@ class Minigame:
             if pygame.time.get_ticks() - self.static_timer > 2000:
                 self.static_timer = pygame.time.get_ticks()
                 self.showing_static = False
+
+    def back_voice(self, App):
+        if pygame.time.get_ticks() - self.timer > self.time_to_voice:
+            if (self.letter_index > len(App.assets.sv_tm_audio)) - 1:
+                self.letter_index = 0
+            App.assets.sv_tm_audio[self.letter_index].play()
+            self.timer = pygame.time.get_ticks()
+            self.letter_index += 1
