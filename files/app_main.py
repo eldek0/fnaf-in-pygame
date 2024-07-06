@@ -94,7 +94,7 @@ class App:
 			# Frames per second
 			self.game_fps = self.clock.tick(self.frames_per_second)
 
-			#pygame.display.set_caption(str(round(self.clock.get_fps(), 2)) ) # Win's name
+			pygame.display.set_caption(str(round(self.clock.get_fps(), 2)) ) # Win's name
 
 			#DeltaTime
 			self.get_deltatime()

@@ -46,7 +46,7 @@ class MinigameDummy(ABC):
 
             ordered_keys = list(ordered_elements.keys())
             ordered_keys.sort()
-
+            print(ordered_keys)
             for layer in ordered_keys:
                 index = 0
                 for element in ordered_elements[layer]:
@@ -100,6 +100,7 @@ class MinigameDummy(ABC):
                     # Hitbox initial position
                     if (len(element) > 5 and isinstance(element[5], tuple) and not self.__check_is_default(element[5])):
                         ex, ey = element[5][0], element[5][1]
+                        element_rect = element_rect.copy()
                         element_rect.x += ex
                         element_rect.width += ex
                         element_rect.y += ey
@@ -109,6 +110,7 @@ class MinigameDummy(ABC):
                     if (len(element) > 6 and isinstance(element[6], bool) and not self.__check_is_default(element[6])):
                         if (element[6]):
                             self.draw_hitbox(App, (0, 255, 0), element_rect)
+                        print(layer)
 
                     if (mainCharacter.rect().colliderect(element_rect) and canHit):
                         if (is_lambda_object != None):

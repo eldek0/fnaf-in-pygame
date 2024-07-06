@@ -58,12 +58,12 @@ class CreateScene:
         if not left:
             return (
                 "<multiple>",
-                (App.assets.table, pygame.Rect(x1, y, 350, 100), True, 1),
-                (App.assets.table, pygame.Rect(x1, y + separation, 350, 100))
+                (App.assets.table, pygame.Rect(x1, y, 350, 100), "def", "def", 1, (0, 100), True),
+                (App.assets.table, pygame.Rect(x1, y + separation, 350, 100), "def", "def", 1, (0, 100), True)
             )
         
         return (
             "<multiple>",
-            (App.assets.table, pygame.Rect(x2, y, 350, 100)),
-            (App.assets.table, pygame.Rect(x2, y + separation, 350, 100))
+            (App.assets.table, pygame.Rect(x2, y, 350, 100), "def", "def", 1, (0, 100), True),
+            (App.assets.table, pygame.Rect(x2, y + separation, 350, 100), "def", "def", 1, (0, 100), True)
         )
