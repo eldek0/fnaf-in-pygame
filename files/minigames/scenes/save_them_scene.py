@@ -5,10 +5,12 @@ class SaveThemScene(CreateScene):
 
     def __init__(self, App):
         super().__init__(App)
+        self.rooms = []
 
         # BOUNDARIES
         # spawn
-        self.room0_boundaries = self._clean_boundary( 
+        ### ROOM 0 ###
+        self._clean_boundary( 
             [
 
             # Box
@@ -18,14 +20,15 @@ class SaveThemScene(CreateScene):
             self.bottom_wall(False),
 
             # Elements
-            self.tables(App, left=False)
+            self.tables(App, left=False),
+            (App.assets.sad_soul, (650, 600), "def", "def", "def", "def", True)
             ]
         )
 
-        
-        self.room1_boundaries =  self._clean_boundary(
+         ### ROOM 1 ###
+        self._clean_boundary(
             [
-            (App.assets.floor2, (0, 0), False),
+            (App.assets.floor2, (0, 0), None, False),
 
             # Box
             self.up_wall(True, scene=2),
@@ -35,10 +38,11 @@ class SaveThemScene(CreateScene):
             ] 
         )
 
-        self.room2_boundaries =  self._clean_boundary(
+         ### ROOM 2 ###
+        self._clean_boundary(
             [
 
-            (App.assets.floor2, (0, 0), False),
+            (App.assets.floor1, (0, 0), None, False),
 
             # Box
             self.up_wall(False),
@@ -48,27 +52,29 @@ class SaveThemScene(CreateScene):
             ] 
         )
 
-        self.room3_boundaries =  self._clean_boundary(
+         ### ROOM 3 ###
+        self._clean_boundary(
             [
 
-            (App.assets.floor2, (0, 0), False),
+            (App.assets.floor1, (0, 0), None, False),
             
             # Box
             self.up_wall(False),
             self.left_wall(True, scene=2),
             self.right_wall(True, scene=4),
-            self.bottom_wall(True),
+            self.bottom_wall(False),
 
-            (App.assets.dust, (100, 200), False),
-            (App.assets.dust, (300, 500), False),
+            (App.assets.dust, (100, 200), None, False),
+            (App.assets.dust, (300, 500), None, False),
             (App.assets.sad_soul, (650, 600))
 
             ] 
         )
 
-        self.room4_boundaries =  self._clean_boundary(
+         ### ROOM 4 ###
+        self._clean_boundary(
             [
-            (App.assets.floor1, (0, 0), False),
+            (App.assets.floor1, (0, 0), None, False),
 
             # Box
             self.up_wall(True, 8),
@@ -82,9 +88,10 @@ class SaveThemScene(CreateScene):
             ] 
         )
 
-        self.room5_boundaries =  self._clean_boundary(
+         ### ROOM 5 ###
+        self._clean_boundary(
             [
-            (App.assets.floor2, (0, 0), False),
+            (App.assets.floor2, (0, 0), None, False),
 
             # Box
             self.up_wall(True, scene=4),
@@ -93,15 +100,16 @@ class SaveThemScene(CreateScene):
             self.bottom_wall(True, scene=7),
 
             # Elements
-            (App.assets.blood, (150, 200), False),
-            (App.assets.blood, (410, 400), False),
+            (App.assets.blood, (150, 200), None, False),
+            (App.assets.blood, (410, 400), None, False),
 
             ] 
         )
 
-        self.room6_boundaries =  self._clean_boundary(
+         ### ROOM 6 ###
+        self._clean_boundary(
             [
-            (App.assets.floor1, (0, 0), False),
+            (App.assets.floor1, (0, 0), None, False),
 
             # Box
             self.up_wall(False),
@@ -110,7 +118,7 @@ class SaveThemScene(CreateScene):
             self.bottom_wall(False),
 
             # Elements
-            (App.assets.blood, (440, 410), False),
+            (App.assets.blood, (440, 410), None, False),
             (App.assets.bigGift, pygame.Rect(440, 260, 350, 200)),
 
             (pygame.transform.flip(App.assets.sad_soul, True, False), (390, 500)),
@@ -118,9 +126,10 @@ class SaveThemScene(CreateScene):
             ] 
         )
 
-        self.room7_boundaries =  self._clean_boundary(
+         ### ROOM 7 ###
+        self._clean_boundary(
             [
-            (App.assets.floor2, (0, 0), False),
+            (App.assets.floor2, (0, 0), None, False),
 
             # Box
             self.up_wall(True, 5),
@@ -132,7 +141,8 @@ class SaveThemScene(CreateScene):
             ] 
         )
 
-        self.room8_boundaries =  self._clean_boundary(
+         ### ROOM 8 ###
+        self._clean_boundary(
             [
 
             # Box
@@ -141,13 +151,14 @@ class SaveThemScene(CreateScene):
             self.right_wall(False),
             self.bottom_wall(True, 4),
 
-            (App.assets.blood, (200, 360), False),
+            (App.assets.blood, (200, 360), None, False),
             (App.assets.sceneary, (200, 100)),
             (App.assets.sad_soul, (120, 500))
             ] 
         )
 
-        self.room9_boundaries =  self._clean_boundary(
+         ### ROOM 9 ###
+        self._clean_boundary(
             [
 
             # Box
@@ -162,7 +173,8 @@ class SaveThemScene(CreateScene):
             ] 
         )
 
-        self.room10_boundaries =  self._clean_boundary(
+         ### ROOM 10 ###
+        self._clean_boundary(
             [
 
             # Box
@@ -176,7 +188,8 @@ class SaveThemScene(CreateScene):
             ] 
         )
 
-        self.room11_boundaries =  self._clean_boundary(
+         ### ROOM 11 ###
+        self._clean_boundary(
             [
 
             # Box
@@ -185,12 +198,13 @@ class SaveThemScene(CreateScene):
             self.right_wall(True, 13),
             self.bottom_wall(True, 14),
 
-            (App.assets.blood,(200, 200), False)
+            (App.assets.blood,(200, 200), None, False)
 
             ] 
         )
 
-        self.room12_boundaries = self._clean_boundary( 
+         ### ROOM 12 ###
+        self._clean_boundary( 
             [
 
             # Box
@@ -205,7 +219,8 @@ class SaveThemScene(CreateScene):
             ]
         )
 
-        self.room13_boundaries =  self._clean_boundary(
+         ### ROOM 13 ###
+        self._clean_boundary(
             [
 
             # Box
@@ -219,7 +234,8 @@ class SaveThemScene(CreateScene):
             ] 
         )
 
-        self.room14_boundaries =  self._clean_boundary(
+         ### ROOM 14 ###
+        self._clean_boundary(
             [
 
             # Box
@@ -243,4 +259,5 @@ class SaveThemScene(CreateScene):
             else:
                 boundary_to_return.append(element)
 
-        return boundary_to_return
+        ### Add the boundary to the list
+        self.rooms.append(boundary_to_return)

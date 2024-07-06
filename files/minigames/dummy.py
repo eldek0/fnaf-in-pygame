@@ -2,6 +2,7 @@ import pygame
 from abc import ABC
 from files.minigames.entity import Entity
 from files.animations.sprites_animation import SpritesAnimation
+from files.minigames.scenes.boundaries_exception import BoundException
 
 class MinigameDummy(ABC):
     def __init__(self, App):
@@ -16,92 +17,156 @@ class MinigameDummy(ABC):
 
     def draw_boundaries(self, App, boundaries:list, mainCharacter:Entity, mainCharacterLayer=0):
         """ Will draw all the elements that the player can hit (or not) \n
-        Each element goes between parentesis (). Sintax:\n 
+        Each element goes between parentesis (). \n
+        -- Sintax:\n 
         [0]: pygame.Surface, pygame.Rect or SpritesAnimation\n
-        [1]: int() means when touched will change to that scene (only when [0] is pygame.Rect)\n 
-        [2]: bool(), whether the object can be hit or not
-        [3]: int(), layer of the object
+        [1]: tuple(), if [0] is pygame.Surface or SpritesAnimation this will be the position, if [0] is pygame.Rect this will be the color, Represented by (R, G, B) If its None it will not draw it
+        [2]: lambda object, will be called when the player's entity collides with the object. Can also be a special tuple that will have elements like the identificator and the arguments. 
+                The current types are: - Change the scene: ("scene", 4, 'l') args=id, scene_to_change, direction ('r', 'l', 'u', 'd')\n
+        [3]: bool(), whether the object can be hit or not. By default is True\n
+        [4]: int(), layer of the object. By default is 0\n
+        [5]: tuple(), hitbox initial position. By default is (0, 0)\n
+        [6]: bool(), view object hitbox
         """
 
         surf = App.minigamesSurface
-        surf_width, surf_height = surf.get_width(), surf.get_height()
+        index = 0
 
         ordered_elements = {}
+        try:
+            # Check which layer the element has first (element[4])
+            for element in boundaries:
+                if (len(element) > 4 and not self.__check_is_default(element[4])):
+                    layer = element[4]
+                else:
+                    layer = 0 # layer by default, higher the number higher the element will be
+                if not layer in list(ordered_elements.keys()):
+                    ordered_elements[layer] = []
+                ordered_elements[layer].append(element)
 
-        # Check which layer the element has first (4th list component)
-        for element in boundaries:
-            if (len(element) > 4):
-                layer = element[3]
-                element = tuple(list(element).pop(4)) # Remove the layer component
-            else:
-                layer = 0 # layer by default, higher the number higher the element will be
-            if not layer in list(ordered_elements.keys()):
-                ordered_elements[layer] = []
-            ordered_elements[layer].append(element)
+            ordered_keys = list(ordered_elements.keys())
+            ordered_keys.sort()
 
-        ordered_keys = list(ordered_elements.keys())
-        ordered_keys.sort()
+            for layer in ordered_keys:
+                index = 0
+                for element in ordered_elements[layer]:
+                    element_rect = None
+                    canHit = True
+                    is_lambda_object = None
+                    if isinstance(element[0], pygame.Surface):
+                        if isinstance(element[1], pygame.Rect):
+                            surf.blit(element[0], (element[1].x, element[1].y))
+                            element_rect = element[1]
+                        elif isinstance(element[1], tuple):
+                            surf.blit(element[0], element[1])
+                            element_rect = pygame.Rect(element[1][0], element[1][1], element[0].get_width(), element[0].get_height())
+                        else:
+                            raise BoundException("The [1] element must be a pygame.Rect or a tuple!", boundaries, index)
+                        
+                    elif isinstance(element[0], pygame.Rect):
+                        element_rect = element[0]
+                        color = element[1]
+                        if not (color is None):
+                            if not (isinstance(color, tuple)):
+                                raise BoundException("The [1] element must be a (R, G, B) tuple!", boundaries, index)
+                            pygame.draw.rect(surf, color, element_rect)
 
-        for layer in ordered_keys:
-            for element in ordered_elements[layer]:
-                element_rect = None
-                rect_changes_scene = False
-                canHit = True
-                if isinstance(element[0], pygame.Surface):
-                    if isinstance(element[1], pygame.Rect):
-                        surf.blit(element[0], (element[1].x, element[1].y))
-                        element_rect = element[1]
+                    elif isinstance(element[0], SpritesAnimation):
+                        if isinstance(element[1], pygame.Rect):
+                            element[0].position = [element[1].x, element[1].y]
+                            element_rect = element[1]
+                        elif isinstance(element[1], tuple):
+                            spr_width, spr_height = element[0].sprites[0].get_width(), element[0].sprites[0].get_height()
+                            pos = element[1]
+                            element[0].position = pos
+                            element_rect = pygame.Rect(pos[0], pos[1], spr_width, spr_height)
+                        else:
+                            raise BoundException("The [1] element must be a pygame.Rect or a tuple!", boundaries, index)
+                        element[0].update(surf, App.deltaTime)
+
                     else:
-                        surf.blit(element[0], element[1])
-                        element_rect = pygame.Rect(element[1][0], element[1][1], element[0].get_width(), element[0].get_height())
-                    
-                elif isinstance(element[0], pygame.Rect):
-                    element_rect = element[0]
-                    if (isinstance(element[1], int)): # Changes scene
-                        rect_changes_scene = True
-                    elif (isinstance(element[1], tuple)):
-                        pygame.draw.rect(surf, element[1], element[0])
+                        raise BoundException("The [0] element must be pygame.Surface, pygame.Rect or SpritesAnimation!", boundaries, index)
 
-                elif isinstance(element[0], SpritesAnimation):
-                    if isinstance(element[1], pygame.Rect):
-                        element[0].position = [element[1].x, element[1].y]
-                        element_rect = element[1]
-                    elif isinstance(element[1], tuple):
-                        spr_width, spr_height = element[0].sprites[0].get_width(), element[0].sprites[0].get_height()
-                        pos = element[1]
-                        element[0].position = pos
-                        element_rect = pygame.Rect(pos[0], pos[1], spr_width, spr_height)
-                    element[0].update(surf, App.deltaTime)
+                    # Detect if element[2] is a lambda object or a special tuple (and if its not None)
+                    if (len(element) > 2 and element[2] and not self.__check_is_default(element[2]) ):
+                        if (isinstance(element[2], tuple)): is_lambda_object = False # Is a special tuple
+                        elif (isinstance(element[2], object)): is_lambda_object = True
+                        else: raise BoundException("The [2] element must be a lambda object or a special tuple!", boundaries, index)
 
-                # If the third component is a boolean:
-                if (len(element) >= 3 and isinstance(element[2], bool)):
-                    canHit = element[2]
-                    rect_changes_scene = False
+                    # Detect if element[3] (can be hit) is true or false (by default true):
+                    if (len(element) > 3 and isinstance(element[3], bool) and not self.__check_is_default(element[3])):
+                        canHit = element[3]
 
-                """if rect_changes_scene:
-                    pygame.draw.rect(App.uiSurface, (200, 200, 100), element_rect)"""
+                    # Hitbox initial position
+                    if (len(element) > 5 and isinstance(element[5], tuple) and not self.__check_is_default(element[5])):
+                        ex, ey = element[5][0], element[5][1]
+                        element_rect.x += ex
+                        element_rect.width += ex
+                        element_rect.y += ey
+                        element_rect.height += ey
 
-                if (mainCharacter.rect().colliderect(element_rect) and canHit):
-                    if rect_changes_scene:
-                        if element[1] != -1:
-                            self.change_scene(App, element[1])
-                        match element[2]:
-                            case 'l':
-                                mainCharacter.position = [90, mainCharacter.position[1]]
-                            case 'r':
-                                mainCharacter.position = [surf_width - 130*2, mainCharacter.position[1]]
-                            case 'u':
-                                mainCharacter.position = [mainCharacter.position[0], 10]
-                            case 'd':
-                                mainCharacter.position = [mainCharacter.position[0], surf_height - 130*2]
+                    # See element hitbox
+                    if (len(element) > 6 and isinstance(element[6], bool) and not self.__check_is_default(element[6])):
+                        if (element[6]):
+                            self.draw_hitbox(App, (0, 255, 0), element_rect)
 
-                        mainCharacter.lastFramePos = mainCharacter.position.copy()
-                        return
-                    mainCharacter.position = mainCharacter.lastFramePos
+                    if (mainCharacter.rect().colliderect(element_rect) and canHit):
+                        if (is_lambda_object != None):
+                            obj = element[2]
+                            if (is_lambda_object):
+                                obj
+                            else:
+                                # Special tuple
+                                tupleId = str(obj[0]).lower()
+                                sceneToChange = int(obj[1])
+                                dir = str(obj[2])
+                                match tupleId:
+                                    case "scene":
+                                        self.__change_position(App, mainCharacter, sceneToChange, dir)
+                                        
+                        mainCharacter.position = mainCharacter.lastFramePos
+                    index += 1
+                # Update the main character if its in the corresponding layer
+                if (layer == mainCharacterLayer):
+                    mainCharacter.update(App)
 
-            # Update the main character if its in the corresponding layer
-            if (layer == mainCharacterLayer):
-                mainCharacter.update(App)
+                
+        except ValueError or IndexError as e:
+            raise BoundException(e, boundaries, index)
+
+    def __change_position(self, App, mainCharacter:Entity, scene:int, dir:chr):
+        surf = App.minigamesSurface
+        surf_width, surf_height = surf.get_width(), surf.get_height()
+        self.change_scene(App, scene)
+        
+        match dir:
+            
+            case 'l':
+                mainCharacter.position = [90, mainCharacter.position[1]]
+            case 'r':
+                mainCharacter.position = [surf_width - 130*2, mainCharacter.position[1]]
+            case 'u':
+                mainCharacter.position = [mainCharacter.position[0], 10]
+            case 'd':
+                mainCharacter.position = [mainCharacter.position[0], surf_height - 130*2]
+
+
+        mainCharacter.lastFramePos = mainCharacter.position.copy()
+
+    def __check_is_default(self, element):return (str(element).lower() == "def")
+
+    def draw_hitbox(self, App, color, rect):
+        surf = App.uiSurface
+        x = rect.x
+        y = rect.y
+        w = rect.width
+        h = rect.height
+        color = color
+        pygame.draw.line(surf, color, (x, y), (x + w, y), 1)
+        pygame.draw.line(surf, color, (x + w, y), (x + w, y + h), 1)
+        pygame.draw.line(surf, color, (x, y), (x, y + h), 1)
+        pygame.draw.line(surf, color, (x, y + h), (x + w, y + h), 1)
+
 
     def change_scene(self, App, scene):
         print(scene)

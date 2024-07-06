@@ -25,24 +25,6 @@ class SAVETHEM(MinigameDummy):
         self.sceneElements = SaveThemScene(App)
         self.scene = 0
 
-        self.rooms = [
-            self.sceneElements.room0_boundaries,
-            self.sceneElements.room1_boundaries,
-            self.sceneElements.room2_boundaries,
-            self.sceneElements.room3_boundaries,
-            self.sceneElements.room4_boundaries,
-            self.sceneElements.room5_boundaries,
-            self.sceneElements.room6_boundaries,
-            self.sceneElements.room7_boundaries,
-            self.sceneElements.room8_boundaries,
-            self.sceneElements.room9_boundaries,
-            self.sceneElements.room10_boundaries,
-            self.sceneElements.room11_boundaries,
-            self.sceneElements.room12_boundaries,
-            self.sceneElements.room13_boundaries,
-            self.sceneElements.room14_boundaries
-        ]
-
     def update(self, App):
         self.draw_scene(App)
 
@@ -66,8 +48,9 @@ class SAVETHEM(MinigameDummy):
             self.fredbear.movement('d')
 
     def draw_scene(self, App):
-        if (self.scene < len(self.rooms)):
-            self.draw_boundaries(App, self.rooms[self.scene], self.fredbear)
+        rooms = self.sceneElements.rooms
+        if (self.scene < len(rooms)):
+            self.draw_boundaries(App, rooms[self.scene], self.fredbear)
 
             if self.isPuppetRoom(self.scene):
                 self.draw_puppet(App)

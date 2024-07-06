@@ -18,7 +18,7 @@ class CreateScene:
                 "<multiple>",
                 (pygame.Rect(0, 0, self.left_wall_size, self.door_y_size), (200, 200, 200)), 
                 (pygame.Rect(0, self.surf_height - self.door_y_size, self.left_wall_size, self.door_y_size), (200, 200, 200)),
-                (pygame.Rect(-50, self.surf_height/2 - self.right_left_exit_hitbox/2, self.left_wall_size, self.right_left_exit_hitbox),  scene, 'r'),
+                (pygame.Rect(-50, self.surf_height/2 - self.right_left_exit_hitbox/2, self.left_wall_size, self.right_left_exit_hitbox),  None, ("scene", scene, 'r')),
             )
         return (pygame.Rect(0, 0, self.left_wall_size, self.surf_height), (200, 200, 200))
 
@@ -28,7 +28,7 @@ class CreateScene:
                 "<multiple>",
                 (pygame.Rect(self.surf_width - self.left_wall_size, 0, self.left_wall_size, self.door_y_size), (200, 200, 200)),
                 (pygame.Rect(self.surf_width - self.left_wall_size, self.surf_height - self.door_y_size, self.left_wall_size, self.door_y_size), (200, 200, 200)),
-                (pygame.Rect(self.surf_width -  self.left_wall_size + 50, self.surf_height/2 -  self.right_left_exit_hitbox/2,  self.left_wall_size,  self.right_left_exit_hitbox),  scene, 'l'),
+                (pygame.Rect(self.surf_width -  self.left_wall_size + 50, self.surf_height/2 -  self.right_left_exit_hitbox/2,  self.left_wall_size,  self.right_left_exit_hitbox),  None, ("scene", scene, 'l')),
             )
         return (pygame.Rect(self.surf_width - self.left_wall_size, 0, self.left_wall_size, self.surf_height), (200, 200, 200))
 
@@ -38,7 +38,7 @@ class CreateScene:
                 "<multiple>",
                 (pygame.Rect(0, 0, self.door_x_size, self.up_wall_size), (200, 200, 200)),
                 (pygame.Rect(self.surf_width - self.door_x_size, 0, self.door_x_size, self.up_wall_size), (200, 200, 200)),
-                (pygame.Rect(self.surf_width/2 - self.down_up_exit_hitbox/2, -50, self.down_up_exit_hitbox, self.up_wall_size),  scene, 'd'),
+                (pygame.Rect(self.surf_width/2 - self.down_up_exit_hitbox/2, -50, self.down_up_exit_hitbox, self.up_wall_size),  None, ("scene", scene, 'd')),
             )
         return (pygame.Rect(0, 0, self.surf_width, self.up_wall_size), (200, 200, 200))
 
@@ -48,7 +48,7 @@ class CreateScene:
                 "<multiple>",
                 (pygame.Rect(0, self.surf_height - self.up_wall_size, self.door_x_size, self.up_wall_size), (200, 200, 200)),
                 (pygame.Rect(self.surf_width - self.door_x_size, self.surf_height - self.up_wall_size, self.door_x_size, self.up_wall_size), (200, 200, 200)),
-                (pygame.Rect(self.surf_width/2 -  self.down_up_exit_hitbox/2, self.surf_height -  self.up_wall_size + 50,  self.down_up_exit_hitbox,  self.up_wall_size),  scene, 'u'),
+                (pygame.Rect(self.surf_width/2 -  self.down_up_exit_hitbox/2, self.surf_height -  self.up_wall_size + 50,  self.down_up_exit_hitbox,  self.up_wall_size),  None, ("scene", scene, 'u')),
             )
         return (pygame.Rect(0, self.surf_height - self.up_wall_size, self.surf_width, self.up_wall_size), (200, 200, 200))
     
