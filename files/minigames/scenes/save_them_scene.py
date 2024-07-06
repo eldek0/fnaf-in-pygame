@@ -168,8 +168,7 @@ class SaveThemScene(CreateScene):
             self.bottom_wall(False),
 
             (App.assets.suit2, (100, 170)),
-            (App.assets.suit3, (120, 300)),
-            (App.assets.suit4, (600, 110))
+            (App.assets.suit3, (120, 300))
             ] 
         )
 

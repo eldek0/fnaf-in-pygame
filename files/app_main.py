@@ -109,6 +109,10 @@ class App:
 				if self.warning_init.is_finished():
 					save(self)
 				self.playing = False
+
+			elif event.type == pygame.KEYDOWN:
+				if event.key == pygame.K_F11:
+					pygame.display.toggle_fullscreen()
 				
 	def update(self, events):
 		self.surface.fill((0,0,0))
