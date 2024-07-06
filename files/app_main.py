@@ -44,8 +44,6 @@ class App:
 		self.warning_init = WarningInit(self)
 		self.inital_warning = pygame.image.load("sprites/menu/logos/4.png").convert()
 		
-		self.inMinigame = False
-		
 		self.update(self)
 		
 		self.assets = import_images()
@@ -122,7 +120,7 @@ class App:
 		if self.loaded:
 			self.shaderMain.render_direct(pygame.Rect(0, 0, self.dimentions[0], self.dimentions[1]))
 
-			if (self.inMinigame):
+			if (self.minigame.inMinigame):
 				self.minigamesShader.render_direct(pygame.Rect(0, 0, self.dimentions[0], self.dimentions[1]))
 
 		# This surface will be responsable about the ui

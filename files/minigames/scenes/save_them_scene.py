@@ -61,7 +61,7 @@ class SaveThemScene(CreateScene):
 
             (App.assets.dust, (100, 200), False),
             (App.assets.dust, (300, 500), False),
-            (App.assets.sad_soul, (400, 400))
+            (App.assets.sad_soul, (650, 600))
 
             ] 
         )
@@ -141,8 +141,9 @@ class SaveThemScene(CreateScene):
             self.right_wall(False),
             self.bottom_wall(True, 4),
 
-            (App.assets.blood, (200, 260), False),
-            (App.assets.sceneary, (200, 150))
+            (App.assets.blood, (200, 360), False),
+            (App.assets.sceneary, (200, 100)),
+            (App.assets.sad_soul, (120, 500))
             ] 
         )
 
@@ -166,9 +167,9 @@ class SaveThemScene(CreateScene):
 
             # Box
             self.up_wall(False),
-            self.left_wall(False),
+            self.left_wall(True, 1),
             self.right_wall(False),
-            self.bottom_wall(True, 1),
+            self.bottom_wall(False),
 
             self.tables(App, left=True)
 

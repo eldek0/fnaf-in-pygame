@@ -53,15 +53,17 @@ class CreateScene:
         return (pygame.Rect(0, self.surf_height - self.up_wall_size, self.surf_width, self.up_wall_size), (200, 200, 200))
     
     def tables(self, App, left:bool=False):
+        separation = 170
+        x1, x2, y = 150, 510, 120
         if not left:
             return (
                 "<multiple>",
-                (App.assets.table, pygame.Rect(200, 150, 350, 100)),
-                (App.assets.table, pygame.Rect(200, 300, 350, 100))
+                (App.assets.table, pygame.Rect(x1, y, 350, 100), True, 1),
+                (App.assets.table, pygame.Rect(x1, y + separation, 350, 100))
             )
         
         return (
             "<multiple>",
-            (App.assets.table, pygame.Rect(400, 150, 350, 100)),
-            (App.assets.table, pygame.Rect(400, 300, 350, 100))
+            (App.assets.table, pygame.Rect(x2, y, 350, 100)),
+            (App.assets.table, pygame.Rect(x2, y + separation, 350, 100))
         )

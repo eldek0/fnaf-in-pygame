@@ -46,8 +46,6 @@ class SAVETHEM(MinigameDummy):
     def update(self, App):
         self.draw_scene(App)
 
-        self.fredbear.update(App)
-
         self.key_movement(App)
 
         #self.fredbear.show_rect(App)

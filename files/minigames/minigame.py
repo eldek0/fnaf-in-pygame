@@ -4,6 +4,7 @@ from files.minigames.save_them import SAVETHEM
 
 class Minigame:
     def __init__(self, App):
+        self.inMinigame = True
         self.static_rect = pygame.Rect(0, 0, App.surface.get_width(), 50)
         self.static_timer:int = pygame.time.get_ticks()
         self.showing_static:bool = False
@@ -23,7 +24,7 @@ class Minigame:
         if not minigame.ended:
             minigame.update(App)
 
-        self.back_voice(App)
+        #self.back_voice(App)
         self.static(App)
 
     def static(self, App):
@@ -42,7 +43,7 @@ class Minigame:
 
     def back_voice(self, App):
         if pygame.time.get_ticks() - self.timer > self.time_to_voice:
-            if (self.letter_index > len(App.assets.sv_tm_audio)) - 1:
+            if (self.letter_index > len(App.assets.sv_tm_audio) - 1):
                 self.letter_index = 0
             App.assets.sv_tm_audio[self.letter_index].play()
             self.timer = pygame.time.get_ticks()

@@ -1,12 +1,18 @@
 import pygame
 
 import files.utils as f
-from files.game.game_controller import Game
 
 def Draw(App):
-	if not App.warning_init.is_finished():
-		App.warning_init.update(App)
-	
+	if App.warning_init.is_finished():
+		game_states(App)
 	else:
-		App.game = Game(App)
+		App.warning_init.update(App)
+
+def game_states(App):
+	if (App.menu.start_game):
 		App.game.updater(App)
+	elif (App.minigame.inMinigame):
+		App.minigame.update(App)
+	else:
+		App.menu.update(App)
+		
