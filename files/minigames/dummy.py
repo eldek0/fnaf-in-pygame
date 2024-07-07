@@ -31,6 +31,7 @@ class MinigameDummy(ABC):
 
         surf = App.minigamesSurface
         index = 0
+        objs_to_draw = []
 
         ordered_elements = {}
         try:
@@ -46,7 +47,8 @@ class MinigameDummy(ABC):
 
             ordered_keys = list(ordered_elements.keys())
             ordered_keys.sort()
-            print(ordered_keys)
+
+            # First calculate hitboxes
             for layer in ordered_keys:
                 index = 0
                 for element in ordered_elements[layer]:
@@ -55,10 +57,16 @@ class MinigameDummy(ABC):
                     is_lambda_object = None
                     if isinstance(element[0], pygame.Surface):
                         if isinstance(element[1], pygame.Rect):
-                            surf.blit(element[0], (element[1].x, element[1].y))
+                            objs_to_draw.append(
+                                lambda img=element[0], rect=element[1].copy(): surf.blit(img, (rect.x, rect.y))
+                            )
+
                             element_rect = element[1]
                         elif isinstance(element[1], tuple):
-                            surf.blit(element[0], element[1])
+                            objs_to_draw.append(
+                                lambda img=element[0], pos=element[1]:surf.blit(img, pos)
+                            )
+                
                             element_rect = pygame.Rect(element[1][0], element[1][1], element[0].get_width(), element[0].get_height())
                         else:
                             raise BoundException("The [1] element must be a pygame.Rect or a tuple!", boundaries, index)
@@ -69,7 +77,10 @@ class MinigameDummy(ABC):
                         if not (color is None):
                             if not (isinstance(color, tuple)):
                                 raise BoundException("The [1] element must be a (R, G, B) tuple!", boundaries, index)
-                            pygame.draw.rect(surf, color, element_rect)
+                            
+                            objs_to_draw.append(
+                                lambda r=element_rect, c=color:pygame.draw.rect(surf, c, r)
+                            )
 
                     elif isinstance(element[0], SpritesAnimation):
                         if isinstance(element[1], pygame.Rect):
@@ -82,7 +93,11 @@ class MinigameDummy(ABC):
                             element_rect = pygame.Rect(pos[0], pos[1], spr_width, spr_height)
                         else:
                             raise BoundException("The [1] element must be a pygame.Rect or a tuple!", boundaries, index)
-                        element[0].update(surf, App.deltaTime)
+                        
+                        objs_to_draw.append(
+                            lambda anim=element[0], deltaTime=App.deltaTime:anim.update(surf, deltaTime)
+                        )
+                        
 
                     else:
                         raise BoundException("The [0] element must be pygame.Surface, pygame.Rect or SpritesAnimation!", boundaries, index)
@@ -100,7 +115,6 @@ class MinigameDummy(ABC):
                     # Hitbox initial position
                     if (len(element) > 5 and isinstance(element[5], tuple) and not self.__check_is_default(element[5])):
                         ex, ey = element[5][0], element[5][1]
-                        element_rect = element_rect.copy()
                         element_rect.x += ex
                         element_rect.width += ex
                         element_rect.y += ey
@@ -109,8 +123,9 @@ class MinigameDummy(ABC):
                     # See element hitbox
                     if (len(element) > 6 and isinstance(element[6], bool) and not self.__check_is_default(element[6])):
                         if (element[6]):
-                            self.draw_hitbox(App, (0, 255, 0), element_rect)
-                        print(layer)
+                            objs_to_draw.append(
+                                lambda color=(0, 255, 0), rect=element_rect:self.draw_hitbox(App, color, rect)
+                            )
 
                     if (mainCharacter.rect().colliderect(element_rect) and canHit):
                         if (is_lambda_object != None):
@@ -127,14 +142,21 @@ class MinigameDummy(ABC):
                                         self.__change_position(App, mainCharacter, sceneToChange, dir)
                                         
                         mainCharacter.position = mainCharacter.lastFramePos
+                        mainCharacter.update()
                     index += 1
                 # Update the main character if its in the corresponding layer
                 if (layer == mainCharacterLayer):
-                    mainCharacter.update(App)
-
-                
+                    mainCharacter.update()
+                    objs_to_draw.append(
+                        lambda:mainCharacter.draw(App)
+                    )
+ 
         except ValueError or IndexError as e:
             raise BoundException(e, boundaries, index)
+        
+        # Draw everything from the obj_to_draw list
+        for draw in objs_to_draw:
+            draw()
 
     def __change_position(self, App, mainCharacter:Entity, scene:int, dir:chr):
         surf = App.minigamesSurface

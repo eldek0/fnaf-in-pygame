@@ -27,13 +27,15 @@ class Entity:
         self.animate:bool = False
         self.moving_direction:chr = 'd'
 
-    def update(self, App):
-        surf = App.minigamesSurface
+    def update(self):
         self.detect_if_its_not_moving()
+        self.updateCharacter()
         
+    def draw(self, App):
+        surf = App.minigamesSurface
         if (self.is_in_screen_bounds(surf)):
             self.drawCharacter(App)
-        
+
 
     def movement(self, movement:chr):
         self.lastFramePos = list(self.position).copy()
@@ -64,25 +66,38 @@ class Entity:
         if pygame.time.get_ticks() - self.notMovingTimer > 150:
             self.animate = False
 
+    def updateCharacter(self):
+        if self.animate:
+            match self.moving_direction:
+                case 'r':
+                    self.walkingRightAnimation.position = self.position
+                case 'l':
+                    self.walkingRightAnimation.position = self.position
+                case 'u':
+                    self.walkingUpAnimation.position = self.position
+                case 'd':
+                    self.walkingDownAnimation.position = self.position
+            return
+
+
     def drawCharacter(self, App):
         surf = App.minigamesSurface
   
         if self.animate:
-            if (self.moving_direction == 'r'): # walking right
-                self.walkingRightAnimation.position = self.position
-                self.walkingRightAnimation.update(surf, App.deltaTime)
-            elif (self.moving_direction == 'l'): # walking left
-                self.walkingRightAnimation.position = self.position
-                self.walkingRightAnimation.update(surf, App.deltaTime, flipx=True)
-            elif (self.moving_direction == 'u'): # walking up
-                self.walkingUpAnimation.position = self.position
-                self.walkingUpAnimation.update(surf, App.deltaTime)
-            elif (self.moving_direction == 'd'): # walking down
-                self.walkingDownAnimation.position = self.position
-                self.walkingDownAnimation.update(surf, App.deltaTime)
+            match self.moving_direction:
+                case 'r':
+                    self.walkingRightAnimation.update(surf, App.deltaTime)
+                case 'l':
+                    self.walkingRightAnimation.update(surf, App.deltaTime, flipx=True)
+                case 'u':
+                    self.walkingUpAnimation.update(surf, App.deltaTime)
+                case 'd':
+                    self.walkingDownAnimation.update(surf, App.deltaTime)
             return
-        
+
         surf.blit(self.texture, self.position)
+        
+        
         
     def is_in_screen_bounds(self, surface:pygame.Surface):
         entity_w, entity_h = self.texture.get_width(), self.texture.get_height()

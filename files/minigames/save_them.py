@@ -26,6 +26,8 @@ class SAVETHEM(MinigameDummy):
         self.scene = 0
 
     def update(self, App):
+        self.sceneElements.update(App, self.scene)
+
         self.draw_scene(App)
 
         self.key_movement(App)
@@ -56,7 +58,8 @@ class SAVETHEM(MinigameDummy):
                 self.draw_puppet(App)
 
     def draw_puppet(self, App):
-        self.puppet.update(App)
+        self.puppet.update()
+        self.puppet.draw(App)
         if (self.puppet_state == 1 and self.scene == 1):
             self.puppet.movement('u')
 
