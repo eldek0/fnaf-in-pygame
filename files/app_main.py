@@ -30,12 +30,12 @@ class App:
 		self.surface = pygame.display.set_mode( self.dimentions, vsync=True, flags= pygame.OPENGL | pygame.DOUBLEBUF )
 		pygame.display.set_caption(caption) # Win's name
 
-		# Shaders
-		self.set_shaders()
-
 		# Icon
 		icon = pygame.image.load("icon.ico")
 		pygame.display.set_icon(icon)
+
+		# Shaders
+		self.set_shaders()
 
 		# Fps configurations
 		self.clock = pygame.time.Clock()

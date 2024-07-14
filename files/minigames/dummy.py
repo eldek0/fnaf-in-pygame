@@ -15,7 +15,7 @@ class MinigameDummy(ABC):
     def key_movement(self, App):
         pass
 
-    def draw_boundaries(self, App, boundaries:list, mainCharacter:Entity, mainCharacterLayer=0):
+    def draw_boundaries(self, App, boundaries:list, mainCharacter:Entity, suitEntity:Entity, mainCharacterLayer=0):
         """ Will draw all the elements that the player can hit (or not) \n
         Each element goes between parentesis (). \n
         -- Sintax:\n 
@@ -131,7 +131,7 @@ class MinigameDummy(ABC):
                         if (is_lambda_object != None):
                             obj = element[2]
                             if (is_lambda_object):
-                                obj
+                                obj()
                             else:
                                 # Special tuple
                                 tupleId = str(obj[0]).lower()
@@ -149,6 +149,10 @@ class MinigameDummy(ABC):
                     mainCharacter.update()
                     objs_to_draw.append(
                         lambda:mainCharacter.draw(App)
+                    )
+                    # Draw the suit
+                    objs_to_draw.append(
+                        lambda:suitEntity.draw(App)
                     )
  
         except ValueError or IndexError as e:

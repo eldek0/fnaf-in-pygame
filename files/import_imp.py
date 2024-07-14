@@ -347,15 +347,27 @@ class import_images:
 			)
 
 		# Labels
-		self.fnaf_title = pygame.image.load("sprites/menu/logos/2.png").convert_alpha()
-		self.scott_credits = pygame.image.load("sprites/menu/logos/1.png").convert_alpha()
-		self.option_selected = pygame.image.load("sprites/menu/logos/3.png").convert_alpha()
-		self.new_game_option = pygame.image.load("sprites/menu/logos/5.png").convert_alpha()
-		self.continue_option = pygame.image.load("sprites/menu/logos/6.png").convert_alpha()
-		self.night_six_option = pygame.image.load("sprites/menu/nights/12.png").convert_alpha()
-		self.custom_night_option = pygame.image.load("sprites/menu/nights/13.png").convert_alpha()
+		self.fnaf_title = pygame.image.load("sprites/menu/logos/2.png").convert()
+		self.fnaf_title.set_colorkey((0, 0, 0))
+		
+		self.scott_credits = pygame.image.load("sprites/menu/logos/1.png").convert()
+		self.scott_credits.set_colorkey((0, 0, 0))
+		self.sel_scott_credits = pygame.image.load("sprites/menu/logos/10.png").convert()
+		self.sel_scott_credits.set_colorkey((0, 0, 0))
+
+		self.option_selected = pygame.image.load("sprites/menu/logos/3.png").convert()
+		self.option_selected.set_colorkey((0, 0, 0))
+		self.new_game_option = pygame.image.load("sprites/menu/logos/5.png").convert()
+		self.new_game_option.set_colorkey((0, 0, 0))
+		self.continue_option = pygame.image.load("sprites/menu/logos/6.png").convert()
+		self.continue_option.set_colorkey((0, 0, 0))
+		self.night_six_option = pygame.image.load("sprites/menu/nights/12.png").convert()
+		self.night_six_option.set_colorkey((0, 0, 0))
+		self.custom_night_option = pygame.image.load("sprites/menu/nights/13.png").convert()
+		self.custom_night_option.set_colorkey((0, 0, 0))
 		self.star = pygame.image.load("sprites/menu/misc/4.png").convert_alpha()
-		self.delete_data_label = pygame.image.load("sprites/menu/logos/7.png").convert_alpha()
+		self.delete_data_label = pygame.image.load("sprites/menu/logos/7.png").convert()
+		self.delete_data_label.set_colorkey((0, 0, 0))
 		self.version = pygame.image.load("sprites/menu/logos/9.png").convert_alpha()
 
 		self.newspaper = pygame.image.load("sprites/menu/paychecks/1.png").convert()
@@ -721,4 +733,4 @@ class import_images:
 
 
 	def fonts(self):
-		pass
+		self.ocr_font = pygame.font.Font("fonts/1.TTF")

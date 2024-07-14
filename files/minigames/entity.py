@@ -26,34 +26,37 @@ class Entity:
         self.notMovingTimer = pygame.time.get_ticks()
         self.animate:bool = False
         self.moving_direction:chr = 'd'
+        self._activate:bool = True
 
     def update(self):
-        self.detect_if_its_not_moving()
-        self.updateCharacter()
+        if self._activate:
+            self.detect_if_its_not_moving()
+            self.updateCharacter()
         
     def draw(self, App):
         surf = App.minigamesSurface
-        if (self.is_in_screen_bounds(surf)):
+        if (self.is_in_screen_bounds(surf) and self._activate):
             self.drawCharacter(App)
 
 
     def movement(self, movement:chr):
-        self.lastFramePos = list(self.position).copy()
-        if (pygame.time.get_ticks() - self.timer > self.framesToMove):
-            match movement:
-                case 'r':
-                    self.position[0] += self.speed
-                case 'l':
-                    self.position[0] -= self.speed
-                case 'u':
-                    self.position[1] -= self.speed
-                case 'd':
-                    self.position[1] += self.speed
+        if self._activate:
+            self.lastFramePos = list(self.position).copy()
+            if (pygame.time.get_ticks() - self.timer > self.framesToMove):
+                match movement:
+                    case 'r':
+                        self.position[0] += self.speed
+                    case 'l':
+                        self.position[0] -= self.speed
+                    case 'u':
+                        self.position[1] -= self.speed
+                    case 'd':
+                        self.position[1] += self.speed
 
-            if movement in ['r', 'l', 'u', 'd']:
-                self.moving_direction = movement
+                if movement in ['r', 'l', 'u', 'd']:
+                    self.moving_direction = movement
 
-            self.timer = pygame.time.get_ticks()
+                self.timer = pygame.time.get_ticks()
 
     def detect_if_its_not_moving(self):
         if self.position != self.lastFramePos and (self.walkingDownAnimation and self.walkingRightAnimation and self.walkingUpAnimation):
@@ -111,3 +114,7 @@ class Entity:
     
     def show_rect(self, App):
         pygame.draw.rect(App.uiSurface, (200, 200, 200), self.rect())
+
+    def activate(self): self._activate = True
+
+    def desactivate(self): self._activate = False

@@ -1,4 +1,4 @@
-import pygame
+import pygame, random
 from files.minigames.entity import Entity
 from files.minigames.dummy import MinigameDummy
 from files.minigames.scenes.save_them_scene import SaveThemScene
@@ -9,7 +9,7 @@ class SAVETHEM(MinigameDummy):
         self.surf_width, self.surf_height = App.surface.get_width(), App.surface.get_height()
         self.fredbear = Entity(
             texture = App.assets.freddy_walking[0], 
-            initial_position = (self.surf_width/2 - App.assets.puppet_minigame.get_width()/2 + 100, self.surf_height/2 - App.assets.puppet_minigame.get_height()/2),
+            initial_position = (self.surf_width/2 - App.assets.puppet_minigame.get_width()/2 + 100, self.surf_height/2 - App.assets.puppet_minigame.get_height()/2 - 50),
             walkingRightAnimation = App.animations.fredbear_walking1, 
             walkingDownAnimation = App.animations.fredbear_walking3, 
             walkingUpAnimation = App.animations.fredbear_walking2,
@@ -24,6 +24,9 @@ class SAVETHEM(MinigameDummy):
 
         self.sceneElements = SaveThemScene(App)
         self.scene = 0
+
+        self.suit = Entity(App.assets.suit_gr_1, (0, 0))
+        self.show_suit = False
 
     def update(self, App):
         self.sceneElements.update(App, self.scene)
@@ -52,7 +55,11 @@ class SAVETHEM(MinigameDummy):
     def draw_scene(self, App):
         rooms = self.sceneElements.rooms
         if (self.scene < len(rooms)):
-            self.draw_boundaries(App, rooms[self.scene], self.fredbear)
+            if self.show_suit:
+                self.update_suit(App)
+            else:
+                self.suit.desactivate()
+            self.draw_boundaries(App, rooms[self.scene], self.fredbear, self.suit)
 
             if self.isPuppetRoom(self.scene):
                 self.draw_puppet(App)
@@ -73,7 +80,6 @@ class SAVETHEM(MinigameDummy):
         return (scene == 1 or scene == 2 or scene == 3 or scene == 4 or scene == 5)
 
     def change_scene(self, App, scene):
-        super().change_scene(App, scene)
 
         puppet_width, puppet_height = self.puppet.texture.get_width(), self.puppet.texture.get_height()
 
@@ -84,7 +90,32 @@ class SAVETHEM(MinigameDummy):
                 self.puppet.position = list(puppet_init_pos)
                 self.puppet_state += 1
             else:
-                self.puppet.position = [-puppet_width, 0]
+                self.puppet.position = [-puppet_width, -puppet_height]
+
+        super().change_scene(App, scene)
+
+        if (random.randint(1, 100) < 5):
+            self.show_suit = True
+            self.suit.position = [random.randint(160, 850), random.randint(250, 630)]
+        else:
+            self.show_suit = False
+    
+    def update_suit(self, App):
+        self.suit.activate()
+        rectCollide = pygame.Rect(self.suit.position[0], self.suit.position[1], 200, 200)
+        #pygame.draw.rect(App.uiSurface, (200, 200, 200), rectCollide)
+        if (self.fredbear.rect().colliderect(rectCollide)):
+            self.suit.texture = App.assets.suit_gr_2
+        else:
+            self.suit.texture = App.assets.suit_gr_1
+
+        if (self.show_suit and self.fredbear.rect().colliderect(self.suit.rect())):
+            key = pygame.key.get_pressed()
+            if key[pygame.K_c]:
+                self.show_suit = False
+                
+
+        self.suit.update()
             
 
     

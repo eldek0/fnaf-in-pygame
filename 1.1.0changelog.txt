@@ -1,6 +1,8 @@
+- Minigames and more secrets were added
 - A barrel shader was added to the gameplay, similar to the original game.
 - Changed night 1. Now toy chica and toy freddy can move.
 - Changed music box time.
+- By pressing F11 you can exit fullscreen
 - Now jumpscares don't stop until the sound ends.
 - Game would sometimes crash while winding the music box
 - Battery would still be consumed even if the camera is occupied
@@ -11,7 +13,7 @@ GENERAL
 - Toy freddy takes way long to move
 - Hallway animatronics often appear from nowhere
 - Foxy leave hallway without waiting
-- The game sometimes crashes at camera 11?
+- The game sometimes crashes at camera 11? FIXED
 - The marionet (in the cutscene) is kinda glitched FIXED
 - Encrypt private and public RSA is not the same as fnaf 1.0.05 FIXED
 

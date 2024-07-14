@@ -13,12 +13,12 @@ def save(App):
     data = default()
 
     # Write
-    """
+    
     data["Night"] = App.menu.inNight
     data["Played"] = App.menu.played_once
     data["Custom"] = App.menu.custom_night_menu.completed_nights
     data["Cutscenes"] = App.menu.cutscenes_data
-    """
+    
 
     # Get key
     with open("public.pem", "r") as pk:

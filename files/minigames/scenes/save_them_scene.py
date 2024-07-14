@@ -144,7 +144,7 @@ class SaveThemScene(CreateScene):
                     self.right_wall(False),
                     self.bottom_wall(False),
 
-                    (App.animations.endoAnim, (300, 460))
+                    (App.animations.endoAnim, (360, 460))
                     ], scene
                 )
 

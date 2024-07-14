@@ -5,6 +5,7 @@ from files.game.game_controller import Game
 from files.animations.animations_init import animations_init
 from files.menu.custom_night import CustomNight
 from files.menu.cutscene import Cutscene
+from files.menu.credits import Credits
 
 class Menu:
     def __init__(self, App): 
@@ -49,6 +50,8 @@ class Menu:
         self.pressed_key = False
 
         self.pressed_click = False
+
+        self.credits = Credits()
 
         self.essentials_variables(App)
 
@@ -120,8 +123,21 @@ class Menu:
 
             # Labels
             App.uiSurface.blit(App.assets.fnaf_title, (80, 30))
+            
             dims = App.assets.scott_credits.get_rect()
-            App.uiSurface.blit(App.assets.scott_credits, (App.dimentions[0] - dims.w - 10, App.dimentions[1] - dims.h - 20))
+            credits_rect = pygame.Rect(
+                App.dimentions[0] - dims.w - 10, App.dimentions[1] - dims.h - 20,
+                dims.w, dims.h
+            )
+
+            if (App.mouse_hitbox.colliderect(credits_rect)):
+                App.uiSurface.blit(App.assets.sel_scott_credits, (credits_rect.x, credits_rect.y))
+                press = pygame.mouse.get_pressed()
+                if press[0]:
+                    self.start_state = 12
+            else:
+                App.uiSurface.blit(App.assets.scott_credits, (credits_rect.x, credits_rect.y))
+
             dims = App.assets.delete_data_label.get_rect()
             App.uiSurface.blit(App.assets.delete_data_label, (App.dimentions[0]/2 - dims.w/2, App.dimentions[1] - dims.h - 20))
             dims = App.assets.version.get_rect()
@@ -380,6 +396,9 @@ class Menu:
 
             case 11: # Custom night
                 self.custom_night_menu.update(App)
+
+            case 12: # Credits
+                self.credits.update(App)
 
             case 100: # Cutscenes
                 self.cutscene.update(App, self.inNight)
