@@ -65,6 +65,13 @@ def check_if_minigames_data_is_in_file(App, data):
     print(data)
     return data
 
+def get_decrypted_file(read:bytes):
+    try:
+        json_raw = rsa.decrypt(read, PRIVATE_KEY).decode("utf-8")
+    except rsa.pkcs1.DecryptionError:
+        print("A DECRIPTION ERROR HAPPENED, RESETTING GAME VALUES")
+        return None
+    return json_raw
 
 def read(App):
     with open("files/utils.txt", "rb") as f:
@@ -72,14 +79,13 @@ def read(App):
         f.close()
 
     if App.debug:
-        json_raw = en.decode("utf-8") # Without encryption
+        try:
+            json_raw = en.decode("utf-8") # Without encryption
+        except UnicodeDecodeError:
+            json_raw = get_decrypted_file(en)
 
     else:
-        try:
-            json_raw = rsa.decrypt(en, PRIVATE_KEY).decode("utf-8")
-        except rsa.pkcs1.DecryptionError:
-            print("A DECRIPTION ERROR HAPPENED, RESETTING GAME VALUES")
-            return None
+        json_raw = get_decrypted_file(en)
 
     # Read the file from json
     try:

@@ -23,7 +23,6 @@ class SAVETHEM(MinigameDummy):
         self.puppet_state = 0
 
         self.sceneElements = SaveThemScene(App)
-        self.scene = 0
 
         self.suit = Entity(App.assets.suit_gr_1, (0, 0))
         self.show_suit = False

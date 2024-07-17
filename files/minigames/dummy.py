@@ -15,7 +15,7 @@ class MinigameDummy(ABC):
     def key_movement(self, App):
         pass
 
-    def draw_boundaries(self, App, boundaries:list, mainCharacter:Entity, suitEntity:Entity, mainCharacterLayer=0):
+    def draw_boundaries(self, App, boundaries:list, mainCharacter:Entity, *args:Entity, mainCharacterLayer=0):
         """ Will draw all the elements that the player can hit (or not) \n
         Each element goes between parentesis (). \n
         -- Sintax:\n 
@@ -127,7 +127,7 @@ class MinigameDummy(ABC):
                                 lambda color=(0, 255, 0), rect=element_rect:self.draw_hitbox(App, color, rect)
                             )
 
-                    if (mainCharacter.rect().colliderect(element_rect) and canHit):
+                    if (mainCharacter.rect().colliderect(element_rect)):
                         if (is_lambda_object != None):
                             obj = element[2]
                             if (is_lambda_object):
@@ -140,9 +140,9 @@ class MinigameDummy(ABC):
                                 match tupleId:
                                     case "scene":
                                         self.__change_position(App, mainCharacter, sceneToChange, dir)
-                                        
-                        mainCharacter.position = mainCharacter.lastFramePos
-                        mainCharacter.update()
+                        if canHit:  
+                            mainCharacter.position = mainCharacter.lastFramePos
+                            mainCharacter.update()
                     index += 1
                 # Update the main character if its in the corresponding layer
                 if (layer == mainCharacterLayer):
@@ -150,10 +150,12 @@ class MinigameDummy(ABC):
                     objs_to_draw.append(
                         lambda:mainCharacter.draw(App)
                     )
-                    # Draw the suit
-                    objs_to_draw.append(
-                        lambda:suitEntity.draw(App)
-                    )
+                    # Draw the args entities
+                    if args != (None,):
+                        for entity in args:
+                            objs_to_draw.append(
+                                lambda:entity.draw(App)
+                            )
  
         except ValueError or IndexError as e:
             raise BoundException(e, boundaries, index)

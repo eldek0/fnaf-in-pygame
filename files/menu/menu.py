@@ -271,7 +271,13 @@ class Menu:
             self.pressed_key = False
 
         return keys
-                
+
+    def menu_exit(self, App):
+        keys = pygame.key.get_pressed()
+        if keys[pygame.K_ESCAPE] and not App.menu.pressed_key:
+            App.menu.start_state = 0
+            App.menu.static_with_change = True
+            App.menu.pressed_key = True      
 
     def static(self, App):
         if self.static_with_change:

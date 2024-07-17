@@ -3,7 +3,7 @@ from files.animations.sprites_animation import SpritesAnimation
 
 class Entity:
     def __init__(self, 
-                 texture:pygame.Surface, initial_position:tuple,
+                 texture, initial_position:tuple,
                  walkingRightAnimation:SpritesAnimation = None, 
                  walkingDownAnimation:SpritesAnimation = None, 
                  walkingUpAnimation:SpritesAnimation = None,
@@ -11,7 +11,7 @@ class Entity:
                  framesToMove:int = 100,
                  speed:int = 15
                  ):
-        self.texture:pygame.Surface = texture
+        self.texture = texture
         self.position:list = list(initial_position)
         self.lastFramePos:list = list(initial_position)
         self.walkingRightAnimation:SpritesAnimation = walkingRightAnimation
@@ -27,6 +27,7 @@ class Entity:
         self.animate:bool = False
         self.moving_direction:chr = 'd'
         self._activate:bool = True
+        self.flip_x:bool = False
 
     def update(self):
         if self._activate:
@@ -46,8 +47,10 @@ class Entity:
                 match movement:
                     case 'r':
                         self.position[0] += self.speed
+                        self.flip_x = False
                     case 'l':
                         self.position[0] -= self.speed
+                        self.flip_x = True
                     case 'u':
                         self.position[1] -= self.speed
                     case 'd':
@@ -89,16 +92,20 @@ class Entity:
         if self.animate:
             match self.moving_direction:
                 case 'r':
-                    self.walkingRightAnimation.update(surf, App.deltaTime)
+                    self.walkingRightAnimation.update(surf, App.deltaTime, flipx=self.flip_x)
                 case 'l':
-                    self.walkingRightAnimation.update(surf, App.deltaTime, flipx=True)
+                    self.walkingRightAnimation.update(surf, App.deltaTime, flipx=self.flip_x)
                 case 'u':
-                    self.walkingUpAnimation.update(surf, App.deltaTime)
+                    self.walkingUpAnimation.update(surf, App.deltaTime, flipx=self.flip_x)
                 case 'd':
-                    self.walkingDownAnimation.update(surf, App.deltaTime)
+                    self.walkingDownAnimation.update(surf, App.deltaTime, flipx=self.flip_x)
             return
 
-        surf.blit(self.texture, self.position)
+        if isinstance(self.texture, pygame.surface.Surface):
+            surf.blit(self.texture, self.position)
+        elif isinstance(self.texture, SpritesAnimation):
+            self.texture.position = self.position
+            self.texture.update(surf, App.deltaTime, flipx=self.flip_x)
         
         
         

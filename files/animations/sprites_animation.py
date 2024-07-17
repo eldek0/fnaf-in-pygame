@@ -45,3 +45,11 @@ class SpritesAnimation:
                                 self.sprite_num = len(self.sprites) - 1
 
                     self.frame = 0
+    
+    def get_width(self):
+        return self.sprites[0].get_width()
+    
+    def get_height(self):
+        return self.sprites[0].get_height()
+    
+    def reset(self):self.__init__(self.sprites, self.position, self.frame_wait, self.loop, self.alpha)

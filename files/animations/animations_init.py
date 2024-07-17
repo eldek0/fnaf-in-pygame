@@ -72,3 +72,11 @@ class animations_init:
         self.fredbear_walking3 = SpritesAnimation(sprites=App.assets.freddy_walking[4:6], position=(0, 0), frame_wait=10, isLoop=True)
 
         self.endoAnim = SpritesAnimation(sprites=App.assets.endo_anim, position=(0, 0), frame_wait=10, isLoop=True)
+
+        self.foxy_anim = SpritesAnimation(sprites=App.assets.min_foxy_anim, position=(0, 0), frame_wait=10, isLoop=True)
+
+        self.confs_animation2 = []
+        for _ in range(15):
+            self.confs_animation2.append(
+                SpritesAnimation(sprites=App.assets.min_confetti, position=(random.randint(100, 700), random.randint(100, 400)), frame_wait=10, isLoop=False)
+            )

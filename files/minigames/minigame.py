@@ -1,18 +1,20 @@
 import pygame, random
 from files.minigames.give_gifts import GiveGifts
-from files.minigames.save_them import SAVETHEM 
+from files.minigames.save_them import SAVETHEM
+from files.minigames.foxy_go import FoxyGoGo
 
 class Minigame:
     def __init__(self, App):
-        self.inMinigame = False
+        self.inMinigame = True
         self.static_rect = pygame.Rect(0, 0, App.surface.get_width(), 50)
         self.static_timer:int = pygame.time.get_ticks()
         self.showing_static:bool = False
         self.minigames = [
             GiveGifts(App),
-            SAVETHEM(App)
+            SAVETHEM(App),
+            FoxyGoGo(App)
         ]
-        self.inMinigameId:int = 1
+        self.inMinigameId:int = 2
         self.timer = pygame.time.get_ticks()
         self.time_to_voice:int = 3000
         self.letter_index = 0
@@ -24,7 +26,7 @@ class Minigame:
         if not minigame.ended:
             minigame.update(App)
 
-        self.back_voice(App)
+        #self.back_voice(App)
         self.static(App)
 
     def static(self, App):

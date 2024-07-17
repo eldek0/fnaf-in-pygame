@@ -260,16 +260,3 @@ class SaveThemScene(CreateScene):
 
                     ], scene
                 )
-
-
-    def _clean_boundary(self, boundary, scene):
-        boundary_to_return = []
-        for element in boundary:
-            if (isinstance(element[0], str) and str(element[0]).lower() == "<multiple>"):
-                for e in element[1:]:
-                    boundary_to_return.append(e)
-            else:
-                boundary_to_return.append(element)
-
-        ### Add the boundary to the list
-        self.rooms[scene] = boundary_to_return

@@ -123,10 +123,7 @@ class CustomNight:
             App.menu.start_state = 2
             App.menu.pressed_key = True
 
-        if keys[pygame.K_ESCAPE] and not App.menu.pressed_key:
-            App.menu.start_state = 0
-            App.menu.static_with_change = True
-            App.menu.pressed_key = True
+        App.menu.menu_exit(App)
 
         if not keys[pygame.K_LEFT] and not keys[pygame.K_RIGHT] and not keys[pygame.K_RETURN] and not keys[pygame.K_ESCAPE]:
              App.menu.pressed_key = False

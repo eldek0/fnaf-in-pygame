@@ -624,6 +624,42 @@ class import_images:
 		self.desk_min = pygame.image.load(f"sprites/minigames/SAVE THEM/11.png").convert()
 		self.desk_min.set_colorkey((0, 0, 0))
 
+		# Foxy GO GO!
+		self.min_foxy_anim = []
+		for i in range(2):
+			m = pygame.image.load(f"sprites/minigames/Go! Go! Go!/{i}.png").convert()
+			m.set_colorkey((0, 0, 0))
+			self.min_foxy_anim.append(m)
+
+		self.courtain = pygame.image.load(f"sprites/minigames/Go! Go! Go!/4.png").convert()
+
+		self.min_confetti = []
+		for i in range(10, 18):
+			m = pygame.image.load(f"sprites/minigames/Go! Go! Go!/{i}.png").convert()
+			m.set_colorkey((0, 0, 0))
+			self.min_confetti.append(m)
+
+		self.sad_child = pygame.image.load(f"sprites/minigames/Go! Go! Go!/20.png").convert()
+		self.sad_child.set_colorkey((0, 0, 0))
+
+		self.happy_child = pygame.image.load(f"sprites/minigames/Go! Go! Go!/21.png").convert()
+		self.happy_child.set_colorkey((0, 0, 0))
+
+		self.arrow_min = pygame.image.load(f"sprites/minigames/Go! Go! Go!/22.png").convert()
+		self.arrow_min.set_colorkey((0, 0, 0))
+
+		self.purple_guy = pygame.image.load(f"sprites/minigames/Go! Go! Go!/23.png").convert()
+		self.purple_guy.set_colorkey((0, 0, 0))
+
+		self.get_ready_txt = pygame.image.load(f"sprites/minigames/Go! Go! Go!/31.png").convert()
+		self.get_ready_txt.set_colorkey((90, 90, 90))
+
+		self.go_txt = pygame.image.load(f"sprites/minigames/Go! Go! Go!/32.png").convert()
+		self.go_txt.set_colorkey((90, 90, 90))
+
+		self.hurray_txt = pygame.image.load(f"sprites/minigames/Go! Go! Go!/33.png").convert()
+		self.hurray_txt.set_colorkey((90, 90, 90))
+
 		# Get crops from cropped images
 		import_images.cropped_images(self)
 		

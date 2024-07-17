@@ -65,7 +65,7 @@ class App:
 
 		self.loaded = True
 
-		self.debug = False # debugging the game
+		self.debug = True # debugging the game
 
 		if self.debug: print("Game on debug mode")
 
@@ -103,17 +103,23 @@ class App:
 
 			self.update(events)
 
+	def quit_game(self):
+		if self.warning_init.is_finished():
+			save(self)
+		self.playing = False
+
 	def game_events(self, events):
 		for event in events:
 			if event.type == QUIT:
-				if self.warning_init.is_finished():
-					save(self)
-				self.playing = False
+				self.quit_game()
 
 			elif event.type == pygame.KEYDOWN:
 				if event.key == pygame.K_F11:
 					pygame.display.toggle_fullscreen()
-				
+
+				if self.debug:
+					if event.key == pygame.K_ESCAPE:
+						self.quit_game()
 	def update(self, events):
 		self.surface.fill((0,0,0))
 		self.uiSurface.fill((0, 0, 0, 0))
