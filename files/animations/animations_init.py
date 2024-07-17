@@ -80,3 +80,18 @@ class animations_init:
             self.confs_animation2.append(
                 SpritesAnimation(sprites=App.assets.min_confetti, position=(random.randint(100, 700), random.randint(100, 400)), frame_wait=10, isLoop=False)
             )
+
+        self.cake_fred_walking = SpritesAnimation(sprites=App.assets.cake_freddy_walking, position=(0, 0), frame_wait=10, isLoop=True)
+
+        self.various_childs_anim = []
+        for _ in range(6):
+            self.various_childs_anim.append([
+                SpritesAnimation(sprites=App.assets.child_states[0:2], position=(0, 0), frame_wait=10, isLoop=True), # NORMAL
+                SpritesAnimation(sprites=App.assets.child_states[2:4], position=(0, 0), frame_wait=5, isLoop=True), # ANGRY
+                SpritesAnimation(sprites=App.assets.child_states[4:6], position=(0, 0), frame_wait=2, isLoop=True) # MAD
+            ])
+
+        self.sad_child_anim = SpritesAnimation(sprites=App.assets.child_crying_states[0:2], position=(0, 0), frame_wait=15, isLoop=True)
+
+
+        
