@@ -661,6 +661,41 @@ class import_images:
 		self.hurray_txt = pygame.image.load(f"sprites/minigames/Go! Go! Go!/33.png").convert()
 		self.hurray_txt.set_colorkey((90, 90, 90))
 
+		# Take cake to the children
+		self.cake_freddy_walking = []
+		for i in range(2):
+			f = pygame.image.load(f"sprites/minigames/TCTTC/{i}.png").convert()
+			f.set_colorkey((0, 0, 0))
+			self.cake_freddy_walking.append(f)
+
+		self.child_crying_states = []
+		for i in range(10, 17):
+			f = pygame.image.load(f"sprites/minigames/TCTTC/{i}.png").convert()
+			f.set_colorkey((0, 0, 0))
+			self.child_crying_states.append(f)
+
+		self.dead_child = pygame.image.load(f"sprites/minigames/TCTTC/17.png").convert()
+		self.dead_child.set_colorkey((0, 0, 0))
+
+		self.child_states = []
+		for i in range(20, 26):
+			f = pygame.image.load(f"sprites/minigames/TCTTC/{i}.png").convert()
+			f.set_colorkey((0, 0, 0))
+			self.child_states.append(f)
+
+		self.car = pygame.image.load(f"sprites/minigames/TCTTC/30.png").convert()
+		self.car.set_colorkey((0, 0, 0))
+
+		self.small_purple_guy = pygame.transform.flip(
+			pygame.transform.scale(self.purple_guy, (self.purple_guy.get_width()*0.75, self.purple_guy.get_height()*0.75 )),
+			True, False
+		)
+		
+		
+
+		self.take_cake_to_the_children_label = pygame.image.load(f"sprites/minigames/TCTTC/31.png").convert()
+		self.take_cake_to_the_children_label.set_colorkey((90, 90, 90))
+
 		# Get crops from cropped images
 		import_images.cropped_images(self)
 		

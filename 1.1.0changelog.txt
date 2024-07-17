@@ -22,7 +22,7 @@ SHADER
 - Fade in gameplay does not work right (and when the night ends makes the game crash) FIXED
 
 TO ADD
-Minigames ! (SAVETHEM, Give Gifts, Give Life, Take Cake to the Children, Foxy Go! Go! Go!)
+Minigames ! (SAVETHEM, Give Gifts, Give Life, Take Cake to the Children, Foxy Go! Go! Go!) ADDED
 Easter eggs (shadow bonnie, shadow freddy, balloon girl, Paper Buddy, Endo skeletons, Eyeless Screens)
 Be able to use the keyboard to play the game
 Add helpful tips (like the ctrl tip to flashlight when you start the game)

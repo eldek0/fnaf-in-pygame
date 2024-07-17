@@ -7,7 +7,7 @@ class FoxyGoGoScene(CreateScene):
     def __init__(self, App, root):
         super().__init__(App)
         self.rooms = {}
-        for i in range(14):
+        for i in range(2):
             self.update(App, i, root)
     
     def update(self, App, scene, root, *args):

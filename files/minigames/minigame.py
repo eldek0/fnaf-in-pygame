@@ -2,6 +2,7 @@ import pygame, random
 from files.minigames.give_gifts import GiveGifts
 from files.minigames.save_them import SAVETHEM
 from files.minigames.foxy_go import FoxyGoGo
+from files.minigames.take_cake_to_children import TakeCakeToTheChildren
 
 class Minigame:
     def __init__(self, App):
@@ -12,9 +13,10 @@ class Minigame:
         self.minigames = [
             GiveGifts(App),
             SAVETHEM(App),
-            FoxyGoGo(App)
+            FoxyGoGo(App),
+            TakeCakeToTheChildren(App)
         ]
-        self.inMinigameId:int = 2
+        self.inMinigameId:int = 3
         self.timer = pygame.time.get_ticks()
         self.time_to_voice:int = 3000
         self.letter_index = 0
