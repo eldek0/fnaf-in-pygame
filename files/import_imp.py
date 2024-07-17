@@ -430,8 +430,9 @@ class import_images:
 		
 		self.numbers2 = []
 		for i in range(10):
+			n = pygame.image.load(f"sprites/numbers/2nd/medium/{i}.png").convert()
 			self.numbers2.append(
-				pygame.image.load(f"sprites/numbers/2nd/medium/{i}.png").convert_alpha()
+				n
 			)
 
 		self.numbers2_small = []
@@ -592,13 +593,13 @@ class import_images:
 		self.suit_gr_2 = pygame.image.load(f"sprites/minigames/SAVE THEM/24.png").convert()
 		self.suit_gr_2.set_colorkey((0, 0, 0))
 
-		self.suit1 = pygame.image.load(f"sprites/minigames/SAVE THEM/20.png").convert()
+		self.suit1 = pygame.image.load(f"sprites/minigames/SAVE THEM/20.png").convert() # freddy
 		self.suit1.set_colorkey((0, 0, 0))
 
-		self.suit2 = pygame.image.load(f"sprites/minigames/SAVE THEM/21.png").convert()
+		self.suit2 = pygame.image.load(f"sprites/minigames/SAVE THEM/21.png").convert() # bonnie
 		self.suit2.set_colorkey((0, 0, 0))
 
-		self.suit3 = pygame.image.load(f"sprites/minigames/SAVE THEM/22.png").convert()
+		self.suit3 = pygame.image.load(f"sprites/minigames/SAVE THEM/22.png").convert() # foxy
 		self.suit3.set_colorkey((0, 0, 0))
 
 		self.dust = pygame.image.load(f"sprites/minigames/SAVE THEM/13.png").convert()

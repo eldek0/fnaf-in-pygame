@@ -125,3 +125,5 @@ class Entity:
     def activate(self): self._activate = True
 
     def desactivate(self): self._activate = False
+
+    def is_activated(self): return self._activate

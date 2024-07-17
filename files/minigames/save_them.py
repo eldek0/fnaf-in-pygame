@@ -18,6 +18,7 @@ class SAVETHEM(MinigameDummy):
         
         # TODO CHANGE
         #self.fredbear.speed = 70
+        self.scene = 9
 
         self.puppet = Entity(App.assets.puppet_minigame, (self.surf_width/2, self.surf_height/2), framesToMove=400, speed=40)
         self.puppet_state = 0
@@ -25,6 +26,7 @@ class SAVETHEM(MinigameDummy):
         self.sceneElements = SaveThemScene(App)
 
         self.suit = Entity(App.assets.suit_gr_1, (0, 0))
+        self.suit.desactivate()
         self.show_suit = False
 
     def update(self, App):
@@ -58,7 +60,14 @@ class SAVETHEM(MinigameDummy):
                 self.update_suit(App)
             else:
                 self.suit.desactivate()
-            self.draw_boundaries(App, rooms[self.scene], self.fredbear, self.suit)
+            
+            # Add suit to rooms[self.scene]
+            if self.suit.is_activated():
+                rooms[self.scene].append(
+                    (self.suit.texture, tuple(self.suit.position), lambda:self.suit_collide(), False, 0)
+                )
+
+            self.draw_boundaries(App, rooms[self.scene], self.fredbear)
 
             if self.isPuppetRoom(self.scene):
                 self.draw_puppet(App)
@@ -101,20 +110,24 @@ class SAVETHEM(MinigameDummy):
     
     def update_suit(self, App):
         self.suit.activate()
-        rectCollide = pygame.Rect(self.suit.position[0], self.suit.position[1], 200, 200)
-        #pygame.draw.rect(App.uiSurface, (200, 200, 200), rectCollide)
+        rect_size = (300, 300)
+        size = (self.suit.rect().w, self.suit.rect().h)
+        rectCollide = pygame.Rect(
+            self.suit.position[0] - rect_size[0]/2 + size[0]/2, self.suit.position[1] - rect_size[1]/2 + size[1]/2, rect_size[0], rect_size[1]
+            )
+
         if (self.fredbear.rect().colliderect(rectCollide)):
             self.suit.texture = App.assets.suit_gr_2
         else:
             self.suit.texture = App.assets.suit_gr_1
-
-        if (self.show_suit and self.fredbear.rect().colliderect(self.suit.rect())):
-            key = pygame.key.get_pressed()
-            if key[pygame.K_c]:
-                self.show_suit = False
-                
-
+            
         self.suit.update()
+
+    def suit_collide(self):
+        if self.show_suit:
+            key = pygame.key.get_pressed()
+            if key[pygame.K_x]:
+                self.show_suit = False
             
 
     

@@ -49,7 +49,7 @@ class FoxyGoGo(MinigameDummy):
             anim.reset()
 
     def update(self, App):
-        self.sceneElements.update(App, self.scene, self, self.childs)
+        self.sceneElements.update(App, self.scene, self)
         self.draw_scene(App)
 
         if (self.canWalk):
@@ -65,10 +65,22 @@ class FoxyGoGo(MinigameDummy):
 
     def draw_scene(self, App):
         rooms = self.sceneElements.rooms
-        if (self.scene < len(rooms)):
-            self.draw_boundaries(App, rooms[self.scene], self.foxy, None)
+        if self.scene == 1:
+            for child in self.childs:
+                rooms[1].append(
+                    (child.texture, tuple(child.position), lambda:self.collided_child(App), False)
+                )
 
-        self.draw_game_status(App)
+        if (self.game_status == 2 and self.scene == 0):
+            rooms[0].append(
+                (App.assets.purple_guy, (140, 450), None, False)
+            )
+
+        if (self.scene < len(rooms)):
+            self.draw_boundaries(App, rooms[self.scene], self.foxy)
+
+        if self.bool_draw_game_status:
+            self.draw_game_status(App)
         pos = (App.surface.get_width()/2 - self.texts[self.text_index].get_width()/2, 10)
 
         if (self.text_index == 1):
@@ -112,25 +124,36 @@ class FoxyGoGo(MinigameDummy):
             self.finished_status = True
 
     def draw_game_status(self, App):
-        if self.bool_draw_game_status:
-            match self.game_status:
-                case 0:
-                    if pygame.time.get_ticks() - self.conf_timer > 500:
-                        if (self.conf_index < len(App.animations.confs_animation2)):
-                            self.confetti_updating.append(
-                                [App.animations.confs_animation2[self.conf_index], pygame.time.get_ticks()]
-                                )
-                            self.conf_index += 1
-                            self.conf_timer = pygame.time.get_ticks()
-                            pygame.mixer.Channel(1).play(App.assets.pop)
+        if self.game_status == 0 or self.game_status == 1:
+            self.canWalk = False
+            if pygame.time.get_ticks() - self.conf_timer > 500:
+                if (self.conf_index < len(App.animations.confs_animation2)):
+                    self.confetti_updating.append(
+                        [App.animations.confs_animation2[self.conf_index], pygame.time.get_ticks()]
+                        )
+                    self.conf_index += 1
+                    self.conf_timer = pygame.time.get_ticks()
+                    pygame.mixer.Channel(1).play(App.assets.pop)
 
-                    self.draw_confetti(App)
+            self.draw_confetti(App)
+
+        elif self.game_status == 2:
+            self.foxy.speed = 5
+            
                 
 
     def change_state(self, App):
         self.reset_vals(App)
         self.game_status += 1
+        if (self.game_status == 2):
+            for child in self.childs:
+                child.texture = App.assets.sad_child
 
     def change_draw_bool(self, state):
         self.bool_draw_game_status = state
-        self.text_index = 2
+        if self.game_status != 2:
+            self.text_index = 2
+
+    def collided_child(self, App):
+        self.canWalk = False
+        self.jumpscare(App, App.animations.foxy_jump)

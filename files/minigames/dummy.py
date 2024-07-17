@@ -15,7 +15,17 @@ class MinigameDummy(ABC):
     def key_movement(self, App):
         pass
 
-    def draw_boundaries(self, App, boundaries:list, mainCharacter:Entity, *args:Entity, mainCharacterLayer=0):
+    def jumpscare(self, App, animation:SpritesAnimation):
+        if not pygame.mixer.Channel(0).get_busy():
+            pygame.mixer.Channel(0).set_volume(1)
+            pygame.mixer.Channel(0).play(App.assets.xScream1)
+        if animation.sprite_num >= len(animation.sprites) - 1:
+            self.ended = True
+            pygame.mixer.Channel(0).stop()
+
+        animation.update(App.uiSurface, App.deltaTime)
+
+    def draw_boundaries(self, App, boundaries:list, mainCharacter:Entity, mainCharacterLayer=0):
         """ Will draw all the elements that the player can hit (or not) \n
         Each element goes between parentesis (). \n
         -- Sintax:\n 
@@ -150,13 +160,7 @@ class MinigameDummy(ABC):
                     objs_to_draw.append(
                         lambda:mainCharacter.draw(App)
                     )
-                    # Draw the args entities
-                    if args != (None,):
-                        for entity in args:
-                            objs_to_draw.append(
-                                lambda:entity.draw(App)
-                            )
- 
+        
         except ValueError or IndexError as e:
             raise BoundException(e, boundaries, index)
         

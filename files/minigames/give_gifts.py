@@ -30,6 +30,13 @@ class GiveGifts(MinigameDummy):
             (pygame.Rect(margin, self.surf_height - (margin - 30), self.surf_width - margin*2, size_horizontal), (200, 200, 200)) # Horizontal down
         ]
 
+        for i in range(len(self.souls)):
+            soul = self.souls[i]
+            self.boundaries.append(
+                (soul.texture, tuple(soul.position), lambda index=i:self.detect_collition(App, index), False, 0)
+            )
+
+
         self.masks = [
             App.assets.chica_mask,
             App.assets.fred_mask,
@@ -46,16 +53,15 @@ class GiveGifts(MinigameDummy):
         self.timer = pygame.time.get_ticks()
 
     def update(self, App):
-
         if not pygame.Channel(2).get_busy():
             pygame.Channel(2).play(App.assets.static_end)
 
         for soul in self.souls:
-            soul.update(App)
+            soul.update()
 
         self.draw_boundaries(App, self.boundaries, self.puppet)
 
-        self.puppet.update(App)
+        self.puppet.update()
 
         self.show_score(App, (75, 10))
 
@@ -68,11 +74,9 @@ class GiveGifts(MinigameDummy):
             self.show_lives(App)
 
         if (self.state == 1 and self.gifts_and_masks_given == [True, True, True, True]):
-            self.last.update(App)
+            self.last.update()
         else:
             self.key_movement(App)
-
-        self.detect_collition(App)
 
         self.comprobe_state(App)
 
@@ -116,19 +120,17 @@ class GiveGifts(MinigameDummy):
                 pos = (self.souls[i].position[0] - 20, self.souls[i].position[1] - 35)
                 App.minigamesSurface.blit(self.masks[i], pos)
 
-    def detect_collition(self, App):
-        for i in range(len(self.souls)):
-            if (self.souls[i].rect().colliderect(self.puppet.rect())):
-                if not self.gifts_and_masks_given[i]:
-                    self.score += 1
-                    if self.state == 0:
-                        pygame.mixer.Channel(1).play(App.assets.cake_sound)
-                    else:
-                        pygame.mixer.Channel(1).play(App.assets.pop)
-                        self.puppet.speed -= 4
+    def detect_collition(self, App, index:int):
+        if not self.gifts_and_masks_given[index]:
+            self.score += 1
+            if self.state == 0:
+                pygame.mixer.Channel(1).play(App.assets.cake_sound)
+            else:
+                pygame.mixer.Channel(1).play(App.assets.pop)
+                self.puppet.speed -= 4
 
-                    self.gifts_and_masks_given[i] = True
-                    self.timer = pygame.time.get_ticks()
+            self.gifts_and_masks_given[index] = True
+            self.timer = pygame.time.get_ticks()
 
     def comprobe_state(self, App):
         if (self.state == 0 and self.gifts_and_masks_given == [True, True, True, True]):
@@ -137,12 +139,4 @@ class GiveGifts(MinigameDummy):
                 self.gifts_and_masks_given = [False, False, False, False]
 
         elif (self.state == 1 and self.gifts_and_masks_given == [True, True, True, True]):
-            
-            if not pygame.mixer.Channel(0).get_busy():
-                pygame.mixer.Channel(0).set_volume(1)
-                pygame.mixer.Channel(0).play(App.assets.xScream1)
-            if App.animations.golden_freddy_jump.sprite_num >= len(App.animations.golden_freddy_jump.sprites) - 1:
-                self.ended = True
-                pygame.mixer.Channel(0).stop()
-
-            App.animations.golden_freddy_jump.update(App.uiSurface, App.deltaTime)
+            self.jumpscare(App, App.animations.golden_freddy_jump)

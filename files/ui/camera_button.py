@@ -13,7 +13,7 @@ class CameraButton:
     def update(self, App, canInteract=True):
 
         self.monitor_button.update(App.uiSurface, App.mouse_hitbox)
-        if canInteract or not App.objects.mask_button.entering_mask:
+        if canInteract and self.canEnter(App):
             if App.objects.battery.charge == 0 or App.objects.office.animatronic_in_office:
                 self.quitting_camera = True
                 if self.monitor_button.mouse_hovered:
@@ -23,19 +23,14 @@ class CameraButton:
                 else:
                     self.camera_being_pressed = False
 
-        if self.inCamera and not self.quitting_camera:
-            # Force quit mask
-            App.objects.mask_button.inMask = False
-            App.objects.mask_button.entering_mask = False
-            App.objects.mask_button.quitting_mask = True
-            App.animations.mask.sprite_num = 0
+            self.animation(App, canInteract=canInteract)
             
+        #print(self.entering_camera, self.inCamera, self.quitting_camera)
 
         if App.animations.monitor.sprite_num == 0 and self.quitting_camera:
             self.quitting_camera = False
         
-        self.animation(App, canInteract=canInteract)
-        
+    def canEnter(self, App): return not (App.objects.mask_button.entering_mask or App.objects.mask_button.inMask or App.objects.mask_button.quitting_mask)
 
     def animation(self, App, canInteract=True):
         # Monitor animation

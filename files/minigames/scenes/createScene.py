@@ -58,14 +58,14 @@ class CreateScene:
         if right: 
             return (
                 "<multiple>",
-                (App.assets.table, pygame.Rect(x2, y, 350, 0), "def", "def", 1, (0, 100), True),
-                (App.assets.table, pygame.Rect(x2, y + separation, 350, 100), "def", "def", 0, "def", True)
+                (App.assets.table, pygame.Rect(x2, y, 350, 0), "def", "def", 1, (0, 100)),
+                (App.assets.table, pygame.Rect(x2, y + separation, 350, 100), "def", "def", 0)
             )
     
         return (
                     "<multiple>",
-                    (App.assets.table, pygame.Rect(x1, y, 350, 0), "def", "def", 1, (0, 100), True),
-                    (App.assets.table, pygame.Rect(x1, y + separation, 350, 100), "def", "def", 0, "def", True)
+                    (App.assets.table, pygame.Rect(x1, y, 350, 0), "def", "def", 1, (0, 100)),
+                    (App.assets.table, pygame.Rect(x1, y + separation, 350, 100), "def", "def", 0)
                 )
     
     def _clean_boundary(self, boundary, scene):

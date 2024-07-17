@@ -16,6 +16,7 @@ GENERAL
 - The game sometimes crashes at camera 11? FIXED
 - The marionet (in the cutscene) is kinda glitched FIXED
 - Encrypt private and public RSA is not the same as fnaf 1.0.05 FIXED
+- Mask button breaks if you spam it FIXED
 
 SHADER 
 - Fade in gameplay does not work right (and when the night ends makes the game crash) FIXED

@@ -13,6 +13,6 @@ void main()
     {
         discard;
     }
-    
-    color = texture(image, fragmentTexCoord);
+    float saturation = 0.260f;
+    color = texture(image, fragmentTexCoord) - vec4(saturation, saturation, saturation, saturation) + vec4(0.15, 0.15, 0.15, 0.0);
 }

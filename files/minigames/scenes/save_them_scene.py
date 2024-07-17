@@ -24,8 +24,7 @@ class SaveThemScene(CreateScene):
                     self.bottom_wall(False),
 
                     # Elements
-                    self.tables(App, right=False),
-                    (App.assets.sad_soul, (650, 600), "def", "def", "def", "def", True)
+                    self.tables(App, right=False)
                     ], scene
                 )
             case 1:
@@ -176,8 +175,9 @@ class SaveThemScene(CreateScene):
                     self.right_wall(True, 2),
                     self.bottom_wall(False),
 
-                    (App.assets.suit2, (100, 170)),
-                    (App.assets.suit3, (120, 300))
+                    (App.assets.suit1, (160, 400)), # freddy
+                    (App.assets.suit2, (250, 170)), # bonnie
+                    (App.assets.suit3, (690, 70)) # Foxy
                     ], scene
                 )
 
@@ -256,7 +256,7 @@ class SaveThemScene(CreateScene):
                     self.right_wall(False),
                     self.bottom_wall(False),
 
-                    (App.assets.desk_min, pygame.Rect(400, 380, 200, 100)),
+                    (App.assets.desk_min, (400, 360),  None, "def", 1, (0, 130), True),
 
                     ], scene
                 )
