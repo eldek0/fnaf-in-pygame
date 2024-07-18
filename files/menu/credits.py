@@ -10,6 +10,7 @@ def import_names() ->list:
 class Credits:
     def __init__(self):
         self.mouse_pressed = False
+        self.scroll_down:int = 0
 
     def update(self, App):
         surf = App.surface
@@ -18,13 +19,20 @@ class Credits:
         margin_yt = margin_y + 40
         margin_yt_between_texts = 50
 
-        sc_text = Text(App, "Created originally by Scott Cawthon", (margin_x, margin_y) , App.assets.ocr_font, (255, 255, 255), lock="x")
+        credits = Text(App, "Credits", (0, 5), App.assets.ocr_font40, (255, 255, 255), "x")
+        credits.draw(App.uiSurface)
+
+        sc_text = Text(App, "Created originally by Scott Cawthon", (margin_x, margin_y) , App.assets.ocr_font20, (255, 255, 255), lock="x")
         sc_text.draw(surf)
+
+        thanks_subs = Text(App, "Thanks to all and every sub from okxd, you really mean a lot to me!", (margin_x, margin_y) , App.assets.ocr_font30, (255, 255, 255), lock="x")
+        
+
         names = import_names()
         for i in range(len(names)):
             info = names[i].split(",")
 
-            t = Text(App, str(info[0]), (margin_x, margin_yt + margin_yt_between_texts*(i)), App.assets.ocr_font, (255, 255, 255), lock="x")
+            t = Text(App, str(info[0]), (margin_x, margin_yt + margin_yt_between_texts*(i)) - self.scroll_down, App.assets.ocr_font20, (255, 255, 255), lock="x")
 
             click = pygame.mouse.get_pressed()
             if (len(info) > 1):

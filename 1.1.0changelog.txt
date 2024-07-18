@@ -3,20 +3,23 @@
 - Changed night 1. Now toy chica and toy freddy can move.
 - Changed music box time.
 - By pressing F11 you can exit fullscreen
+- Now the game is reasizable
 - Now jumpscares don't stop until the sound ends.
 - Game would sometimes crash while winding the music box
 - Battery would still be consumed even if the camera is occupied
 - Sounds would not reproduce correctly
+- Mask button used to break if you spamed it
 
 TO FIX (preferently before adding the new stuff like minigames):
 GENERAL
+- Puppet timer is weird
 - Toy freddy takes way long to move
 - Hallway animatronics often appear from nowhere
 - Foxy leave hallway without waiting
 - The game sometimes crashes at camera 11? FIXED
 - The marionet (in the cutscene) is kinda glitched FIXED
 - Encrypt private and public RSA is not the same as fnaf 1.0.05 FIXED
-- Mask button breaks if you spam it FIXED
+- Hitboxes wont suit properly on fullscreen
 
 SHADER 
 - Fade in gameplay does not work right (and when the night ends makes the game crash) FIXED

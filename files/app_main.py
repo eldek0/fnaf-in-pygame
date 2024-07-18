@@ -12,6 +12,7 @@ from files.save.save import save, read
 from files.menu.warning_init import WarningInit
 import include.pygame_shaders as pygame_shaders
 from files.minigames.minigame import Minigame
+from files.utils import get_shader_diff, draw_hitbox
 
 default = (pygame_shaders.DEFAULT_VERTEX_SHADER, pygame_shaders.DEFAULT_FRAGMENT_SHADER)
 gameplay = ("files/shaders/gameplay/vertex.glsl", "files/shaders/gameplay/fragment.glsl")
@@ -27,7 +28,7 @@ class App:
 		pygame.init() # Starts the pygame timer
 		pygame.mixer.init() # Init the mixer
 		self.dimentions = initial_dimentions
-		self.surface = pygame.display.set_mode( self.dimentions, vsync=True, flags= pygame.OPENGL | pygame.DOUBLEBUF )
+		self.surface = pygame.display.set_mode( self.dimentions, vsync=True, flags= pygame.OPENGL | pygame.DOUBLEBUF | pygame.RESIZABLE )
 		pygame.display.set_caption(caption) # Win's name
 
 		# Icon
@@ -61,7 +62,7 @@ class App:
 		self.objects:GameObjects = None
 		self.game:Game = None
 		self.menu:Menu = None
-		self.minigame:Minigame = Minigame(self)
+		self.minigame:Minigame = None
 
 		self.loaded = True
 
@@ -89,7 +90,11 @@ class App:
 			events = pygame.event.get()
 
 			# Update mouse's hitbox and pressed buttons
-			self.mouse_hitbox.left, self.mouse_hitbox.top = pygame.mouse.get_pos()
+			diff = get_shader_diff(self.surface)
+			p = pygame.mouse.get_pos()
+			self.mouse_hitbox.left, self.mouse_hitbox.top = p
+			self.mouse_hitbox.x -= p[0]*diff[0]
+			self.mouse_hitbox.y -= p[1]*diff[1]
 
 			# Frames per second
 			self.game_fps = self.clock.tick(self.frames_per_second)
@@ -102,6 +107,7 @@ class App:
 			self.game_events(events)
 
 			self.update(events)
+
 
 	def quit_game(self):
 		if self.warning_init.is_finished():
@@ -120,22 +126,29 @@ class App:
 				if self.debug:
 					if event.key == pygame.K_ESCAPE:
 						self.quit_game()
+					
+					if event.key == pygame.K_m:
+						self.minigame.startMinigame(self)
 	def update(self, events):
-		self.surface.fill((0,0,0))
+		self.surface.fill((0,0,0, 0))
 		self.uiSurface.fill((0, 0, 0, 0))
-
 		#Draw on screen
 		dr.Draw(self)
 
-		if self.loaded:
+		try:
+			draw_hitbox(self.uiSurface, (255, 255, 255), self.mouse_hitbox)
+		except:
+			print("fail")
+
+		if self.warning_init.is_finished():
 			self.shaderMain.render_direct(pygame.Rect(0, 0, self.dimentions[0], self.dimentions[1]))
 
-			if (self.minigame.inMinigame):
+			if (self.minigame.isInMinigame()):
 				self.minigamesShader.render_direct(pygame.Rect(0, 0, self.dimentions[0], self.dimentions[1]))
 
 		# This surface will be responsable about the ui
 		self.uiShader.render_direct(pygame.Rect(0, 0, self.dimentions[0], self.dimentions[1]))
-		
+	
 
 		# Update each frame
 		pygame.display.flip()

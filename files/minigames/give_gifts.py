@@ -8,7 +8,7 @@ class GiveGifts(MinigameDummy):
         super().__init__(App)
 
         self.surf_width, self.surf_height = App.surface.get_width(), App.surface.get_height()
-        self.puppet = Entity(App.assets.puppet_minigame, (self.surf_width/2 - App.assets.puppet_minigame.get_width()/2, self.surf_height/2 - App.assets.puppet_minigame.get_height()/2))
+        self.puppet = Entity(App.assets.puppet_minigame, (self.surf_width/2 - App.assets.puppet_minigame.get_width()/2, self.surf_height/2 - App.assets.puppet_minigame.get_height()/2 + 60))
         self.score = 0 # One score is a hundred points 
         
         delta_y = 50
@@ -52,12 +52,18 @@ class GiveGifts(MinigameDummy):
 
         self.timer = pygame.time.get_ticks()
 
-    def update(self, App):
-        if not pygame.Channel(2).get_busy():
-            pygame.Channel(2).play(App.assets.static_end)
+        self.wasd = Entity(App.assets.wasd, (400, 150))
 
+        self.boundaries.append(
+                (self.wasd, None, "def", False)
+            )
+
+    def update(self, App):
         for soul in self.souls:
             soul.update()
+
+        if not (self.wasd_adv):
+            self.wasd.desactivate()
 
         self.draw_boundaries(App, self.boundaries, self.puppet)
 
@@ -86,16 +92,20 @@ class GiveGifts(MinigameDummy):
         if (key[pygame.K_RIGHT] or key[pygame.K_d]):
             self.puppet.movement('r')
             self.puppet.texture = App.assets.puppet_minigame
+            self.desactivate_wasd()
         
         if (key[pygame.K_LEFT] or key[pygame.K_a]):
             self.puppet.movement('l')
             self.puppet.texture = pygame.transform.flip(App.assets.puppet_minigame, True, False)
+            self.desactivate_wasd()
 
         if (key[pygame.K_UP] or key[pygame.K_w]):
             self.puppet.movement('u')
+            self.desactivate_wasd()
 
         if (key[pygame.K_DOWN] or key[pygame.K_s]):
             self.puppet.movement('d')
+            self.desactivate_wasd()
 
     def show_score(self, App, position:tuple):
         num_width = App.assets.numbers_big[0].get_width()

@@ -20,12 +20,13 @@ class MusicBoxButton:
         self.button.update(App.uiSurface, App.mouse_hitbox)
         App.uiSurface.blit(App.assets.music_box_label, [self.position[0] + 10, self.position[1] + 10])
         App.uiSurface.blit(App.assets.clicknhold, [self.position[0], self.position[1] + 72])
-
+        puppet = App.objects.Animatronics.animatronics_in_game["PUPPET"]
         mouse_click = pygame.mouse.get_pressed()
         if self.button.mouse_hovered:
             if mouse_click[0]:
                 self.button.sprite = App.assets.music_box_button_on
-                self.recharge_time(App)
+                if puppet.aggresivity != 0:
+                    self.recharge_time(App)
                 if not pygame.mixer.Channel(3).get_busy() and pygame.time.get_ticks() - self.timer_sound > 450:
                     pygame.mixer.Channel(3).play(App.assets.charge)
                     self.timer_sound = pygame.time.get_ticks()

@@ -9,16 +9,14 @@ class FoxyGoGo(MinigameDummy):
         self.foxy = Entity(App.animations.foxy_anim, (300, 200))
         
         self.childs = [
-            Entity(App.assets.happy_child, (600, 160)),
-            Entity(App.assets.happy_child, (543, 260)),
-            Entity(App.assets.happy_child, (543, 336)),
-            Entity(App.assets.happy_child, (750, 440)),
-            Entity(App.assets.happy_child, (600, 510))
+            Entity(App.assets.happy_child, (550, 160)),
+            Entity(App.assets.happy_child, (700, 260)),
+            Entity(App.assets.happy_child, (500, 300)),
+            Entity(App.assets.happy_child, (700, 410)),
+            Entity(App.assets.happy_child, (560, 470))
         ]
 
         self.reset_vals(App)
-
-        #self.scene = 1 # unescesary TODO
 
         self.game_status = 0
 
@@ -29,6 +27,8 @@ class FoxyGoGo(MinigameDummy):
             App.assets.go_txt,
             App.assets.hurray_txt
         ]
+
+        self.wasd = Entity(App.assets.wasd, (400, 400))
 
     def reset_vals(self, App):
         self.confetti_updating = []
@@ -76,6 +76,16 @@ class FoxyGoGo(MinigameDummy):
                 (App.assets.purple_guy, (140, 450), None, False)
             )
 
+        if (self.wasd_adv):
+            rooms[0].append(
+                (App.assets.wasd, tuple(self.wasd.position), "def", False)
+            )
+
+        if (self.canWalk):
+            rooms[0].append(
+                (App.assets.arrow_min, (720, 530), None, False, 1)
+            )
+
         if (self.scene < len(rooms)):
             self.draw_boundaries(App, rooms[self.scene], self.foxy)
 
@@ -99,15 +109,19 @@ class FoxyGoGo(MinigameDummy):
 
         if (key[pygame.K_RIGHT] or key[pygame.K_d]):
             self.foxy.movement('r')
+            self.desactivate_wasd()
         
         elif (key[pygame.K_LEFT] or key[pygame.K_a]):
             self.foxy.movement('l')
+            self.desactivate_wasd()
 
         elif (key[pygame.K_UP] or key[pygame.K_w]):
             self.foxy.movement('u')
+            self.desactivate_wasd()
 
         elif (key[pygame.K_DOWN] or key[pygame.K_s]):
             self.foxy.movement('d')
+            self.desactivate_wasd()
 
     def draw_confetti(self, App):
         for c_data in self.confetti_updating:

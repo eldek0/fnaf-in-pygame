@@ -1,6 +1,7 @@
 import pygame
 from files.save.save import read
 from files.menu.menu import Menu
+from files.minigames.minigame import Minigame
 
 class WarningInit:
     def __init__(self, App):
@@ -33,6 +34,7 @@ class WarningInit:
 
             
             App.menu = Menu(App)
+            App.minigame = Minigame(App)
 
             if data:
                 App.menu.inNight = data["Night"]
@@ -40,6 +42,5 @@ class WarningInit:
                 App.menu.custom_night_menu.completed_nights = data["Custom"]
                 App.menu.cutscenes_data = data["Cutscenes"]
                 
-            
-
+            App.started = True
             self._finished = True

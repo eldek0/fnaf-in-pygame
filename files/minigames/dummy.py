@@ -3,11 +3,13 @@ from abc import ABC
 from files.minigames.entity import Entity
 from files.animations.sprites_animation import SpritesAnimation
 from files.minigames.scenes.boundaries_exception import BoundException
+from files.utils import draw_hitbox
 
 class MinigameDummy(ABC):
     def __init__(self, App):
         self.ended:bool = False
         self.scene:int = 0
+        self.wasd_adv:bool = True
 
     def update(self, App):
         pass
@@ -20,16 +22,19 @@ class MinigameDummy(ABC):
             pygame.mixer.Channel(0).set_volume(1)
             pygame.mixer.Channel(0).play(App.assets.xScream1)
         if animation.sprite_num >= len(animation.sprites) - 1:
-            self.ended = True
+            self.end_minigame()
             pygame.mixer.Channel(0).stop()
 
         animation.update(App.uiSurface, App.deltaTime)
+
+    def end_minigame(self):
+        self.ended = True
 
     def draw_boundaries(self, App, boundaries:list, mainCharacter:Entity, mainCharacterLayer=0):
         """ Will draw all the elements that the player can hit (or not) \n
         Each element goes between parentesis (). \n
         -- Sintax:\n 
-        [0]: pygame.Surface, pygame.Rect or SpritesAnimation\n
+        [0]: pygame.Surface, pygame.Rect, SpritesAnimation or Entity (being Entity, [1] would be ignored).\n
         [1]: tuple(), if [0] is pygame.Surface or SpritesAnimation this will be the position, if [0] is pygame.Rect this will be the color, Represented by (R, G, B) If its None it will not draw it
         [2]: lambda object, will be called when the player's entity collides with the object. Can also be a special tuple that will have elements like the identificator and the arguments. 
                 The current types are: - Change the scene: ("scene", 4, 'l') args=id, scene_to_change, direction ('r', 'l', 'u', 'd')\n
@@ -108,9 +113,22 @@ class MinigameDummy(ABC):
                             lambda anim=element[0], deltaTime=App.deltaTime:anim.update(surf, deltaTime)
                         )
                         
+                    elif isinstance(element[0], Entity):
+                        entity:Entity = element[0]
+                        element_rect = entity.rect()
+                        
+                        # Update entity first
+                        objs_to_draw.append(
+                            lambda ent=entity:ent.update()
+                        )
+
+                        # Draw the entity
+                        objs_to_draw.append(
+                            lambda ent=entity:ent.draw(App)
+                        )
 
                     else:
-                        raise BoundException("The [0] element must be pygame.Surface, pygame.Rect or SpritesAnimation!", boundaries, index)
+                        raise BoundException("The [0] element must be pygame.Surface, pygame.Rect, SpritesAnimation or Entity!", boundaries, index)
 
                     # Detect if element[2] is a lambda object or a special tuple (and if its not None)
                     if (len(element) > 2 and element[2] and not self.__check_is_default(element[2]) ):
@@ -134,7 +152,7 @@ class MinigameDummy(ABC):
                     if (len(element) > 6 and isinstance(element[6], bool) and not self.__check_is_default(element[6])):
                         if (element[6]):
                             objs_to_draw.append(
-                                lambda color=(0, 255, 0), rect=element_rect:self.draw_hitbox(App, color, rect)
+                                lambda color=(0, 255, 0), rect=element_rect:draw_hitbox(App.uiSurface, color, rect)
                             )
 
                     if (mainCharacter.rect().colliderect(element_rect)):
@@ -189,19 +207,9 @@ class MinigameDummy(ABC):
 
     def __check_is_default(self, element):return (str(element).lower() == "def")
 
-    def draw_hitbox(self, App, color, rect):
-        surf = App.uiSurface
-        x = rect.x
-        y = rect.y
-        w = rect.width
-        h = rect.height
-        color = color
-        pygame.draw.line(surf, color, (x, y), (x + w, y), 1)
-        pygame.draw.line(surf, color, (x + w, y), (x + w, y + h), 1)
-        pygame.draw.line(surf, color, (x, y), (x, y + h), 1)
-        pygame.draw.line(surf, color, (x, y + h), (x + w, y + h), 1)
-
-
     def change_scene(self, App, scene):
         print(scene)
+        self.wasd_adv = False
         self.scene = scene
+
+    def desactivate_wasd(self): self.wasd_adv = False

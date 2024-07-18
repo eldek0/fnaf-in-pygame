@@ -411,14 +411,18 @@ class import_images:
 		# Numbers 
 		self.numbers = []
 		for i in range(10):
+			n = pygame.image.load(f"sprites/numbers/1rst/medium/{i}.png").convert()
+			n.set_colorkey((0, 0, 0))
 			self.numbers.append(
-				pygame.image.load(f"sprites/numbers/1rst/medium/{i}.png").convert_alpha()
+				n
 			)
 
 		self.numbers_small = []
 		for i in range(10):
+			n = pygame.image.load(f"sprites/numbers/1rst/small/{i}.png").convert()
+			n.set_colorkey((0, 0, 0))
 			self.numbers_small.append(
-				pygame.image.load(f"sprites/numbers/1rst/small/{i}.png").convert_alpha()
+				n
 			)
 
 		self.numbers_big = []
@@ -431,14 +435,17 @@ class import_images:
 		self.numbers2 = []
 		for i in range(10):
 			n = pygame.image.load(f"sprites/numbers/2nd/medium/{i}.png").convert()
+			n.set_colorkey((0, 0, 0))
 			self.numbers2.append(
 				n
 			)
 
 		self.numbers2_small = []
 		for i in range(10):
+			n = pygame.image.load(f"sprites/numbers/2nd/small/{i}.png").convert()
+			n.set_colorkey((0, 0, 0))
 			self.numbers2_small.append(
-				pygame.image.load(f"sprites/numbers/2nd/small/{i}.png").convert_alpha()
+				n
 			)
 
 		self.night_label = pygame.image.load(f"sprites/clock/20.png").convert_alpha()
@@ -549,7 +556,8 @@ class import_images:
 		# Minigames
 
 		# Give gifts, Give life
-		self.puppet_minigame = pygame.image.load("sprites/minigames/GG_GL/4.png").convert_alpha()
+		self.puppet_minigame = pygame.image.load("sprites/minigames/GG_GL/4.png").convert()
+		self.puppet_minigame.set_colorkey((0, 0, 0))
 
 		self.soul = pygame.image.load("sprites/minigames/GG_GL/7.png").convert()
 		self.soul.set_colorkey((0, 0, 0))
@@ -613,7 +621,10 @@ class import_images:
 
 		self.endo_anim = []
 		for i in range(2):
-			img = pygame.image.load(f"sprites/minigames/SAVE THEM/{25 + i}.png").convert()
+			img = pygame.transform.flip(
+				pygame.image.load(f"sprites/minigames/SAVE THEM/{25 + i}.png").convert(),
+				True, False
+			)
 			img.set_colorkey((0, 0, 0))
 			self.endo_anim.append(img)
 
@@ -691,10 +702,11 @@ class import_images:
 			True, False
 		)
 		
-		
-
 		self.take_cake_to_the_children_label = pygame.image.load(f"sprites/minigames/TCTTC/31.png").convert()
 		self.take_cake_to_the_children_label.set_colorkey((90, 90, 90))
+
+		self.wasd = pygame.image.load("sprites/minigames/SAVE THEM/16.png").convert()
+		self.wasd.set_colorkey((0, 0, 0))
 
 		# Get crops from cropped images
 		import_images.cropped_images(self)
@@ -754,6 +766,8 @@ class import_images:
 
 		self.cake_sound = pygame.mixer.Sound("sounds/cake2.wav")
 
+		self.minigame_ambient = pygame.mixer.Sound("sounds/ComputerInteriorLong.wav")
+
 
 		self.vents_sounds = pygame.mixer.Sound("sounds/ventwalk1.wav")
 
@@ -805,4 +819,7 @@ class import_images:
 
 
 	def fonts(self):
-		self.ocr_font = pygame.font.Font("fonts/1.TTF")
+		ocr_path = "fonts/1.TTF"
+		self.ocr_font20 = pygame.font.Font(ocr_path, 20)
+		self.ocr_font30 = pygame.font.Font(ocr_path, 30)
+		self.ocr_font40 = pygame.font.Font(ocr_path, 40)

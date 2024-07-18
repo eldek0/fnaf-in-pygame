@@ -3,13 +3,13 @@ from files.minigames.scenes.createScene import CreateScene
 
 class SaveThemScene(CreateScene):
 
-    def __init__(self, App):
+    def __init__(self, App, root):
         super().__init__(App)
         self.rooms = {}
         for i in range(14):
-            self.update(App, i)
+            self.update(App, i, root)
     
-    def update(self, App, scene):
+    def update(self, App, scene, root):
         match scene:
             case 0:
                 # spawn
@@ -68,8 +68,8 @@ class SaveThemScene(CreateScene):
                     self.bottom_wall(False),
 
                     (App.assets.dust, (100, 200), None, False),
-                    (App.assets.dust, (300, 500), None, False),
-                    (App.assets.sad_soul, (650, 600))
+                    (App.assets.dust, (300, 300), None, False),
+                    (pygame.transform.flip(App.assets.sad_soul, True, False), (660, 570), lambda:root.end_minigame(), False),
 
                     ], scene
                 )
@@ -126,7 +126,7 @@ class SaveThemScene(CreateScene):
                     (App.assets.blood, (440, 410), None, False),
                     (App.assets.bigGift, pygame.Rect(440, 260, 350, 200)),
 
-                    (pygame.transform.flip(App.assets.sad_soul, True, False), (390, 500)),
+                    (pygame.transform.flip(App.assets.sad_soul, True, False), (390, 500), lambda:root.end_minigame(), False),
 
                     ], scene
                 )
@@ -143,7 +143,8 @@ class SaveThemScene(CreateScene):
                     self.right_wall(False),
                     self.bottom_wall(False),
 
-                    (App.animations.endoAnim, (360, 460))
+                     (App.assets.sad_soul, (160, 580), lambda:root.end_minigame(), False)
+                    
                     ], scene
                 )
 
@@ -160,7 +161,8 @@ class SaveThemScene(CreateScene):
 
                     #(App.assets.blood, (200, 360), None, False),
                     (App.assets.sceneary, pygame.Rect(200, 100, 600, 300)),
-                    (App.assets.sad_soul, (120, 500))
+                    (App.assets.sad_soul, (120, 500), lambda:root.end_minigame(), False)
+                    
                     ], scene
                 )
 
@@ -225,7 +227,7 @@ class SaveThemScene(CreateScene):
 
                     # Elements
                     self.tables(App, right=False),
-                    (App.assets.sad_soul, (300, 600))
+                    (App.assets.sad_soul, (300, 600), lambda:root.end_minigame(), False)
                     ], scene
                 )
 

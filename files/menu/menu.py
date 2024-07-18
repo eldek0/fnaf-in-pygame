@@ -123,7 +123,7 @@ class Menu:
 
             # Labels
             App.uiSurface.blit(App.assets.fnaf_title, (80, 30))
-            
+
             dims = App.assets.scott_credits.get_rect()
             credits_rect = pygame.Rect(
                 App.dimentions[0] - dims.w - 10, App.dimentions[1] - dims.h - 20,
@@ -145,6 +145,7 @@ class Menu:
 
             self.new_game_button.update(App.uiSurface, App.mouse_hitbox)
             self.continue_button.update(App.uiSurface, App.mouse_hitbox)
+            
             if self.inNight >= 6:
                 self.night_six_button.update(App.uiSurface, App.mouse_hitbox)
             if self.inNight >= 7:

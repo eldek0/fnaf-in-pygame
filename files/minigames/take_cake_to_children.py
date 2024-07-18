@@ -6,7 +6,7 @@ from files.minigames.scenes.take_cake_scene import TakeCakeToTheChildrenScene
 class TakeCakeToTheChildren(MinigameDummy):
     def __init__(self, App):
         super().__init__(App)
-        self.freadbear = Entity(App.animations.cake_fred_walking, (350, 450))
+        self.freadbear = Entity(App.animations.cake_fred_walking, (400, 450))
         self.sceneElements = TakeCakeToTheChildrenScene(App, self)
 
         self.childs = []
@@ -26,9 +26,11 @@ class TakeCakeToTheChildren(MinigameDummy):
         self.purple_guy.desactivate()
 
         self.timer = pygame.time.get_ticks()
-        self.car_to_appear = 0
+        self.car_to_appear = 15_000
         self.game_state = 0
         self.child_state = 2
+
+        self.wasd = Entity(App.assets.wasd, (400, 290))
 
     def update(self, App):
         self.sceneElements.update(App, self.scene, self)
@@ -68,6 +70,11 @@ class TakeCakeToTheChildren(MinigameDummy):
         rooms[self.scene].append(
             (self.sad_child.texture, tuple(self.sad_child.position))
         )
+        
+        if self.wasd_adv:
+            rooms[self.scene].append(
+                    (self.wasd, None, "def", False)
+                )
 
         self.draw_boundaries(App, rooms[0], self.freadbear)
         
@@ -97,15 +104,19 @@ class TakeCakeToTheChildren(MinigameDummy):
 
         if (key[pygame.K_RIGHT] or key[pygame.K_d]):
             self.freadbear.movement('r')
+            self.desactivate_wasd()
         
         elif (key[pygame.K_LEFT] or key[pygame.K_a]):
             self.freadbear.movement('l')
+            self.desactivate_wasd()
 
         elif (key[pygame.K_UP] or key[pygame.K_w]):
             self.freadbear.movement('u')
+            self.desactivate_wasd()
 
         elif (key[pygame.K_DOWN] or key[pygame.K_s]):
             self.freadbear.movement('d')
+            self.desactivate_wasd()
 
     def update_scene(self, App):
         match self.game_state:
@@ -147,7 +158,7 @@ class TakeCakeToTheChildren(MinigameDummy):
                 self.car.movement("l")
                 self.car.update()
 
-                if self.car.position[0] <= -90:
+                if self.car.position[0] <= -150:
                     self.jumpscare(App, App.animations.puppet_jump)
 
 

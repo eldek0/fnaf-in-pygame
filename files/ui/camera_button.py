@@ -1,5 +1,6 @@
 import pygame
 from files.ui.button import Button
+from files.utils import transform_rect
 
 class CameraButton:
     def __init__(self, App, draw_box=False):
@@ -11,7 +12,6 @@ class CameraButton:
         self.entering_camera = False
 
     def update(self, App, canInteract=True):
-
         self.monitor_button.update(App.uiSurface, App.mouse_hitbox)
         if canInteract and self.canEnter(App):
             if App.objects.battery.charge == 0 or App.objects.office.animatronic_in_office:
@@ -70,8 +70,10 @@ class CameraButton:
                 App.animations.monitor.update(App.uiSurface, App.deltaTime, reversed=True)
                 # Get off camera
                 if App.animations.monitor.sprite_num == 0:
-                    self.inCamera = False
-                    self.camera_being_pressed = True
-                    self.quitting_camera = False
-                    App.assets.camera_sound_2.play()
-                    
+                    self.quit_camera(App)
+
+    def quit_camera(self, App):
+        self.inCamera = False
+        self.camera_being_pressed = True
+        self.quitting_camera = False
+        App.assets.camera_sound_2.play()             
