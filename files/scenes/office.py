@@ -72,6 +72,7 @@ class Office:
             if not App.animations.darkness.is_animating:
                 self.hallway_animatrionic_fade = False
 
+
     def draw_office(self, App):
         App.surface.blit(self.office_sprite, self.position)
 
@@ -83,7 +84,7 @@ class Office:
         elif self.plastic_show:
             App.surface.blit(App.assets.plastic, (1050 + self.position[0], 0))
 
-        if App.objects.open_monitor_button.inCamera: self.random_num = 0
+        if App.objects.open_monitor_button.inCamera and not App.objects.open_monitor_button.quitting_camera: self.random_num = 0
 
     def desk_rewards(self, App):
         custom_nights_completed = App.menu.custom_night_menu.completed_nights

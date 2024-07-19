@@ -18,6 +18,7 @@ def save(App):
     data["Played"] = App.menu.played_once
     data["Custom"] = App.menu.custom_night_menu.completed_nights
     data["Cutscenes"] = App.menu.cutscenes_data
+    data["Ctrl"] = App.ctrl_adv
     
 
     # Get key
@@ -46,23 +47,21 @@ def default():
             False, False, False, False, False,
             False, False, False, False, False
         ],
-        "Cutscenes":[False, False, False, False]
-        #,"Minigames":[False, False]
+        "Cutscenes":[False, False, False, False],
+        "Ctrl":False
     }
     return data
 
-def check_if_minigames_data_is_in_file(App, data):
-    # TODO
-    """ Minigames are not aveliable in version 1.0.05 and below,"""
+def check_if_data_is_in_file(App, data):
+    """ Some features are not aveliable in version 1.0.05 and below,"""
     """ so the files must be updated correctly if that's the case."""
-    if "minigames" in data.keys():
-        print("is")
-    else:
-        print("not, updating")
-        defa = default()
-        data["Minigames"] = defa["Minigames"]
-
-    print(data)
+    to_check = ["Ctrl"]
+    for check in to_check:
+        if not check in list(data.keys()):
+            print("not, updating")
+            defa = default()
+            data[check] = defa[check]
+        
     return data
 
 def get_decrypted_file(read:bytes):
@@ -102,7 +101,7 @@ def read(App):
         print(f"An unexpected error happened: {e}")
         data = default()
 
-    #data = check_if_minigames_data_is_in_file(App, data)
+    data = check_if_data_is_in_file(App, data)
 
     return data
 

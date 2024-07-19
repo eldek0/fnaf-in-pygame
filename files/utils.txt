@@ -1,0 +1,23 @@
+{
+  "Night": 6,
+  "Played": true,
+  "Custom": [
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false
+  ],
+  "Cutscenes": [
+    true,
+    true,
+    true,
+    true
+  ],
+  "Ctrl": false
+}

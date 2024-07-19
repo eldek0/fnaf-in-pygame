@@ -208,7 +208,6 @@ class MinigameDummy(ABC):
     def __check_is_default(self, element):return (str(element).lower() == "def")
 
     def change_scene(self, App, scene):
-        print(scene)
         self.wasd_adv = False
         self.scene = scene
 

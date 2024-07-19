@@ -116,7 +116,6 @@ class Game:
                 else:
                     App.objects.office.update(App, canInteract=False, draw=True)
 
-
                 if App.objects.open_monitor_button.inCamera and not App.objects.open_monitor_button.quitting_camera:
                     # Update camera
                     App.objects.camera.update(App)
@@ -136,6 +135,12 @@ class Game:
 
                 # Music box warning
                 App.objects.music_box.warning_sign(App)
+
+                # Ctrl initial tip
+                if not App.ctrl_adv:
+                    App.uiSurface.blit(App.assets.ctrl_adv, (10, 680))
+                    if pygame.key.get_pressed()[pygame.K_LCTRL]:
+                        App.ctrl_adv = True
 
                 # Update animatronics
                 App.objects.Animatronics.update(App)

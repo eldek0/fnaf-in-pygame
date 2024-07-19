@@ -11,7 +11,7 @@ class Minigame:
         self.static_rect = pygame.Rect(0, 0, App.surface.get_width(), 50)
         self.static_timer:int = pygame.time.get_ticks()
         self.reset_minigames(App)
-        self.inMinigameId:int = 1
+        self.inMinigameId:int = 0
         self.timer = pygame.time.get_ticks()
         self.time_to_voice:int = 3000
         self.letter_index = 0
@@ -111,5 +111,5 @@ class Minigame:
         self.__init__(App)
         App.assets.static_end.play()
         self.transMinigame = True
-        self.inMinigameId = random.randint(3, 3)
+        self.inMinigameId = random.randint(0, 3)
         

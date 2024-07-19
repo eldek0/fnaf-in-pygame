@@ -26,9 +26,9 @@ SHADER
 
 TO ADD
 Minigames ! (SAVETHEM, Give Gifts, Give Life, Take Cake to the Children, Foxy Go! Go! Go!) ADDED
-Easter eggs (shadow bonnie, Endo skeletons, balloon girl, Paper Buddy) ADDED TO ADD (Shadow Freddy, Eyeless Screens)
+Easter eggs (shadow bonnie, Endo skeletons, balloon girl, Paper Buddy, Eyeless Screens) ADDED TO ADD (Shadow Freddy)
 Be able to use the keyboard to play the game
-Add helpful tips (like the ctrl tip to flashlight when you start the game)
+Add helpful tips (like the ctrl tip to flashlight when you start the game) DONE
 ¿A real time mode?
 
 

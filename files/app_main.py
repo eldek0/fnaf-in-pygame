@@ -49,6 +49,10 @@ class App:
 		
 		self.assets = import_images()
 		self.scene = 0
+
+		# Game events
+		self.ctrl_adv = False
+
 		# Mouse
 		self.mouse_hitbox = pygame.Rect((self.dimentions[0]/2,self.dimentions[1]/2), (1,1))
 

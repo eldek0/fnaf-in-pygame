@@ -368,7 +368,8 @@ class import_images:
 		self.star = pygame.image.load("sprites/menu/misc/4.png").convert_alpha()
 		self.delete_data_label = pygame.image.load("sprites/menu/logos/7.png").convert()
 		self.delete_data_label.set_colorkey((0, 0, 0))
-		self.version = pygame.image.load("sprites/menu/logos/9.png").convert_alpha()
+		self.version = pygame.image.load("sprites/menu/logos/9.png").convert()
+		self.version.set_colorkey((0, 0, 0))
 
 		self.newspaper = pygame.image.load("sprites/menu/paychecks/1.png").convert()
 		self.loading_icon = pygame.image.load("sprites/menu/logos/0.png").convert()
@@ -380,7 +381,7 @@ class import_images:
 		self.nights_12am = []
 		for i in range(7):
 			self.nights_12am.append(
-				pygame.image.load(f"sprites/menu/nights/{i+1}.png").convert_alpha()
+				pygame.image.load(f"sprites/menu/nights/{i+1}.png").convert()
 			)
 		
 		# Confetti
@@ -448,29 +449,32 @@ class import_images:
 				n
 			)
 
-		self.night_label = pygame.image.load(f"sprites/clock/20.png").convert_alpha()
-		self.am_label = pygame.image.load(f"sprites/clock/2.png").convert_alpha()
+		self.night_label = pygame.image.load(f"sprites/clock/20.png").convert()
+		self.night_label.set_colorkey((0, 0, 0))
+		self.am_label = pygame.image.load(f"sprites/clock/2.png").convert()
+		self.am_label.set_colorkey((0, 0, 0))
 
 		# 5 am to 6 am animation
 		self.five_animation = []
 		for i in range(3, 8):
 			self.five_animation.append(
-				pygame.image.load(f"sprites/clock/{i}.png").convert_alpha()
+				pygame.image.load(f"sprites/clock/{i}.png").convert()
 			)
 
 		self.six_animation = []
 		for i in range(8, 14):
-			self.six_animation.append(
-				pygame.image.load(f"sprites/clock/{i}.png").convert_alpha()
-			)
+			cl = pygame.image.load(f"sprites/clock/{i}.png").convert()
+			cl.set_colorkey((0, 0, 0))
+			self.six_animation.append(cl)
 
-		self.big_am = pygame.image.load(f"sprites/clock/1.png").convert_alpha()
+		self.big_am = pygame.image.load(f"sprites/clock/1.png").convert()
 
 		# Telephone mute
 		self.telephone_mute = pygame.image.load(f"sprites/office/utils/20.png").convert_alpha()
 
 		self.lost_screen = pygame.image.load(f"sprites/menu/nights/10.png").convert()
-		self.game_over = pygame.image.load(f"sprites/menu/nights/11.png").convert_alpha()
+		self.game_over = pygame.image.load(f"sprites/menu/nights/11.png").convert()
+		self.game_over.set_colorkey((0, 0, 0))
 		
 		self.static_stripes = []
 		for i in range(5):
@@ -490,7 +494,9 @@ class import_images:
 				pygame.image.load(f"sprites/office/utils/{i}.png").convert_alpha()
 			)
 
-		self.night_label_2 = pygame.image.load("sprites/menu/logos/8.png").convert_alpha()
+		self.night_label_2 = pygame.image.load("sprites/menu/logos/8.png").convert()
+		self.night_label_2.set_colorkey((0, 0, 0))
+
 
 		# CUSTOM NIGHT
 		# Animatrionics icons and labels
@@ -553,6 +559,9 @@ class import_images:
 		self.err_img = pygame.image.load(f"sprites/cutscenes/3.png").convert()
 		self.its_me = pygame.image.load(f"sprites/cutscenes/4.png").convert()
 		
+		self.ctrl_adv = pygame.image.load(f"sprites/office/utils/40.png").convert()
+		self.ctrl_adv.set_colorkey((90, 90, 90))
+
 		# Easter eggs
 		self.baloon_girl = pygame.image.load(f"sprites/office/inside/8.png").convert_alpha() 
 		self.DWARF = pygame.image.load("sprites/office/inside/DWARF.png").convert_alpha()
@@ -713,6 +722,13 @@ class import_images:
 		self.wasd = pygame.image.load("sprites/minigames/SAVE THEM/16.png").convert()
 		self.wasd.set_colorkey((0, 0, 0))
 
+		# rare
+		self.rare = [
+			pygame.image.load("sprites/rare/1.png").convert(),
+			pygame.image.load("sprites/rare/2.png").convert(),
+			pygame.image.load("sprites/rare/3.png").convert()
+		]
+
 		# Get crops from cropped images
 		import_images.cropped_images(self)
 		
@@ -773,6 +789,7 @@ class import_images:
 
 		self.minigame_ambient = pygame.mixer.Sound("sounds/ComputerInteriorLong.wav")
 
+		self.popstatic = pygame.mixer.Sound("sounds/popstatic.wav")
 
 		self.vents_sounds = pygame.mixer.Sound("sounds/ventwalk1.wav")
 

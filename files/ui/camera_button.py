@@ -61,6 +61,9 @@ class CameraButton:
         else:
             if self.monitor_button.mouse_hovered or self.quitting_camera:
                 if not self.camera_being_pressed:
+                    if not self.quitting_camera:
+                        App.objects.office.random_number()
+                    
                     self.quitting_camera = True
 
             else:
@@ -82,6 +85,5 @@ class CameraButton:
         self.camera_being_pressed = True
         self.quitting_camera = False
         App.assets.camera_sound_2.play()
-        App.objects.office.random_number()
         endo = App.objects.Animatronics.animatronics_in_game["ENDO"]
         endo.rest(App)
