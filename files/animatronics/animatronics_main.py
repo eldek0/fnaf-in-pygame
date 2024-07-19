@@ -11,6 +11,7 @@ from files.animatronics.foxy import Foxy
 from files.animatronics.mangle import Mangle
 from files.animatronics.baloon_boy import BaloonBoy
 from files.animatronics.golden_freddy import GoldenFreddy
+from files.animatronics.endo_skeleton import EndoSkeleton
 
 class AnimatronicsMain:
     def __init__(self, App):
@@ -27,6 +28,7 @@ class AnimatronicsMain:
             "MANGLE":Mangle(App=App, aggresivity=0, custom_index=8),
             "GOLDEN_FREDDY":GoldenFreddy(App=App, aggresivity=0, custom_index=9),
             "PUPPET":Puppet(App=App, aggresivity=0, custom_index=None),
+            "ENDO":EndoSkeleton(App=App, aggresivity=1, custom_index=None)
         }
         self.gameOver = False
         self.being_jumpscared = False
@@ -50,7 +52,7 @@ class AnimatronicsMain:
 
     def update_animatrionic_position(self):
         self.every_animatrionic_position = {
-            -1:[],0:[], 1:[], 2:[], 3:[], 4:[], 5:[], 6:[], 7:[],
+            -2:[], -1:[],0:[], 1:[], 2:[], 3:[], 4:[], 5:[], 6:[], 7:[],
             8:[], 9:[], 10:[], 11:[], 12:[], 101:[], 102:[],
             103:[], 104:[]
         }

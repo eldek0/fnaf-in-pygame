@@ -1,4 +1,4 @@
-import pygame
+import pygame, random
 
 class Office:
     def __init__(self, App):
@@ -26,6 +26,11 @@ class Office:
         # Left and right movement hitbox
         self.move_left, self.move_right = pygame.Rect(0, 0, 300, App.dimentions[1]), pygame.Rect(App.dimentions[0] - 300, 0, 300, App.dimentions[1])
 
+        self.bbg_show = False
+        self.dwarq_show = False
+        self.plastic_show = False
+        self.random_num:int = 0
+
     def update(self, App, canInteract=True, draw=True, animate=True):
         if self.animatronic_in_office:
             canInteract = False
@@ -34,8 +39,10 @@ class Office:
         if canInteract or self.animatronic_in_office:
             self.camera_movement(App)
 
+        self.check_eggs()
+
         if draw:
-            App.surface.blit(self.office_sprite, self.position)
+            self.draw_office(App)
 
         if canInteract:
             self.hallway_interact(App)
@@ -55,6 +62,7 @@ class Office:
 
             self.desk_update(App)
             self.desk_rewards(App)
+            
             if not animate:
                 App.animations.desk.animate = False
 
@@ -63,6 +71,19 @@ class Office:
             App.animations.darkness.update(App.uiSurface, App.deltaTime)
             if not App.animations.darkness.is_animating:
                 self.hallway_animatrionic_fade = False
+
+    def draw_office(self, App):
+        App.surface.blit(self.office_sprite, self.position)
+
+        if self.dwarq_show:
+            App.surface.blit(App.assets.DWARF, (300 + self.position[0], 0))
+            if pygame.time.get_ticks() - self.timer > 6000:
+                App.playing = False
+
+        elif self.plastic_show:
+            App.surface.blit(App.assets.plastic, (1050 + self.position[0], 0))
+
+        if App.objects.open_monitor_button.inCamera: self.random_num = 0
 
     def desk_rewards(self, App):
         custom_nights_completed = App.menu.custom_night_menu.completed_nights
@@ -133,6 +154,7 @@ class Office:
             self.office_sprite = App.assets.flash_offices[self.get_flashed_office(App)]
         else:
             self.office_sprite = App.assets.office1
+            
 
         hallway_collide = App.mouse_hitbox.colliderect(hallway_rect)
 
@@ -241,8 +263,22 @@ class Office:
 
         #pygame.draw.rect(App.uiSurface, (200, 255, 100), easter_egg_rect)
 
+    def check_eggs(self):
+        if self.random_num > 9304 and self.random_num < 9600: 
+            self.bbg_show = True
+        elif self.random_num == 6161:
+            self.dwarq_show = True
+        elif self.random_num > 100 and self.random_num < 500:
+            self.plastic_show = True
+        else:
+            self.bbg_show = False
+            self.dwarq_show = False
+            self.plastic_show = False
+
     def desk_update(self, App):
         App.animations.desk.position = [ self.position[0] + 560,App.dimentions[1] - 435]
+        if self.bbg_show:
+            App.surface.blit(App.assets.baloon_girl, (850 + self.position[0] , App.surface.get_height() - 100))
         App.animations.desk.update(App.surface, App.deltaTime)
 
     def get_flashed_office(self, App):
@@ -376,3 +412,7 @@ class Office:
                 self.animatronic_in_office = False
                 if not animatrionic._prepare_to_jumpscare:
                     animatrionic.change_location_id(App, 0, forced=True)
+
+    def random_number(self): 
+        self.random_num = random.randint(0, 150_000)
+        self.timer = pygame.time.get_ticks()

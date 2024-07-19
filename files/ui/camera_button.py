@@ -29,7 +29,11 @@ class CameraButton:
 
         if App.animations.monitor.sprite_num == 0 and self.quitting_camera:
             self.quitting_camera = False
-        
+    
+    def eggs(self, App):
+        endo = App.objects.Animatronics.animatronics_in_game["ENDO"]
+        endo.try_appearance(App)
+
     def canEnter(self, App): return not (App.objects.mask_button.entering_mask or App.objects.mask_button.inMask or App.objects.mask_button.quitting_mask)
 
     def animation(self, App, canInteract=True):
@@ -47,6 +51,7 @@ class CameraButton:
                             App.objects.camera.static_animation = True
                             self.entering_camera = False
                             App.assets.camera_sound_1.play()
+                            self.eggs(App)
                         App.animations.monitor.desactivate = True
 
                         self.camera_being_pressed = True
@@ -76,4 +81,7 @@ class CameraButton:
         self.inCamera = False
         self.camera_being_pressed = True
         self.quitting_camera = False
-        App.assets.camera_sound_2.play()             
+        App.assets.camera_sound_2.play()
+        App.objects.office.random_number()
+        endo = App.objects.Animatronics.animatronics_in_game["ENDO"]
+        endo.rest(App)

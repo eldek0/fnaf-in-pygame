@@ -119,16 +119,18 @@ class Animatronic(ABC):
 
     def _change_occupied_camera_or_office(self, App, state:bool):
         """ Change occupied camera and office """
-        # If previous_movement is below 100 its a camera
-        if self._previous_movement[0] -1 < 100:
-            App.objects.camera.occupied_camera[self._previous_movement[0] - 1] = state # Camera
-        else:
-            App.objects.office.occupied_office[self._previous_movement[0] - 101] = state # Office
+        if self._previous_movement[0] - 1 >= 0:
+            # If previous_movement is below 100 its a camera
+            if self._previous_movement[0] -1 < 100:
+                App.objects.camera.occupied_camera[self._previous_movement[0] - 1] = state # Camera
+            else:
+                App.objects.office.occupied_office[self._previous_movement[0] - 101] = state # Office
 
-        if self._previous_movement[1] -1 < 100:
-            App.objects.camera.occupied_camera[self._previous_movement[1] - 1] = state # Camera
-        else:
-            App.objects.office.occupied_office[self._previous_movement[1] - 101] = state # Office
+        if self._previous_movement[1] - 1 >= 0:
+            if self._previous_movement[1] -1 < 100:
+                App.objects.camera.occupied_camera[self._previous_movement[1] - 1] = state # Camera
+            else:
+                App.objects.office.occupied_office[self._previous_movement[1] - 101] = state # Office
 
     def movement(self, App):
         pass

@@ -8,12 +8,11 @@ class Puppet(Animatronic):
 
     def movement(self, App):
         if App.objects.music_box.times_out:
-            self.secondPositionId = 3
             if self.secondPositionId == 1:
                 self.change_location_id(App, 11, secondPositionId=2)
                     
             elif self.secondPositionId == 2:
-                if pygame.time.get_ticks() - self.timer > 10000:
+                if pygame.time.get_ticks() - self.timer > 1000:
                     self.change_location_id(App, 11, secondPositionId=3)
 
             elif self.secondPositionId == 3:

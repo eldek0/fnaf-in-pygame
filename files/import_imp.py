@@ -553,6 +553,11 @@ class import_images:
 		self.err_img = pygame.image.load(f"sprites/cutscenes/3.png").convert()
 		self.its_me = pygame.image.load(f"sprites/cutscenes/4.png").convert()
 		
+		# Easter eggs
+		self.baloon_girl = pygame.image.load(f"sprites/office/inside/8.png").convert_alpha() 
+		self.DWARF = pygame.image.load("sprites/office/inside/DWARF.png").convert_alpha()
+		self.plastic = pygame.image.load("sprites/office/inside/10.png").convert_alpha()
+
 		# Minigames
 
 		# Give gifts, Give life

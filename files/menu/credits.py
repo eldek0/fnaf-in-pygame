@@ -32,7 +32,7 @@ class Credits:
         for i in range(len(names)):
             info = names[i].split(",")
 
-            t = Text(App, str(info[0]), (margin_x, margin_yt + margin_yt_between_texts*(i)) - self.scroll_down, App.assets.ocr_font20, (255, 255, 255), lock="x")
+            t = Text(App, str(info[0]), (margin_x, margin_yt + margin_yt_between_texts*(i) -  self.scroll_down), App.assets.ocr_font20, (255, 255, 255), lock="x")
 
             click = pygame.mouse.get_pressed()
             if (len(info) > 1):

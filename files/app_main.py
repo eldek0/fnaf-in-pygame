@@ -124,7 +124,7 @@ class App:
 					pygame.display.toggle_fullscreen()
 
 				if self.debug:
-					if event.key == pygame.K_ESCAPE:
+					if event.key == pygame.K_l:
 						self.quit_game()
 					
 					if event.key == pygame.K_m:
@@ -134,11 +134,6 @@ class App:
 		self.uiSurface.fill((0, 0, 0, 0))
 		#Draw on screen
 		dr.Draw(self)
-
-		try:
-			draw_hitbox(self.uiSurface, (255, 255, 255), self.mouse_hitbox)
-		except:
-			print("fail")
 
 		if self.warning_init.is_finished():
 			self.shaderMain.render_direct(pygame.Rect(0, 0, self.dimentions[0], self.dimentions[1]))

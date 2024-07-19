@@ -85,6 +85,11 @@ class Camera:
 
         #pygame.draw.rect(App.surface, (255,0,0), self.flash_light_hitbox)
 
+        if App.objects.music_box.charge < 8:
+            endo = App.objects.Animatronics.animatronics_in_game["ENDO"]
+            if endo.locationId == 11:
+                endo.rest(App)   
+
     def cam_map(self, App):
         App.uiSurface.blit(App.assets.camera_map, (550, 310))
         self.draw_cam_map_buttons(App)
@@ -334,12 +339,15 @@ class Camera:
         toy_chica = App.objects.Animatronics.animatronics_in_game["TOY_CHICA"]
         baloon_boy = App.objects.Animatronics.animatronics_in_game["BALOON_BOY"]
         withered_bonnie = App.objects.Animatronics.animatronics_in_game["WITHERED_BONNIE"]
+        endo = App.objects.Animatronics.animatronics_in_game["ENDO"]
         if toy_chica.locationId == 5 and baloon_boy.locationId != 5 and withered_bonnie.locationId != 5:
             return 0, 4
         elif toy_chica.locationId != 5 and baloon_boy.locationId == 5 and withered_bonnie.locationId != 5:
             return 0, 3
         elif toy_chica.locationId != 5 and baloon_boy.locationId != 5 and withered_bonnie.locationId == 5:
             return 0, 2
+        elif toy_chica.locationId != 5 and baloon_boy.locationId != 5 and withered_bonnie.locationId != 5 and endo.locationId == 5:
+            return 0, 5
         elif toy_chica.locationId != 5 and baloon_boy.locationId != 5 and withered_bonnie.locationId != 5:
             return 0, 1
 
@@ -429,10 +437,15 @@ class Camera:
     def prize_corner(self, App):
         """ 11 """
         puppet = App.objects.Animatronics.animatronics_in_game["PUPPET"]
-        if puppet.secondPositionId == 2:
+        endo = App.objects.Animatronics.animatronics_in_game["ENDO"]
+        if puppet.secondPositionId == 1 and App.objects.music_box.times_out:
             return 0, 2
-        elif puppet.secondPositionId == 3:
+        elif puppet.secondPositionId == 2 and App.objects.music_box.times_out:
             return 0, 3
+        elif puppet.secondPositionId == 3 and App.objects.music_box.times_out:
+            return 0, 4
+        elif endo.locationId == 11:
+            return 0, 5
         else:
             return 0, 1
     # Wider
