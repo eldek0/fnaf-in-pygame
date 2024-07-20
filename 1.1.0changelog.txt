@@ -1,4 +1,5 @@
 - Minigames and more secrets were added
+- A real time mode was added (unlockable when finishing night 6)
 - A barrel shader was added to the gameplay, similar to the original game.
 - Changed night 1. Now toy chica and toy freddy can move.
 - Changed music box time.
@@ -9,17 +10,15 @@
 - Battery would still be consumed even if the camera is occupied
 - Sounds would not reproduce correctly
 - Mask button used to break if you spamed it
+- Added a credits section
 
 TO FIX (preferently before adding the new stuff like minigames):
 GENERAL
-- Puppet timer is weird
-- Toy freddy takes way long to move
-- Hallway animatronics often appear from nowhere
-- Foxy leave hallway without waiting
 - The game sometimes crashes at camera 11? FIXED
 - The marionet (in the cutscene) is kinda glitched FIXED
 - Encrypt private and public RSA is not the same as fnaf 1.0.05 FIXED
-- Hitboxes wont suit properly on fullscreen
+- Hitboxes wont suit properly on fullscreen FIXED
+- Camera/mask button dont fully function whith withered animatronics
 
 SHADER 
 - Fade in gameplay does not work right (and when the night ends makes the game crash) FIXED
@@ -29,6 +28,6 @@ Minigames ! (SAVETHEM, Give Gifts, Give Life, Take Cake to the Children, Foxy Go
 Easter eggs (shadow bonnie, Endo skeletons, balloon girl, Paper Buddy, Eyeless Screens) ADDED TO ADD (Shadow Freddy)
 Be able to use the keyboard to play the game
 Add helpful tips (like the ctrl tip to flashlight when you start the game) DONE
-¿A real time mode?
+¿A real time mode? DONE
 
 

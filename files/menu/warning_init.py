@@ -45,6 +45,7 @@ class WarningInit:
                 App.menu.custom_night_menu.completed_nights = data["Custom"]
                 App.menu.cutscenes_data = data["Cutscenes"]
                 App.ctrl_adv = data["Ctrl"]
+                App.menu.passed_real_time = data["RealTime"]
             
             if data["Played"]: # At least opened the game once
                 self.death_screen_probability(App)

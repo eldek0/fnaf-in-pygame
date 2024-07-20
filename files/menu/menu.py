@@ -23,6 +23,9 @@ class Menu:
         custom_night_dims = App.assets.custom_night_option.get_rect()
         self.custom_night_button = Button((80, 630), (custom_night_dims.width, custom_night_dims.height), App.assets.custom_night_option)
 
+        real_dims = App.assets.real_time_button.get_rect()
+        self.real_time_button = Button((80, 690), (real_dims.width, real_dims.height), App.assets.real_time_button)
+
         self.background_id = 0
         self.random_value_number = random.randint(500, 2000)
         self.random_value_number2 = random.randint(200, 800)
@@ -53,6 +56,8 @@ class Menu:
 
         self.credits = Credits()
 
+        self.play_real_time_mode = False
+
         self.essentials_variables(App)
 
     def essentials_variables(self, App):
@@ -60,16 +65,18 @@ class Menu:
 
         self.cutscene = Cutscene(App)
 
-        self.cutscenes_data = [True, True, True, False]
+        self.cutscenes_data = [False, False, False, False]
 
-        self.inNight = 3
-        self.nightToPlay = 3
+        self.inNight = 1
+        self.nightToPlay = 1
 
-        self.played_once = True
+        self.played_once = False
+
+        self.passed_real_time = False
 
     def static_animation(self, App):
-        App.animations.static_anim_1.update(App.uiSurface, App.deltaTime)
         App.animations.static_anim_1.alpha = 190
+        App.animations.static_anim_1.update(App.uiSurface, App.deltaTime)
 
         # More static animation
         App.animations.static_stripes_animation5.update(App, App.uiSurface)
@@ -88,6 +95,12 @@ class Menu:
             App.uiSurface.blit(App.assets.star, (80 + 65, title_dims.h + 35))
             if self.custom_night_menu.completed_nights[0] == True: # 4/20 mode is completed
                 App.uiSurface.blit(App.assets.star, (80 + 65*2, title_dims.h + 35))
+
+                if self.passed_real_time:
+                    App.uiSurface.blit(App.assets.blue_star, (80 + 65*3, title_dims.h + 35))
+            else:
+                if self.passed_real_time:
+                    App.uiSurface.blit(App.assets.blue_star, (80 + 65*2, title_dims.h + 35))
 
     def reset_data_option(self, App):
         key = pygame.key.get_pressed()
@@ -134,6 +147,7 @@ class Menu:
                 App.uiSurface.blit(App.assets.sel_scott_credits, (credits_rect.x, credits_rect.y))
                 press = pygame.mouse.get_pressed()
                 if press[0]:
+                    self.credits.__init__()
                     self.start_state = 12
             else:
                 App.uiSurface.blit(App.assets.scott_credits, (credits_rect.x, credits_rect.y))
@@ -145,11 +159,12 @@ class Menu:
 
             self.new_game_button.update(App.uiSurface, App.mouse_hitbox)
             self.continue_button.update(App.uiSurface, App.mouse_hitbox)
-            
+
             if self.inNight >= 6:
                 self.night_six_button.update(App.uiSurface, App.mouse_hitbox)
             if self.inNight >= 7:
                 self.custom_night_button.update(App.uiSurface, App.mouse_hitbox)
+                self.real_time_button.update(App.uiSurface, App.mouse_hitbox)
 
         if self.start_state == 0:
             self.change_background(App)
@@ -175,9 +190,15 @@ class Menu:
                 if self.played_once:
                     self.option_to_select(App, lambda:self.option_3(), 3)
 
-            elif ((self.custom_night_button.mouse_hovered and mouse[0]) or (keys[pygame.K_RETURN] and self.option == 4)) and self.inNight >= 7:
-                if self.played_once:
-                    self.option_to_select(App, lambda:self.option_4(), 4)
+            elif self.inNight >= 7:
+
+                if ((self.custom_night_button.mouse_hovered and mouse[0]) or (keys[pygame.K_RETURN] and self.option == 4)):
+                    if self.played_once:
+                        self.option_to_select(App, lambda:self.option_4(), 4)
+
+                elif ((self.real_time_button.mouse_hovered and mouse[0]) or (keys[pygame.K_RETURN] and self.option == 5)):
+                    if self.played_once:
+                        self.option_to_select(App, lambda:self.option_5(), 5)
 
             if not mouse[0]: 
                 self.pressed_click = False
@@ -197,6 +218,8 @@ class Menu:
                 App.uiSurface.blit(App.assets.option_selected, (28, self.night_six_button.position[1] + 3))
             elif self.option == 4:
                 App.uiSurface.blit(App.assets.option_selected, (28, self.custom_night_button.position[1] + 3))
+            elif self.option == 5:
+                App.uiSurface.blit(App.assets.option_selected, (28, self.real_time_button.position[1] + 3))
 
         if self.start_state > 0:
             if self.start_state != 100:
@@ -229,6 +252,11 @@ class Menu:
         self.objects_alpha = 255
         self.nightToPlay = 7
 
+    def option_5(self):
+        self.play_real_time_mode = True
+        self.start_state = 2
+        self.objects_alpha = 255
+
     def option_to_select(self,App, func, option:int):
         self.option = option
         if self.option_ready_to_select == option and not self.pressed_click:
@@ -251,7 +279,7 @@ class Menu:
                 self.option = 1
             elif (self.option > 3 and self.inNight == 6):
                 self.option = 1
-            elif (self.option > 4 and self.inNight >= 7):
+            elif (self.option > 5 and self.inNight >= 7):
                 self.option = 1
             self.pressed_key = True
 
@@ -265,7 +293,7 @@ class Menu:
             elif (self.option < 1 and self.inNight == 6):
                 self.option = 3
             elif (self.option < 1 and self.inNight >= 7):
-                self.option = 4
+                self.option = 5
             self.pressed_key = True
         
         if not keys[pygame.K_DOWN] and not keys[pygame.K_UP]:
@@ -273,9 +301,9 @@ class Menu:
 
         return keys
 
-    def menu_exit(self, App):
+    def menu_exit(self, App, force=False):
         keys = pygame.key.get_pressed()
-        if keys[pygame.K_ESCAPE] and not App.menu.pressed_key:
+        if (keys[pygame.K_ESCAPE] and not App.menu.pressed_key) or force:
             App.menu.start_state = 0
             App.menu.static_with_change = True
             App.menu.pressed_key = True      
@@ -337,6 +365,7 @@ class Menu:
         cutscenes_data = self.cutscenes_data
         custom_completed_nights = self.custom_night_menu.completed_nights
         custom_night = self.custom_night_menu
+        passed_real_time = self.passed_real_time
 
         self.__init__(App)
 
@@ -344,13 +373,20 @@ class Menu:
         self.played_once = played_once
         self.cutscenes_data = cutscenes_data
         self.custom_night_menu = custom_night
+        self.passed_real_time = passed_real_time
 
 
     def show_night(self, App):
-        if self.start_state != 10:
-            App.assets.nights_12am[self.nightToPlay - 1].set_alpha(self.objects_alpha)
-            night_dims = App.assets.nights_12am[self.nightToPlay - 1].get_rect()
-            App.uiSurface.blit(App.assets.nights_12am[self.nightToPlay - 1], (App.dimentions[0] / 2 - night_dims.w / 2, App.dimentions[1] / 2 - night_dims.h / 2))
+        if self.start_state <= 7:
+            label = None
+            if self.play_real_time_mode:
+                label = App.assets.realTimeNight
+            else:
+                label = App.assets.nights_12am[self.nightToPlay - 1]
+
+            label.set_alpha(self.objects_alpha)
+            night_dims = label.get_rect()
+            App.uiSurface.blit(label, (App.dimentions[0] / 2 - night_dims.w / 2, App.dimentions[1] / 2 - night_dims.h / 2))
 
         match self.start_state:
             case 2:
@@ -393,8 +429,8 @@ class Menu:
                 self.start_game = True
                 self.played_once = True
                 App.animations = animations_init(App)
-                App.objects = GameObjects(App)
-                App.game = Game(App)
+                App.objects = GameObjects(App, real_time_mode=self.play_real_time_mode)
+                App.game = Game(App, real_time_mode=self.play_real_time_mode)
             case 10: 
                 # Init objects for custom night menu
                 App.surface.fill((0, 0, 0))

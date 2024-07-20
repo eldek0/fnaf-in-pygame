@@ -73,6 +73,9 @@ class CustomNight:
 
         self.check_in_mode(App)
         self.draw_mode_buttons(App)
+
+        App.assets.esc_to_return.set_alpha(150)
+        App.uiSurface.blit(App.assets.esc_to_return, (15, App.uiSurface.get_height() - 15))
             
 
     def check_in_mode(self, App):

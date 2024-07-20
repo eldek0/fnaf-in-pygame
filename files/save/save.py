@@ -19,6 +19,7 @@ def save(App):
     data["Custom"] = App.menu.custom_night_menu.completed_nights
     data["Cutscenes"] = App.menu.cutscenes_data
     data["Ctrl"] = App.ctrl_adv
+    data["RealTime"] = App.menu.passed_real_time
     
 
     # Get key
@@ -27,8 +28,10 @@ def save(App):
 
     PUBLIC_KEY = rsa.PublicKey.load_pkcs1(raw_public_key)
 
-    json_transform = json.dumps(data, indent=2)
-
+    if App.debug:
+        json_transform = json.dumps(data, indent=2)
+    else:
+        json_transform = json.dumps(data)
     with open("files/utils.txt", "wb") as f:
         if not App.debug:
             f.write(
@@ -48,14 +51,15 @@ def default():
             False, False, False, False, False
         ],
         "Cutscenes":[False, False, False, False],
-        "Ctrl":False
+        "Ctrl":False,
+        "RealTime":False
     }
     return data
 
 def check_if_data_is_in_file(App, data):
     """ Some features are not aveliable in version 1.0.05 and below,"""
     """ so the files must be updated correctly if that's the case."""
-    to_check = ["Ctrl"]
+    to_check = ["Ctrl", "RealTime"]
     for check in to_check:
         if not check in list(data.keys()):
             print("not, updating")

@@ -414,9 +414,9 @@ class import_images:
 		for i in range(10):
 			n = pygame.image.load(f"sprites/numbers/1rst/medium/{i}.png").convert()
 			n.set_colorkey((0, 0, 0))
-			self.numbers.append(
-				n
-			)
+			self.numbers.append(n)
+		self.dots = pygame.image.load(f"sprites/numbers/1rst/medium/dot.png").convert()
+		self.dots.set_colorkey((0, 0, 0))
 
 		self.numbers_small = []
 		for i in range(10):
@@ -497,6 +497,7 @@ class import_images:
 		self.night_label_2 = pygame.image.load("sprites/menu/logos/8.png").convert()
 		self.night_label_2.set_colorkey((0, 0, 0))
 
+		self.blue_star = pygame.image.load("sprites/menu/misc/5.png").convert_alpha()
 
 		# CUSTOM NIGHT
 		# Animatrionics icons and labels
@@ -521,6 +522,8 @@ class import_images:
 		self.arrow_left2 = pygame.image.load(f"sprites/custom_night/labels/6.png").convert()
 
 		self.custom_night_level_info = pygame.image.load(f"sprites/custom_night/labels/7.png").convert()
+
+		self.esc_to_return = pygame.image.load(f"sprites/menu/logos/12.png").convert()
 
 		# Modes
 		self.modes_labels = []
@@ -728,6 +731,12 @@ class import_images:
 			pygame.image.load("sprites/rare/2.png").convert(),
 			pygame.image.load("sprites/rare/3.png").convert()
 		]
+
+		# Real time elements
+		self.real_time_button = pygame.image.load("sprites/menu/logos/11.png").convert()
+		self.real_time_button.set_colorkey((0, 0, 0))
+
+		self.realTimeNight = pygame.image.load("sprites/menu/nights/8.png").convert()
 
 		# Get crops from cropped images
 		import_images.cropped_images(self)

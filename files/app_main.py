@@ -1,5 +1,4 @@
 import pygame
-import time
 from pygame.locals import QUIT
 
 import files.game.draw as dr
@@ -8,19 +7,18 @@ from files.animations.animations_init import animations_init
 from files.game.game_objects import GameObjects
 from files.game.game_controller import Game
 from files.menu.menu import Menu
-from files.save.save import save, read
+from files.save.save import save
 from files.menu.warning_init import WarningInit
 import include.pygame_shaders as pygame_shaders
 from files.minigames.minigame import Minigame
-from files.utils import get_shader_diff, draw_hitbox
+from files.utils import get_shader_diff
 
 default = (pygame_shaders.DEFAULT_VERTEX_SHADER, pygame_shaders.DEFAULT_FRAGMENT_SHADER)
 gameplay = ("files/shaders/gameplay/vertex.glsl", "files/shaders/gameplay/fragment.glsl")
-sepia = (pygame_shaders.DEFAULT_VERTEX_SHADER, "files/shaders/sepia/fragment.glsl")
 minigames = ("files/shaders/minigames/vertex.glsl", "files/shaders/minigames/fragment.glsl")
 
 class App:
-	def __init__(self, initial_dimentions=(1024, 768), caption="Five Nights at Freddy's - made with pygame"):
+	def __init__(self, initial_dimentions=(1024, 768), caption="Five Nights at Freddy's 2 python edition"):
 		self.playing = True
 		self.loaded = False
 
@@ -70,7 +68,7 @@ class App:
 
 		self.loaded = True
 
-		self.debug = True # debugging the game
+		self.debug = False # debugging the game
 
 		if self.debug: print("Game on debug mode")
 
@@ -103,7 +101,8 @@ class App:
 			# Frames per second
 			self.game_fps = self.clock.tick(self.frames_per_second)
 
-			pygame.display.set_caption(str(round(self.clock.get_fps(), 2)) ) # Win's name
+			if self.debug:
+				pygame.display.set_caption(str(round(self.clock.get_fps(), 2)) ) # Win's name
 
 			#DeltaTime
 			self.get_deltatime()

@@ -9,7 +9,7 @@ from files.ui.battery import Battery
 from files.ui.game_timer import GameTimer
 
 class GameObjects:
-    def __init__(self, App):
+    def __init__(self, App, real_time_mode=False):
         # Monitor button
         self.open_monitor_button = CameraButton(App, draw_box=False)
         
@@ -22,9 +22,9 @@ class GameObjects:
         # Camera class
         self.camera = Camera(App)
         
-        self.battery = Battery(App)
+        self.battery = Battery(App, real_time_mode=real_time_mode)
 
-        self.gameTimer = GameTimer(App)
+        self.gameTimer = GameTimer(App, real_time_mode=real_time_mode)
 
         # Animatronics manager
         self.Animatronics = AnimatronicsMain(App)

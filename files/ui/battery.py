@@ -1,12 +1,15 @@
 import pygame
+from files.ui.game_timer import GameTimer
 
 class Battery:
-    def __init__(self, App):
+    def __init__(self, App, real_time_mode=False):
         # 100 = Maximum
         # 0 = No battery
         self.charge = 100
         self.position = [45, 40]
         self.surface_index = 0
+        self.real_time_mode = real_time_mode
+        self.CHANGE_CONST = 0.0152
 
     def update(self, App, update_charge=True):
         App.uiSurface.blit(App.assets.flashlight_label, [self.position[0] + 5, self.position[1] - 15])
@@ -25,7 +28,10 @@ class Battery:
         ]
         for state in usage_detections:
             if state:
-                self.charge -= 0.0152 * App.deltaTime
+                if self.real_time_mode:
+                    self.charge -= (self.CHANGE_CONST * App.objects.gameTimer.GAMEHOUR) / App.objects.gameTimer.REALLIFEHOUR
+                else:
+                    self.charge -= self.CHANGE_CONST * App.deltaTime
         
         if self.charge < 0:
             self.charge = 0

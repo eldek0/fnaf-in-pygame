@@ -8,8 +8,9 @@ from files.game.night import NightAIChanger
 from files.game.telephone import Telephone
 
 class Game:
-    def __init__(self, App):
+    def __init__(self, App, real_time_mode=False):
         self.gameOver = False
+        self.real_time_mode = real_time_mode
 
         self.TIME_PLAYING = pygame.time.get_ticks()
         self.ambiance_sound = pygame.time.get_ticks()
@@ -31,6 +32,9 @@ class Game:
         self.telephone = Telephone(App)
 
         self.num_of_channels = 32
+
+    def isInRealTime(self)->bool:
+        return self.real_time_mode
 
     def set_audio(self, volume:int):
         self.sounds_shutted = False
@@ -57,14 +61,14 @@ class Game:
                 pygame.mixer.Channel(i).stop()
 
     def updater(self, App):
-        if App.objects.gameTimer.time == 6:
+        if App.objects.gameTimer.times[0] == 6:
             self.night_beaten = True
 
         if App.objects.Animatronics.being_jumpscared and not self.sounds_shutted:
             self.stop_sounds()
 
         if not (self.night_beaten and self.you_lost):
-            self.ai_updater.update(App, App.menu.nightToPlay)
+            self.ai_updater.update(App, App.menu.nightToPlay, realTimeMode=self.real_time_mode)
             if App.menu.nightToPlay != 7 and App.objects.Animatronics.being_jumpscared:
                 self.telephone.update(App, App.menu.nightToPlay)
 
