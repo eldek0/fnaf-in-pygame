@@ -43,8 +43,8 @@ class MusicBoxButton:
 
     def updateTicks(self, App):
         puppet = App.objects.Animatronics.animatronics_in_game["PUPPET"]
-        self.descharge_ticks = 17800/(math.log((puppet.aggresivity + 2)**6))
-        self.charge_ticks = (17200 - puppet.aggresivity*80.3)/(math.log((puppet.aggresivity + 2)**6))
+        self.descharge_ticks = 2400 - (puppet.aggresivity*20)
+        self.charge_ticks = 200 + (puppet.aggresivity*10)
 
     def run_time(self, App):
         self.updateTicks(App)
@@ -62,7 +62,7 @@ class MusicBoxButton:
             self.recharging_time = True
 
         if self.recharging_time:
-            if pygame.time.get_ticks() - self.timer > self.descharge_ticks - self.charge_ticks:
+            if pygame.time.get_ticks() - self.timer > self.charge_ticks:
                 if not self.charge >= 21:
                     self.charge += 1
                 self.timer = pygame.time.get_ticks()

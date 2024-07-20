@@ -3,8 +3,8 @@ import pygame
 from files.animatronics.animatronic_base import Animatronic
 
 class Foxy(Animatronic):
-    def __init__(self, App, aggresivity:int, custom_index:int):
-        super().__init__(aggresivity, 8, App.animations.foxy_jump, 8, custom_index)
+    def __init__(self, App, aggresivity:int, custom_index:int, img_show=None):
+        super().__init__(aggresivity, 8, App.animations.foxy_jump, 8, custom_index, img_show=img_show)
         self._light = 100
         self.movement_time = 340_000
         

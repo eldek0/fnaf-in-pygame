@@ -62,8 +62,8 @@ class Minigame:
             self.update_minigame(App)
 
     def update_minigame(self, App):
-        if not pygame.Channel(2).get_busy():
-            pygame.Channel(2).play(App.assets.minigame_ambient)
+        if not pygame.Channel(3).get_busy():
+            pygame.Channel(3).play(App.assets.minigame_ambient)
 
         minigame = self.minigames[self.inMinigameId]
         if not minigame.ended:
@@ -105,11 +105,15 @@ class Minigame:
         self.timer = pygame.time.get_ticks()
         self.static_timer = pygame.time.get_ticks()
 
-    def startMinigame(self, App):
+    def startMinigame(self, App, forceId:int=-1):
         pygame.mixer.music.unload()
         pygame.mixer.stop()
         self.__init__(App)
+        App.animations.__init__(App)
         App.assets.static_end.play()
         self.transMinigame = True
-        self.inMinigameId = random.randint(0, 3)
+        if forceId > -1:
+            self.inMinigameId = forceId
+        else:
+            self.inMinigameId = random.randint(0, 3)
         

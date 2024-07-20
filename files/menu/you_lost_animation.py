@@ -43,6 +43,7 @@ class YouLostAnimation:
                         App.minigame.startMinigame(App)
                     elif (self.ran_num > 5000 and self.ran_num < 5030):
                         pygame.mixer.stop()
+                        pygame.mixer.Channel(1).set_volume(1)
                         pygame.mixer.Channel(1).play(App.assets.popstatic)
                         self.ran_screen = random.randint(0, len(App.assets.rare)-1)
                         self.state += 1

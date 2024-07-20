@@ -1,9 +1,8 @@
 import pygame
-import pyperclip
-from files.Text import Text
+from files.ui.Text import Text
 
 def import_names() ->list:
-    with open("files/cre.txt", "r") as pk:
+    with open("files/cre.txt", "r", encoding="utf8") as pk:
         names = pk.readlines()
     return names
 
@@ -11,6 +10,7 @@ class Credits:
     def __init__(self):
         self.mouse_pressed = False
         self.scroll_down:int = -330
+        self.names = import_names()
 
     def update(self, App):
         surf:pygame.surface.Surface = App.surface
@@ -33,21 +33,17 @@ class Credits:
         thanks_subs.draw(uisurf)
         thanks_subs2.draw(uisurf)
 
-        names = import_names()
-        for i in range(len(names)):
-            text = names[i]
+        for i in range(len(self.names)):
+            text = self.names[i]
 
             t = Text(App, str(text), (margin_x, margin_yt + margin_yt_between_texts*(i)), App.assets.ocr_font20, (255, 255, 255), lock="x")
 
             t.draw(surf)
 
-            if i == len(names) - 1:
+            if i == len(self.names) - 1:
                 if t.y < -10:
                     App.menu.menu_exit(App, force=True)
 
         App.menu.menu_exit(App)
 
         self.scroll_down += 0.2
-
-        App.assets.esc_to_return.set_alpha(150)
-        uisurf.blit(App.assets.esc_to_return, (surf.get_width() - 130, surf.get_height() - 15))

@@ -6,6 +6,7 @@ from files.animations.animations_init import animations_init
 from files.menu.custom_night import CustomNight
 from files.menu.cutscene import Cutscene
 from files.menu.credits import Credits
+from files.menu.extras import Extras
 
 class Menu:
     def __init__(self, App): 
@@ -23,8 +24,8 @@ class Menu:
         custom_night_dims = App.assets.custom_night_option.get_rect()
         self.custom_night_button = Button((80, 630), (custom_night_dims.width, custom_night_dims.height), App.assets.custom_night_option)
 
-        real_dims = App.assets.real_time_button.get_rect()
-        self.real_time_button = Button((80, 690), (real_dims.width, real_dims.height), App.assets.real_time_button)
+        extras_size = App.assets.extras_button.get_rect()
+        self.extras_button = Button((800, 630), (extras_size.width, extras_size.height), App.assets.extras_button)
 
         self.background_id = 0
         self.random_value_number = random.randint(500, 2000)
@@ -57,6 +58,8 @@ class Menu:
         self.credits = Credits()
 
         self.play_real_time_mode = False
+
+        self.extras = Extras(App)
 
         self.essentials_variables(App)
 
@@ -164,7 +167,7 @@ class Menu:
                 self.night_six_button.update(App.uiSurface, App.mouse_hitbox)
             if self.inNight >= 7:
                 self.custom_night_button.update(App.uiSurface, App.mouse_hitbox)
-                self.real_time_button.update(App.uiSurface, App.mouse_hitbox)
+                self.extras_button.update(App.uiSurface, App.mouse_hitbox)
 
         if self.start_state == 0:
             self.change_background(App)
@@ -196,7 +199,7 @@ class Menu:
                     if self.played_once:
                         self.option_to_select(App, lambda:self.option_4(), 4)
 
-                elif ((self.real_time_button.mouse_hovered and mouse[0]) or (keys[pygame.K_RETURN] and self.option == 5)):
+                elif ((self.extras_button.mouse_hovered and mouse[0]) or (keys[pygame.K_RETURN] and self.option == 5)):
                     if self.played_once:
                         self.option_to_select(App, lambda:self.option_5(), 5)
 
@@ -219,7 +222,7 @@ class Menu:
             elif self.option == 4:
                 App.uiSurface.blit(App.assets.option_selected, (28, self.custom_night_button.position[1] + 3))
             elif self.option == 5:
-                App.uiSurface.blit(App.assets.option_selected, (28, self.real_time_button.position[1] + 3))
+                App.uiSurface.blit(App.assets.option_selected, (750, self.extras_button.position[1] + 3))
 
         if self.start_state > 0:
             if self.start_state != 100:
@@ -253,6 +256,11 @@ class Menu:
         self.nightToPlay = 7
 
     def option_5(self):
+        self.extras.inOption = 1
+        self.start_state = 13
+        self.pressed_key = False
+
+    def option_real_time(self):
         self.play_real_time_mode = True
         self.start_state = 2
         self.objects_alpha = 255
@@ -306,7 +314,10 @@ class Menu:
         if (keys[pygame.K_ESCAPE] and not App.menu.pressed_key) or force:
             App.menu.start_state = 0
             App.menu.static_with_change = True
-            App.menu.pressed_key = True      
+            App.menu.pressed_key = True
+
+        App.assets.esc_to_return.set_alpha(150)
+        App.uiSurface.blit(App.assets.esc_to_return, (15, App.uiSurface.get_height() - 15))    
 
     def static(self, App):
         if self.static_with_change:
@@ -442,6 +453,9 @@ class Menu:
 
             case 12: # Credits
                 self.credits.update(App)
+
+            case 13: # Extra!
+                self.extras.update(App)
 
             case 100: # Cutscenes
                 self.cutscene.update(App, self.inNight)

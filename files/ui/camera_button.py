@@ -81,9 +81,10 @@ class CameraButton:
                     self.quit_camera(App)
 
     def quit_camera(self, App):
-        self.inCamera = False
         self.camera_being_pressed = True
         self.quitting_camera = False
         App.assets.camera_sound_2.play()
-        endo = App.objects.Animatronics.animatronics_in_game["ENDO"]
-        endo.rest(App)
+        if not self.inCamera:
+            endo = App.objects.Animatronics.animatronics_in_game["ENDO"]
+            endo.rest(App)
+        self.inCamera = False

@@ -9,6 +9,7 @@ class GameTimer:
         ]
         if self.real_time_mode:
             hours_xpos = self.position[0] - 65*2
+            self.position[1] = 0
         else:
             hours_xpos = self.position[0]
 

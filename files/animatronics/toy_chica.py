@@ -3,8 +3,8 @@ import pygame
 from files.animatronics.animatronic_base import Animatronic
 
 class ToyChica(Animatronic):
-    def __init__(self, App, aggresivity:int, custom_index:int):
-        super().__init__(aggresivity, 9, App.animations.toy_chica_jump, 4, custom_index)
+    def __init__(self, App, aggresivity:int, custom_index:int, img_show=None):
+        super().__init__(aggresivity, 9, App.animations.toy_chica_jump, 4, custom_index, img_show=img_show)
 
     def movement(self, App):
         toy_bonnie = App.objects.Animatronics.animatronics_in_game["TOY_BONNIE"]
@@ -38,7 +38,6 @@ class ToyChica(Animatronic):
                     self.change_location_id(App, 103)
 
             case 103:
-                print(f"{pygame.time.get_ticks() - self.timer} + {self.vent_time_to_scare}")
                 if pygame.time.get_ticks() - self.timer > self.vent_time_to_scare and App.objects.open_monitor_button.inCamera:
                     self.jumpscare(App, force=True)
                 if App.objects.mask_button.inMask:

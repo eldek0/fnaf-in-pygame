@@ -25,7 +25,6 @@ class DarknessAnimation:
             self.fade_alpha = 255
         
     def reset(self):
-        print("resetting darkness")
         if self.reversed:
             self.fade_alpha = 1
         else:

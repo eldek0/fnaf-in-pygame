@@ -130,8 +130,38 @@ class App:
 					if event.key == pygame.K_l:
 						self.quit_game()
 					
-					if event.key == pygame.K_m:
+					elif event.key == pygame.K_m:
 						self.minigame.startMinigame(self)
+
+					elif event.key == pygame.K_g:
+						if self.menu.inNight < 7: 
+							self.menu.inNight += 1
+						self.menu.init_menu_and_save_vars(self)
+						self.menu.nightToPlay = self.menu.inNight
+						self.menu.start_state = 7
+
+
+					elif event.key == pygame.K_f:
+						if self.menu.inNight > 1: 
+							self.menu.inNight -= 1
+						self.menu.init_menu_and_save_vars(self)
+						self.menu.nightToPlay = self.menu.inNight
+						self.menu.start_state = 7
+					try:
+						if event.key == pygame.K_r:
+							if self.objects.gameTimer.times[0] == 12:
+								self.objects.gameTimer.times[0] = 1
+							else:
+								self.objects.gameTimer.times[0] += 1
+
+						elif event.key == pygame.K_e:
+							if self.objects.gameTimer.times[0] == 1:
+								self.objects.gameTimer.times[0] = 12
+							else:
+								self.objects.gameTimer.times[0] -= 1
+					except Exception:
+						pass
+						
 	def update(self, events):
 		self.surface.fill((0,0,0, 0))
 		self.uiSurface.fill((0, 0, 0, 0))

@@ -2,7 +2,7 @@ import pygame, random
 from abc import ABC
 
 class Animatronic(ABC):
-    def __init__(self, aggresivity:int, locationId:int, jumpscare_animation, rest_room:int, custom_index:int):
+    def __init__(self, aggresivity:int, locationId:int, jumpscare_animation, rest_room:int, custom_index:int, img_show=None):
         """
         locationId:
             - From 1 to 12 are room locations
@@ -40,6 +40,8 @@ class Animatronic(ABC):
         self.custom_index = custom_index # For custom night
         self.noise_timer = pygame.time.get_ticks()
         self.time_to_make_noise = 18_000
+        self.img_show = img_show
+        self.camera_time_to_appear = 2000
 
         # Aveliable animatrionics with the same room position
         self.aveliable_rooms_positions = {
@@ -237,3 +239,10 @@ class Animatronic(ABC):
     def return_to_rest_room(self, App):
         """ Changeing to room 0 will imediatly force the animatrionic to change to rest room """
         self.change_location_id(App, 0, forced=True)
+
+    def interrupt_in_office(self, App):
+        if pygame.time.get_ticks() - self.timer > self.movement_time / self.aggresivity and App.objects.open_monitor_button.inCamera:
+            if pygame.time.get_ticks() - self.withered_timer > self.camera_time_to_appear:
+                self.change_location_id(App, 104)
+        else:
+            self.withered_timer = pygame.time.get_ticks()

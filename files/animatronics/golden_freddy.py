@@ -3,8 +3,8 @@ import pygame, random
 from files.animatronics.animatronic_base import Animatronic
 
 class GoldenFreddy(Animatronic):
-    def __init__(self, App, aggresivity:int, custom_index:int):
-        super().__init__(aggresivity, 0, App.animations.golden_freddy_jump, 0, custom_index)
+    def __init__(self, App, aggresivity:int, custom_index:int, img_show=None):
+        super().__init__(aggresivity, 0, App.animations.golden_freddy_jump, 0, custom_index, img_show=img_show)
         self.time_to_react = 1000
         self.in_office = False
         self.attempted_once = False

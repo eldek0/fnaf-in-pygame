@@ -100,7 +100,7 @@ class NightBeatenAnimation:
                 if pygame.time.get_ticks() - self.confetti_timer > time_to_spawn + data["time_spawn"] + data["ran_time"] + anim.ran_value*8:
                     anim.position[0] += data["add"][0]/2.5 * App.deltaTime
                     anim.position[1] += data["add"][1]*1.5 * App.deltaTime
-                    anim.update(App.uiSurface)
+                    anim.update(App.uiSurface, App.deltaTime)
                 index += 1
 
     def end_reset_variables(self, App, toMenu=False):

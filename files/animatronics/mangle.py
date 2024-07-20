@@ -3,8 +3,8 @@ import pygame, random
 from files.animatronics.animatronic_base import Animatronic
 
 class Mangle(Animatronic):
-    def __init__(self, App, aggresivity:int, custom_index:int):
-        super().__init__(aggresivity, 12, App.animations.mangle_jump, 12, custom_index)
+    def __init__(self, App, aggresivity:int, custom_index:int, img_show=None):
+        super().__init__(aggresivity, 12, App.animations.mangle_jump, 12, custom_index, img_show=img_show)
         self.time_to_scare = random.randint(12000, 30000)
 
     def movement(self, App):

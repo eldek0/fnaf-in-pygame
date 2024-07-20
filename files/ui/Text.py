@@ -17,7 +17,7 @@ def Lock_to(lock:str, position:tuple, width:float, height:float, screen_areas:py
 	return 0
 
 class Text:
-	def __init__(self, App, txt:str, position:tuple, font:pygame.font.Font, color:tuple, lock:str=None):
+	def __init__(self, App, txt:str, position:tuple, font:pygame.font.Font, color:tuple, lock:str=None, lock_surf=None):
 
 		self.x = position[0]
 		self.y = position[1]
@@ -31,8 +31,10 @@ class Text:
 		self.h = self.Text.get_rect().height
 		self.Lock_formula = (0,0)
 
+		if not lock_surf: lock_surf = App.surface.get_rect()
+
 		if not lock == None:
-			self.Lock_formula = Lock_to(lock, (self.x, self.y), self.w, self.h, App.surface.get_rect() )
+			self.Lock_formula = Lock_to(lock, (self.x, self.y), self.w, self.h, lock_surf )
 
 	def update_text(self):
 		self.Text = self.font.render(self.txt,1,(self.color))

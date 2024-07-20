@@ -18,12 +18,12 @@ class MinigameDummy(ABC):
         pass
 
     def jumpscare(self, App, animation:SpritesAnimation):
-        if not pygame.mixer.Channel(0).get_busy():
-            pygame.mixer.Channel(0).set_volume(1)
-            pygame.mixer.Channel(0).play(App.assets.xScream1)
+        if not pygame.mixer.Channel(5).get_busy():
+            pygame.mixer.Channel(5).set_volume(1)
+            pygame.mixer.Channel(5).play(App.assets.xScream1)
         if animation.sprite_num >= len(animation.sprites) - 1:
+            pygame.mixer.stop()
             self.end_minigame()
-            pygame.mixer.Channel(0).stop()
 
         animation.update(App.uiSurface, App.deltaTime)
 

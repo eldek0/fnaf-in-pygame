@@ -468,6 +468,7 @@ class import_images:
 			self.six_animation.append(cl)
 
 		self.big_am = pygame.image.load(f"sprites/clock/1.png").convert()
+		self.big_am.set_colorkey((0, 0, 0))
 
 		# Telephone mute
 		self.telephone_mute = pygame.image.load(f"sprites/office/utils/20.png").convert_alpha()
@@ -579,19 +580,26 @@ class import_images:
 		self.soul = pygame.image.load("sprites/minigames/GG_GL/7.png").convert()
 		self.soul.set_colorkey((0, 0, 0))
 
-		self.gift = pygame.image.load("sprites/minigames/GG_GL/6.png").convert_alpha()
+		self.gift = pygame.image.load("sprites/minigames/GG_GL/6.png").convert()
+		self.gift.set_colorkey((0, 0, 0))
 
-		self.give_gifts = pygame.image.load("sprites/minigames/GG_GL/10.png").convert_alpha()
+		self.give_gifts = pygame.image.load("sprites/minigames/GG_GL/10.png").convert()
+		self.give_gifts.set_colorkey((90, 90, 90))
 
-		self.give_life = pygame.image.load("sprites/minigames/GG_GL/11.png").convert_alpha()
+		self.give_life = pygame.image.load("sprites/minigames/GG_GL/11.png").convert()
+		self.give_life.set_colorkey((90, 90, 90))
 
-		self.chica_mask = pygame.image.load("sprites/minigames/GG_GL/0.png").convert_alpha()
+		self.chica_mask = pygame.image.load("sprites/minigames/GG_GL/0.png").convert()
+		self.chica_mask.set_colorkey((0, 0, 0))
 
-		self.fred_mask = pygame.image.load("sprites/minigames/GG_GL/1.png").convert_alpha()
+		self.fred_mask = pygame.image.load("sprites/minigames/GG_GL/1.png").convert()
+		self.fred_mask.set_colorkey((0, 0, 0))
 
-		self.bonnie_mask = pygame.image.load("sprites/minigames/GG_GL/2.png").convert_alpha()
+		self.bonnie_mask = pygame.image.load("sprites/minigames/GG_GL/2.png").convert()
+		self.bonnie_mask.set_colorkey((0, 0, 0))
 
-		self.foxy_mask = pygame.image.load("sprites/minigames/GG_GL/3.png").convert_alpha()
+		self.foxy_mask = pygame.image.load("sprites/minigames/GG_GL/3.png").convert()
+		self.foxy_mask.set_colorkey((0, 0, 0))
 
 		# SAVE THEM
 
@@ -725,6 +733,13 @@ class import_images:
 		self.wasd = pygame.image.load("sprites/minigames/SAVE THEM/16.png").convert()
 		self.wasd.set_colorkey((0, 0, 0))
 
+		self.min_screenshots = []
+		for i in range(4):
+			self.min_screenshots.append(
+				pygame.image.load(f"sprites/minigames/screenshots/{i}.png").convert()
+			)
+
+
 		# rare
 		self.rare = [
 			pygame.image.load("sprites/rare/1.png").convert(),
@@ -732,11 +747,33 @@ class import_images:
 			pygame.image.load("sprites/rare/3.png").convert()
 		]
 
+		# Extras stuff
+		self.extras_button = pygame.image.load("sprites/menu/logos/13.png").convert()
+		self.extras_button.set_colorkey((0, 0, 0))
+
+		self.animatrionics_button = pygame.image.load("sprites/menu/logos/14.png").convert()
+		self.animatrionics_button.set_colorkey((0, 0, 0))
+
+		self.jumpscares_button = pygame.image.load("sprites/menu/logos/15.png").convert()
+		self.jumpscares_button.set_colorkey((0, 0, 0))
+
+		self.minigames_button = pygame.image.load("sprites/menu/logos/16.png").convert()
+		self.minigames_button.set_colorkey((0, 0, 0))
+		
+		self.sel_square = pygame.image.load("sprites/menu/logos/17.png").convert()
+		self.sel_square.set_colorkey((0, 0, 0))
+
+		self.anims_extra = []
+		for i in range(9):
+			self.anims_extra.append(
+				pygame.image.load(f"sprites/animatronics/{i}.png").convert_alpha()
+			)
+
 		# Real time elements
 		self.real_time_button = pygame.image.load("sprites/menu/logos/11.png").convert()
 		self.real_time_button.set_colorkey((0, 0, 0))
 
-		self.realTimeNight = pygame.image.load("sprites/menu/nights/8.png").convert()
+		self.realTimeNight = pygame.image.load("sprites/menu/nights/8.png").convert_alpha()
 
 		# Get crops from cropped images
 		import_images.cropped_images(self)

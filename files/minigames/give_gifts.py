@@ -8,7 +8,7 @@ class GiveGifts(MinigameDummy):
         super().__init__(App)
 
         self.surf_width, self.surf_height = App.surface.get_width(), App.surface.get_height()
-        self.puppet = Entity(App.assets.puppet_minigame, (self.surf_width/2 - App.assets.puppet_minigame.get_width()/2, self.surf_height/2 - App.assets.puppet_minigame.get_height()/2 + 60))
+        self.puppet = Entity(App.assets.puppet_minigame, (self.surf_width/2 - App.assets.puppet_minigame.get_width()/2, self.surf_height/2 - App.assets.puppet_minigame.get_height()/2 + 60), speed=9)
         self.score = 0 # One score is a hundred points 
         
         delta_y = 50
@@ -137,7 +137,7 @@ class GiveGifts(MinigameDummy):
                 pygame.mixer.Channel(1).play(App.assets.cake_sound)
             else:
                 pygame.mixer.Channel(1).play(App.assets.pop)
-                self.puppet.speed -= 4
+                self.puppet.speed -= 2
 
             self.gifts_and_masks_given[index] = True
             self.timer = pygame.time.get_ticks()

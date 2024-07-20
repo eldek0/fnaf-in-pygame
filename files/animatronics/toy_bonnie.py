@@ -3,8 +3,8 @@ import pygame
 from files.animatronics.animatronic_base import Animatronic
 
 class ToyBonnie(Animatronic):
-    def __init__(self, App, aggresivity:int, custom_index:int):
-        super().__init__(aggresivity, 9, App.animations.toy_bunny_jump, 3, custom_index)
+    def __init__(self, App, aggresivity:int, custom_index:int, img_show=None):
+        super().__init__(aggresivity, 9, App.animations.toy_bunny_jump, 3, custom_index, img_show=img_show)
         self.mask_timer = pygame.time.get_ticks()
 
     def movement(self, App):
@@ -31,8 +31,7 @@ class ToyBonnie(Animatronic):
                     self.change_location_id(App, 102)
 
             case 102:
-                if (pygame.time.get_ticks() - self.timer > self.vent_time_to_scare and App.objects.open_monitor_button.inCamera):
-                    self.change_location_id(App, 104)
+                self.interrupt_in_office(App)
                 if App.objects.mask_button.inMask:
                     if (pygame.time.get_ticks() - self.mask_timer > 1500):
                         self.change_location_id(App, 104)

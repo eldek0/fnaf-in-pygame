@@ -17,17 +17,17 @@ class AnimatronicsMain:
     def __init__(self, App):
 
         self.animatronics_in_game = {
-            "WITHERED_FREDDY":WitheredFreddy(App=App, aggresivity=0, custom_index=6),
-            "WITHERED_BONNIE":WitheredBonnie(App=App, aggresivity=0, custom_index=1),
-            "WITHERED_CHICA":WitheredChica(App=App, aggresivity=0, custom_index=0),
-            "FOXY":Foxy(App=App, aggresivity=0, custom_index=2),
-            "BALOON_BOY":BaloonBoy(App=App, aggresivity=0, custom_index=3),
-            "TOY_FREDDY":ToyFreddy(App=App, aggresivity=0, custom_index=5), 
-            "TOY_BONNIE":ToyBonnie(App=App, aggresivity=0, custom_index=4),
-            "TOY_CHICA":ToyChica(App=App, aggresivity=0, custom_index=7),
-            "MANGLE":Mangle(App=App, aggresivity=0, custom_index=8),
-            "GOLDEN_FREDDY":GoldenFreddy(App=App, aggresivity=0, custom_index=9),
-            "PUPPET":Puppet(App=App, aggresivity=0, custom_index=None),
+            "WITHERED_FREDDY":WitheredFreddy(App=App, aggresivity=0, custom_index=6, img_show=App.assets.anims_extra[0]),
+            "WITHERED_BONNIE":WitheredBonnie(App=App, aggresivity=0, custom_index=1, img_show=App.assets.anims_extra[1]),
+            "WITHERED_CHICA":WitheredChica(App=App, aggresivity=0, custom_index=0, img_show=App.assets.anims_extra[2]),
+            "FOXY":Foxy(App=App, aggresivity=0, custom_index=2, img_show=App.assets.anims_extra[3]),
+            "BALOON_BOY":BaloonBoy(App=App, aggresivity=0, custom_index=3, img_show=App.assets.office_baloon_boy),
+            "TOY_FREDDY":ToyFreddy(App=App, aggresivity=0, custom_index=5, img_show=App.assets.anims_extra[4]), 
+            "TOY_BONNIE":ToyBonnie(App=App, aggresivity=0, custom_index=4, img_show=App.assets.anims_extra[5]),
+            "TOY_CHICA":ToyChica(App=App, aggresivity=0, custom_index=7, img_show=App.assets.anims_extra[6]),
+            "MANGLE":Mangle(App=App, aggresivity=0, custom_index=8, img_show=App.assets.anims_extra[7]),
+            "GOLDEN_FREDDY":GoldenFreddy(App=App, aggresivity=0, custom_index=9, img_show=App.assets.office_golden_freddy),
+            "PUPPET":Puppet(App=App, aggresivity=0, custom_index=None, img_show=App.assets.anims_extra[8]),
             "ENDO":EndoSkeleton(App=App, aggresivity=1, custom_index=None)
         }
         self.gameOver = False
@@ -36,7 +36,7 @@ class AnimatronicsMain:
         self.update_animatrionic_position()
 
     def console_animatrionic_position_log(self):
-        #os.system("cls")
+        os.system("cls")
         keys = list(self.every_animatrionic_position.keys())
         for i in range(len(self.every_animatrionic_position)):
             animatrionics_in_position = self.every_animatrionic_position[keys[i]]

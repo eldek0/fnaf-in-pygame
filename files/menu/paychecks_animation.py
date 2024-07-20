@@ -22,7 +22,7 @@ class PaycheckAnimations:
             self.timer = pygame.time.get_ticks()
 
     def fade(self, App):
-        App.animations.fade_effect.update(App.uiSurface)
+        App.animations.fade_effect.update(App.uiSurface, App.deltaTime)
         
     def night_paycheck(self, App):
 

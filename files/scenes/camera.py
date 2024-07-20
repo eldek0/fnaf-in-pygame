@@ -387,6 +387,8 @@ class Camera:
         withered_freddy = App.objects.Animatronics.animatronics_in_game["WITHERED_FREDDY"]
         withered_bonnie = App.objects.Animatronics.animatronics_in_game["WITHERED_BONNIE"]
         withered_chica = App.objects.Animatronics.animatronics_in_game["WITHERED_CHICA"]
+        foxy = App.objects.Animatronics.animatronics_in_game["FOXY"]
+        endo = App.objects.Animatronics.animatronics_in_game["ENDO"]
 
         if withered_freddy.locationId == 8 and withered_bonnie.locationId == 8 and withered_chica.locationId == 8:
             return 0, 1
@@ -395,6 +397,10 @@ class Camera:
         elif withered_freddy.locationId == 8 and withered_bonnie.locationId != 8 and withered_chica.locationId != 8:
             return 0, 3
         elif withered_freddy.locationId != 8 and withered_bonnie.locationId != 8 and withered_chica.locationId != 8:
+            if foxy.locationId == 8:
+                return 0, 4
+            if endo.chance_ran == 1987:
+                return 0, 6
             return 0, 5
     # Wider
     def show_stage(self, App):

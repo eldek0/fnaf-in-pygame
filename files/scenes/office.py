@@ -34,7 +34,7 @@ class Office:
     def update(self, App, canInteract=True, draw=True, animate=True):
         if self.animatronic_in_office:
             canInteract = False
-            App.objects.open_monitor_button.quit_camera(App)
+            #App.objects.open_monitor_button.quit_camera(App)
         
         if canInteract or self.animatronic_in_office:
             self.camera_movement(App)
@@ -67,6 +67,7 @@ class Office:
                 App.animations.desk.animate = False
 
         self.animatronic_detect(App)
+
         if self.hallway_animatrionic_fade:
             App.animations.darkness.update(App.uiSurface, App.deltaTime)
             if not App.animations.darkness.is_animating:

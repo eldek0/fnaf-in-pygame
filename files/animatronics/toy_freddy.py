@@ -3,8 +3,8 @@ import pygame
 from files.animatronics.animatronic_base import Animatronic
 
 class ToyFreddy(Animatronic):
-    def __init__(self, App, aggresivity:int, custom_index:int):
-        super().__init__(aggresivity=aggresivity, locationId=9, jumpscare_animation=App.animations.toy_freddy_jump, rest_room=10, custom_index=custom_index)
+    def __init__(self, App, aggresivity:int, custom_index:int, img_show=None):
+        super().__init__(aggresivity=aggresivity, locationId=9, jumpscare_animation=App.animations.toy_freddy_jump, rest_room=10, custom_index=custom_index, img_show=img_show)
 
     def movement(self, App):
         toy_bonnie = App.objects.Animatronics.animatronics_in_game["TOY_BONNIE"]
@@ -28,7 +28,6 @@ class ToyFreddy(Animatronic):
                     if pygame.time.get_ticks() - self.timer > self.movement_time / self.aggresivity:
                         self.change_location_id(App, 101, secondPositionId=2)
                 elif self.secondPositionId == 2:
-                    if pygame.time.get_ticks() - self.timer > self.movement_time / self.aggresivity and App.objects.open_monitor_button.inCamera:
-                        self.change_location_id(App, 104)
+                    self.interrupt_in_office(App)
         
                 

@@ -3,8 +3,8 @@ import pygame, random
 from files.animatronics.animatronic_base import Animatronic
 
 class EndoSkeleton(Animatronic):
-    def __init__(self, App, aggresivity:int, custom_index:int):
-        super().__init__(aggresivity, -2, None, -2, custom_index)
+    def __init__(self, App, aggresivity:int, custom_index:int, img_show=None):
+        super().__init__(aggresivity, -2, None, -2, custom_index, img_show)
         self.chance_ran = 0
         self.occupied_camera_time = 1500
 
