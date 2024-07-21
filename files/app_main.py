@@ -12,10 +12,14 @@ from files.menu.warning_init import WarningInit
 import include.pygame_shaders as pygame_shaders
 from files.minigames.minigame import Minigame
 from files.utils import get_shader_diff
+from files.shaders.gameplay.vertex import vertex
+from files.shaders.gameplay.fragment import fragment
+from files.shaders.minigames.vertex import min_vertex
+from files.shaders.minigames.fragment import min_fragment
 
 default = (pygame_shaders.DEFAULT_VERTEX_SHADER, pygame_shaders.DEFAULT_FRAGMENT_SHADER)
-gameplay = ("files/shaders/gameplay/vertex.glsl", "files/shaders/gameplay/fragment.glsl")
-minigames = ("files/shaders/minigames/vertex.glsl", "files/shaders/minigames/fragment.glsl")
+gameplay = (vertex, fragment)
+minigames = (min_vertex, min_fragment)
 
 class App:
 	def __init__(self, initial_dimentions=(1024, 768), caption="Five Nights at Freddy's 2 python edition"):
@@ -26,7 +30,7 @@ class App:
 		pygame.init() # Starts the pygame timer
 		pygame.mixer.init() # Init the mixer
 		self.dimentions = initial_dimentions
-		self.surface = pygame.display.set_mode( self.dimentions, vsync=True, flags= pygame.OPENGL | pygame.DOUBLEBUF | pygame.RESIZABLE )
+		self.surface = pygame.display.set_mode( self.dimentions, vsync=True, flags= pygame.OPENGL | pygame.DOUBLEBUF | pygame.RESIZABLE | pygame.FULLSCREEN )
 		pygame.display.set_caption(caption) # Win's name
 
 		# Icon

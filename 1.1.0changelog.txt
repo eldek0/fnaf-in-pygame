@@ -1,35 +1,18 @@
+Version 1.1.0 Changelog
+
 - Minigames and more secrets were added
-- Added a extra menu
+- Added an extra menu
 - A real time mode was added (unlockable when finishing night 6)
-- A barrel shader was added to the gameplay, similar to the original game.
-- Changed night 1. Now toy chica and toy freddy can move.
-- Changed music box time.
+- A barrel shader was added to the gameplay, similar to the original game
+- Changed night 1. Now toy chica and toy freddy can move
+- Changed music box time
 - By pressing F11 you can exit fullscreen
 - Now the game is reasizable
-- Now jumpscares don't stop until the sound ends.
+- Now jumpscares don't stop until the sound ends
 - Game would sometimes crash while winding the music box
 - Battery would still be consumed even if the camera is occupied
 - Sounds would not reproduce correctly
 - Mask button used to break if you spamed it
 - Added a credits section
-
-TO FIX (preferently before adding the new stuff like minigames):
-GENERAL
-- The game sometimes crashes at camera 11? FIXED
-- The marionet (in the cutscene) is kinda glitched FIXED
-- Encrypt private and public RSA is not the same as fnaf 1.0.05 FIXED
-- Hitboxes wont suit properly on fullscreen FIXED
-- Camera/mask button dont fully function whith withered animatronics FIXED
-- Weird bug with jumpscares animations and minigames. Also background music does not sound FIXED
-
-SHADER 
-- Fade in gameplay does not work right (and when the night ends makes the game crash) FIXED
-
-TO ADD
-Minigames ! (SAVETHEM, Give Gifts, Give Life, Take Cake to the Children, Foxy Go! Go! Go!) ADDED
-Easter eggs (shadow bonnie, Endo skeletons, balloon girl, Paper Buddy, Eyeless Screens) ADDED TO ADD (Shadow Freddy)
-Add helpful tips (like the ctrl tip to flashlight when you start the game) DONE
-¿A real time mode? DONE
-Add a Extra menu DONE
 
 

@@ -2,7 +2,7 @@ import pygame
 from files.ui.Text import Text
 
 def import_names() ->list:
-    with open("files/cre.txt", "r", encoding="utf8") as pk:
+    with open("sprites/cre.txt", "r", encoding="utf8") as pk:
         names = pk.readlines()
     return names
 

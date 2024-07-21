@@ -44,19 +44,17 @@ class Shader:
     """
     
     @staticmethod
-    def create_vertfrag_shader(ctx: moderngl.Context, vertex_filepath: str, fragment_filepath: str) -> moderngl.Program:
+    def create_vertfrag_shader(ctx: moderngl.Context, vertex_par: str, fragment_par: str) -> moderngl.Program:
         """
         Create a moderngl shader program containing the shaders at the given filepaths.
         """
         
-        if vertex_filepath != DEFAULT_VERTEX_SHADER:
-            with open(vertex_filepath,'r') as f:
-                vertex_src = f.read()
+        if vertex_par != DEFAULT_VERTEX_SHADER:
+            vertex_src = vertex_par
         else:
             vertex_src = DEFAULT_VERTEX_SHADER
-        if fragment_filepath != DEFAULT_FRAGMENT_SHADER:
-            with open(fragment_filepath,'r') as f:
-                fragment_src = f.read()
+        if fragment_par != DEFAULT_FRAGMENT_SHADER:
+            fragment_src = fragment_par
         else:
             fragment_src = DEFAULT_FRAGMENT_SHADER
 

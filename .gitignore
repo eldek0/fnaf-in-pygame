@@ -16,3 +16,7 @@ files/utils.txt
 files/save/key.py
 public.pem
 icon.ico
+
+#visual / idea
+.vscode
+.idea
