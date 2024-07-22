@@ -459,8 +459,6 @@ class Menu:
 
             case 100: # Cutscenes
                 self.cutscene.update(App, self.inNight)
-                self.cutscene.finished = True # TODO
-                print("cutscene canceled")
                 if self.cutscene.finished:
                     self.init_menu_and_save_vars(App)
                     self.cutscenes_data[self.inNight - 1] = True

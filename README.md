@@ -19,3 +19,4 @@ https://www.youtube.com/watch?v=t2E2ZRrUCs4
 - Version 1.0.04: https://eldek.itch.io/fnaf-2-in-python/devlog/580924/version-1004
 - Version 1.0.05: https://eldek.itch.io/fnaf-2-in-python/devlog/624506/version-1005
 - Version 1.1.0: https://eldek.itch.io/fnaf-2-in-python/devlog/768530/version-110
+- Version 1.1.1: https://eldek.itch.io/fnaf-2-in-python/devlog/769102/version-111
