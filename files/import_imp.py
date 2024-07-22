@@ -380,9 +380,9 @@ class import_images:
 
 		self.nights_12am = []
 		for i in range(7):
-			self.nights_12am.append(
-				pygame.image.load(f"sprites/menu/nights/{i+1}.png").convert()
-			)
+			a = pygame.image.load(f"sprites/menu/nights/{i+1}.png").convert()
+			a.set_colorkey((0, 0, 0))
+			self.nights_12am.append(a)
 		
 		# Confetti
 		self.blue_conf = []
@@ -457,9 +457,9 @@ class import_images:
 		# 5 am to 6 am animation
 		self.five_animation = []
 		for i in range(3, 8):
-			self.five_animation.append(
-				pygame.image.load(f"sprites/clock/{i}.png").convert()
-			)
+			n = pygame.image.load(f"sprites/clock/{i}.png").convert()
+			n.set_colorkey((0, 0, 0))
+			self.five_animation.append(n)
 
 		self.six_animation = []
 		for i in range(8, 14):

@@ -63,21 +63,28 @@ class NightBeatenAnimation:
 
             if self.ended_animation:
                 if pygame.time.get_ticks() - self.timer > 4000:
-                    if App.menu.nightToPlay == 7:
-                        index = App.menu.custom_night_menu.mode_index
-                        App.menu.custom_night_menu.completed_nights[index] = True
+                    if not App.menu.play_real_time_mode:
+                        if App.menu.nightToPlay == 7:
+                            index = App.menu.custom_night_menu.mode_index
+                            App.menu.custom_night_menu.completed_nights[index] = True
 
-                    if App.menu.nightToPlay < 5: 
-                        self.end_reset_variables(App)
-                    else:
-                        if App.menu.nightToPlay == 7 and App.menu.custom_night_menu.completed_nights == [True, True, True, True, True, True, True, True, True, True]:
-                            self.pay_animation.inAnimation = True
-                            self.pay_animation.paycheck_asset = App.assets.night_seven_paycheck
-                        elif App.menu.nightToPlay == 5 or App.menu.nightToPlay == 6:
-                            self.pay_animation.inAnimation = True
+                        if App.menu.nightToPlay < 5: 
+                            self.end_reset_variables(App)
                         else:
-                            self.end_reset_variables(App, toMenu=True)
-                            print("to menu")
+                            if App.menu.nightToPlay == 7 and App.menu.custom_night_menu.completed_nights == [True, True, True, True, True, True, True, True, True, True]:
+                                self.pay_animation.inAnimation = True
+                                self.pay_animation.paycheck_asset = App.assets.night_seven_paycheck
+                            elif App.menu.nightToPlay == 5 or App.menu.nightToPlay == 6:
+                                self.pay_animation.inAnimation = True
+                            else:
+                                self.end_reset_variables(App, toMenu=True)
+                                App.menu.static_with_change = True
+
+                    else:
+                        # Real time mode passed
+                        App.menu.passed_real_time = True
+                        self.end_reset_variables(App, toMenu=True)
+                        App.menu.static_with_change = True
 
         elif self.pay_animation.inAnimation:
             App.uiSurface.fill((0,0,0))

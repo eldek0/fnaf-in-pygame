@@ -20,6 +20,9 @@ class MaskButton:
 
             self.animation(App, canInteract=canInteract)
 
+        if not canInteract:
+            self.animation(App, canInteract=False)
+
         if App.animations.mask.sprite_num == 0 and self.quitting_mask:
             self.quitting_mask = False
 

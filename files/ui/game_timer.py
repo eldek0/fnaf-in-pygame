@@ -26,7 +26,6 @@ class GameTimer:
 
         if self.real_time_mode:
             self.hour = self.REALLIFEHOUR # 1 hour in real life (60 seconds * 60)
-            print("Game running in real time !")
             self.seconds_timer = pygame.time.get_ticks()
         else:
             self.hour = self.GAMEHOUR# 70 seconds

@@ -50,6 +50,7 @@ class Minigame:
                 if self.minigames[self.inMinigameId].ended:
                     self.inMinigame = False
                     App.menu.init_menu_and_save_vars(App)
+                    App.menu.static_with_change = True
                 else:
                     self.inMinigame = True
                     self.reset_minigames(App)

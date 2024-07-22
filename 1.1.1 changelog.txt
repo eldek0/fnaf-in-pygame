@@ -1,0 +1,5 @@
+Version 1.1.1 Changelog
+
+- Various bugs and glitches fixed
+- The game didn't detected well when real time was completed
+- When ending the night with camera/mask on, the animations didn't show

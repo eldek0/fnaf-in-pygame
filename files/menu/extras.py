@@ -110,6 +110,10 @@ class Extras:
 
         App.menu.menu_exit(App)
 
+        if App.menu.passed_real_time:
+            t = Text(App, "Completed", (240, 490), App.assets.ocr_font30, (228, 158, 0), None)
+            t.draw(surf)
+
     def actions_handler(self, App):
         click = pygame.mouse.get_pressed()
         for i in range(len(self.buttons)):

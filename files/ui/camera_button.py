@@ -12,7 +12,6 @@ class CameraButton:
         self.entering_camera = False
 
     def update(self, App, canInteract=True):
-        self.monitor_button.update(App.uiSurface, App.mouse_hitbox)
         if canInteract and self.canEnter(App):
             if App.objects.battery.charge == 0 or App.objects.office.animatronic_in_office:
                 self.quitting_camera = True
@@ -24,6 +23,11 @@ class CameraButton:
                     self.camera_being_pressed = False
 
             self.animation(App, canInteract=canInteract)
+        
+        if not canInteract:
+            self.animation(App, canInteract=False)
+
+        self.monitor_button.update(App.uiSurface, App.mouse_hitbox)
             
         #print(self.entering_camera, self.inCamera, self.quitting_camera)
 
@@ -39,11 +43,10 @@ class CameraButton:
     def animation(self, App, canInteract=True):
         # Monitor animation
         if not self.inCamera:
-            if (self.monitor_button.mouse_hovered and canInteract) or self.entering_camera:
+            if (self.monitor_button.mouse_hovered or self.entering_camera) and canInteract:
                 if not self.camera_being_pressed:
                     self.entering_camera = True
                     App.animations.monitor.update(App.uiSurface, App.deltaTime)
-
                     # Get in camera
                     if App.animations.monitor.sprite_num == len(App.animations.monitor.sprites) - 1:
                         if not App.objects.battery.charge == 0:
@@ -59,7 +62,8 @@ class CameraButton:
                 self.camera_being_pressed = False
                 
         else:
-            if self.monitor_button.mouse_hovered or self.quitting_camera:
+            
+            if (self.monitor_button.mouse_hovered) or self.quitting_camera:
                 if not self.camera_being_pressed:
                     if not self.quitting_camera:
                         App.objects.office.random_number()

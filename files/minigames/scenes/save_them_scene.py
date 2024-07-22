@@ -258,7 +258,7 @@ class SaveThemScene(CreateScene):
                     self.right_wall(False),
                     self.bottom_wall(False),
 
-                    (App.assets.desk_min, (400, 360),  None, "def", 1, (0, 130), True),
+                    (App.assets.desk_min, (400, 360),  None, "def", 1, (0, 130), False),
 
                     ], scene
                 )

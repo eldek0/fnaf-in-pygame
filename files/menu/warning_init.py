@@ -32,10 +32,7 @@ class WarningInit:
         """ Change to menu and load everything from the save file """
         if not self._finished:
             data = read(App)
-            if not App.debug:
-                data = read(App)
 
-            
             App.menu = Menu(App)
             App.minigame = Minigame(App)
 

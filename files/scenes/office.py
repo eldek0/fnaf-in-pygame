@@ -34,7 +34,6 @@ class Office:
     def update(self, App, canInteract=True, draw=True, animate=True):
         if self.animatronic_in_office:
             canInteract = False
-            #App.objects.open_monitor_button.quit_camera(App)
         
         if canInteract or self.animatronic_in_office:
             self.camera_movement(App)

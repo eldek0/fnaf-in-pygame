@@ -159,9 +159,9 @@ class Game:
 
             App.objects.gameTimer.update(App, update_time=False)
 
-            App.objects.open_monitor_button.update(App, canInteract=False)
             App.objects.open_monitor_button.quitting_camera = True
+            App.objects.open_monitor_button.update(App, canInteract=False)
 
-            App.objects.mask_button.update(App, canInteract=False)
             App.objects.mask_button.quitting_mask = True
+            App.objects.mask_button.update(App, canInteract=False)
 
