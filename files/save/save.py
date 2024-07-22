@@ -7,7 +7,7 @@ raw_prvt = ""
 for line in private_raw:
     raw_prvt += line + "\n"
 
-PRIVATE_KEY = rsa.PrivateKey.load_pkcs1(raw_prvt)
+PRIVATE_KEY = rsa.PrivateKey.load_pkcs1(bytes(raw_prvt, "utf-8"))
 
 def save(App):
     data = default()
@@ -74,12 +74,17 @@ def get_decrypted_file(read:bytes):
     except rsa.pkcs1.DecryptionError:
         print("A DECRIPTION ERROR HAPPENED, RESETTING GAME VALUES")
         return None
+
+    #json_raw = rsa.decrypt(read, PRIVATE_KEY)
+
+        
     return json_raw
 
 def read(App):
     with open("files/utils.txt", "rb") as f:
         en = f.read()
-        f.close()
+    
+    print(en)
 
     if App.debug:
         try:
