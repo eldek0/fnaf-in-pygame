@@ -29,7 +29,7 @@ def save(App):
     PUBLIC_KEY = rsa.PublicKey.load_pkcs1(raw_public_key)
 
     if App.debug:
-        json_transform = json.dumps(data, indent=2)
+        json_transform = json.dumps(data, indent=1)
     else:
         json_transform = json.dumps(data)
     with open("files/utils.txt", "wb") as f:
@@ -75,16 +75,11 @@ def get_decrypted_file(read:bytes):
         print("A DECRIPTION ERROR HAPPENED, RESETTING GAME VALUES")
         return None
 
-    #json_raw = rsa.decrypt(read, PRIVATE_KEY)
-
-        
     return json_raw
 
 def read(App):
     with open("files/utils.txt", "rb") as f:
         en = f.read()
-    
-    print(en)
 
     if App.debug:
         try:
@@ -113,4 +108,3 @@ def read(App):
     data = check_if_data_is_in_file(App, data)
 
     return data
-
