@@ -20,3 +20,6 @@ icon.ico
 #visual / idea
 .vscode
 .idea
+
+# Virtual enviroment
+venv/
